@@ -25,14 +25,17 @@
 %code{
     #include <iostream>
     #include <string>
-    
+
     #include "scanner.hh"
     #include "driver.hh"
 
     #undef  yylex
     #define yylex scanner.yylex
 }
-
+                
+%token                  CONSTRUCT
+%token                  ROAD
+%token                  HOUSE
 %token                  NL
 %token                  END
 %token <int>            NUMBER
