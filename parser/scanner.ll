@@ -39,10 +39,22 @@ fin return token::END;
 "/%"          return '/%';
 "%/"          return '%/';
 "->"          return '->';
+"["           return '[';
+"]"           return ']';
+"°"           return '°';
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
 "Construire"  return token::CONSTRUCT;
-
+"Tourner"     return token::TURN;
+"Orienter"    return token::ORIENTATE;
+"Deplacer"    return token::MOVE;
+"Detruire"    return token::DESTRUCT;
+"Position"    return token::POSITION;
+"Orientation" return token::ORIENTATION;
+"Voisinage"   return token::NEIGHBORHOOD;
+"maison"      return token::HOUSELIST;
+"horaire"     return token::CLOCKWISE;
+"!horaire"     return token::ANTI_CLOCKWISE;
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));
     return token::NUMBER;
