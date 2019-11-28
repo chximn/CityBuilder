@@ -13,20 +13,17 @@ Lexical analysis using Flex and Syntax analysis using Bison.
         Comment
     /%
     ```
-2. Construct
-Constructs a new city or update an existing one using `Construire`
+2. Construct a new city or update an existing one using `Construire`
     ```
     Construire (5) {
         %% CODE
     }
     ```
-3. House
-Constructs a new house using `House`
+3. Construct a new house using `House`
     ```
     Maison (x, y, z)
     ```
-4. Road
-Constructs a new road between two houses using `Route`
+4. Construct a new road between two houses using `Route`
     ```
     Route (x1, y1, z1) -> (x2, y2, z2)
     ```
