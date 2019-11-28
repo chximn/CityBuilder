@@ -7,7 +7,7 @@
 
 class Driver {
 private:
-    Contexte variables;       
+    Contexte variables;
 
 public:
     Driver() = default;

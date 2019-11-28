@@ -32,7 +32,7 @@
     #undef  yylex
     #define yylex scanner.yylex
 }
-                
+
 %token                  CONSTRUCT
 %token                  ROAD
 %token                  HOUSE
@@ -47,9 +47,10 @@
 
 %%
 
-programme:
-    instruction NL programme
-    | END NL {
+program:
+    CONSTRUCT '(' NUMBER ')' '{' NL instruction '}' NL
+    {
+
         YYACCEPT;
     }
 
