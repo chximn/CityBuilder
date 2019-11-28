@@ -1,0 +1,46 @@
+Construire [(rayon)]{
+    Maison [nom]
+    Maison [nom] (expression,expression)
+    Deplacer <nom|(expression,expression)> -> (expression,expression)
+    Position <nom|(expression,expression)>
+    Tourner <nom|(expression,expression)> <à droite|à gauche>
+    Orienter <nom|(expression,expression)> expression$\circ$
+    Orientation <nom|(expression,expression)>
+    Coloriser <nom|(expression,expression)> <#rrggbb|expression>
+    Couleur <nom|(expression,expression)>
+    Route <nom|(expression,expression)> -> <nom|(expression,expression)>
+    Voisin <nom|(expression,expression)> -> expression
+    Voisinage <nom|expression>
+    
+    %%Commentaires inline
+    %/
+        Commentaires sur plusieurs lignes
+    /%
+
+
+    Si (condition) {
+        
+    }
+    Sinon {
+
+    }
+
+    Tant que (condition) {
+
+    }
+
+}
+
+void nomFonction (arg1,...,argn){
+}
+
+
+
+%%    ---Bonus---
+
+Pour (initialisation;condition;incrémentation) {
+}
+
+type nomFonction (arg1,...,argn){
+        Retourne resultat 
+}

@@ -1,0 +1,22 @@
+Construire{
+    Maison M1 (1,-1,0)
+    Si (occupe (2,-2,0)){
+        Route M1 -> (2,-2,0)
+    }
+    Sinon {
+        Maison (2,-2,0)
+        Route M1 -> (2,-2,0)
+    }
+    %%Ajoute une route entre (1,-1,0) et  (2,-2,0) si une maison est présente en (2,-2,0) sinon construit une maison en (2,-2,0) et construit une route entre (1,-1,0) et (2,-2,0)
+    i=0
+    Tant que (i<5) {
+        Voisin M1 1
+        i=i+1
+    }
+    %%Construit 5 maisons autour de M1
+    j=1
+    Repeter i fois {
+        Coloriser maison[j] (j*50,0,0)
+    }
+    %%Colorie les maisons de 1 à 5 en nuance de rouge
+}

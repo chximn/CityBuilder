@@ -1,0 +1,11 @@
+Construire (6){
+    Maison M1 (1+2,3/4,-2)
+    Position M1
+    %% Affiche La maison 1 est en position (3,1,-2)
+    i=2
+    i=i-1
+    Maison M2 (2+(1+1)/2,i,-(1+1)*i)
+    %%Affiche erreur il y a déjà une maison en (3,1,-2)
+    Route M1 -> (0,0,0)
+    %%Affiche erreur il n'y a pas de maison en (0,0,0)
+}

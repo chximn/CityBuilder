@@ -1,0 +1,29 @@
+Construire (6){
+    Maison (0,0,0)
+    %%Orienter la maison créée vers la gauche
+    Tourner maison[1] horaire
+    %%Orienter la même maison vers la droite
+    Orienter (0,0,0) 0°
+    %% Déplacer la maison 1 en (2,-1,-1)
+    Deplacer maison[1] -> (2,-1,-1) 
+    %%Créer une seconde maison en (-1,-1,2) avec une route et supprimer la première
+    Maison (-1,-1,2)
+    Route maison[1] -> (-1,-1,2)
+    Detruire  maison[1]
+    %% La maison en position (-1,-1,2) de vient la maison 1 et la route est supprimée
+    %%Construction d'une nouvelle maison avec une route et suppression de la route
+    Maison (-1,2,-1)
+    Route maison[1] -> maison[2]
+    Detruire maison[1] -> maison[2]
+    %%L'instruction inverse ne fonctionne pas car les routes sont orientées
+    Position maison[2]
+    %%Affiche La maison 2 est en position (-1,2,-1)
+    Orientation (-1,2,-1)
+    %%La maison 1 est orientée à 90°
+    Voisinage maison[1]
+    %%Affiche la maison 1 n'a pas de voisin
+    Route maison[1] -> maison[2]
+    Voisinage (-1,-1,2)
+    %%Affiche la maison 1 a 1 voisin :
+    %%maison 2 (4,4,4) distance relative 1
+}

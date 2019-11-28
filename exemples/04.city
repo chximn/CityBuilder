@@ -1,0 +1,12 @@
+Construire (5){
+    Maison M1 (1,-1,0)
+    Coloriser M1 #Ff0000
+    Couleur M1
+    %%Affiche la couleur de la maison 1 est (255,0,0).
+    Maison M2 (2,-1,-1)
+    Coloriser M2 (0,255,0)
+    Couleur (2,-1,-1)
+    %%Affiche la couleur de la maison 2 est (0,255,0)
+    Voisin M1 1
+    %%Ajoute un voisin à M1 sur une des positions suivantes (0,0,0),(1,0,-1),(2,-2,0),(1,-2,1),(0,-1,1). Il n'est pas possible de créer une maison en (2,-2,0). 
+}
