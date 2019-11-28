@@ -25,13 +25,23 @@ using token = yy::Parser::token;
 %}
 fin return token::END;
 
-"+" return '+';
-"*" return '*';
-"-" return '-';
-"/" return '/';
-"(" return '(';
-")" return ')';
-"=" return '=';
+"+"           return '+';
+"*"           return '*';
+"-"           return '-';
+"/"           return '/';
+"("           return '(';
+")"           return ')';
+"="           return '=';
+"{"           return '{';
+"}"           return '}';
+","           return ',';
+"%%"          return '%%';
+"/%"          return '/%';
+"%/"          return '%/';
+"->"          return '->';
+"Maison"      return token::HOUSE;
+"Route"       return token::ROAD;
+"Construire"  return token::CONSTRUCT;
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));
