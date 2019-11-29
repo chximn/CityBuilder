@@ -35,13 +35,13 @@ fin return token::END;
 "{"           return '{';
 "}"           return '}';
 ","           return ',';
-"%%"          return '%%';
-"/%"          return '/%';
-"%/"          return '%/';
-"->"          return '->';
+"%%"          return token::COMMENT_INLINE;
+"/%"          return token::COMMENT_OPEN;
+"%/"          return token::COMMENT_CLOSE;
+"->"          return token::ARROW;
 "["           return '[';
 "]"           return ']';
-"°"           return '°';
+"°"           return token::DEGREE;
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
 "Construire"  return token::CONSTRUCT;
@@ -54,7 +54,8 @@ fin return token::END;
 "Voisinage"   return token::NEIGHBORHOOD;
 "maison"      return token::HOUSELIST;
 "horaire"     return token::CLOCKWISE;
-"!horaire"     return token::ANTI_CLOCKWISE;
+"!horaire"    return token::ANTI_CLOCKWISE;
+
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));
     return token::NUMBER;

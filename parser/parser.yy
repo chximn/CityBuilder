@@ -2,7 +2,7 @@
 %require "3.0"
 
 %defines
-%define parser_class_name { Parser }
+%define api.parser.class { Parser }
 %define api.value.type variant
 %define parse.assert
 
@@ -33,9 +33,9 @@
     #define yylex scanner.yylex
 }
 
-%token                  CONSTRUCT
-%token                  ROAD
-%token                  HOUSE
+%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST CLOCKWISE ANTI_CLOCKWISE
+%token COMMENT_INLINE COMMENT_OPEN COMMENT_CLOSE ARROW DEGREE
+
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -48,11 +48,15 @@
 %%
 
 program:
-    CONSTRUCT '(' NUMBER ')' '{' NL instruction '}' NL
-    {
+    program NL | city
 
-        YYACCEPT;
-    }
+
+city:
+	CONSTRUCT '(' NUMBER ')' '{' NL instruction '}' NL
+	{
+		std::cout << "contruire ville de taille: " << $3 << "\n";
+		YYACCEPT;
+	}
 
 instruction:
     operation  {
