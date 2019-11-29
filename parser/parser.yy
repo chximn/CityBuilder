@@ -52,13 +52,16 @@ program:
 
 
 city:
-	CONSTRUCT '(' NUMBER ')' '{' NL instruction '}' NL
+	CONSTRUCT '(' NUMBER ')' '{' NL commands '}' NL
 	{
-		std::cout << "contruire ville de taille: " << $3 << "\n";
+		std::cout << "construire ville de taille: " << $3 << "\n";
 		YYACCEPT;
 	}
 
-instruction:
+commands:
+	commands NL | command
+
+command:
     operation  {
         std::cout << "#-> " << $1 << std::endl;
     }
