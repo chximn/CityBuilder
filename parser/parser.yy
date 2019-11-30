@@ -34,12 +34,12 @@
 }
 
 %token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST CLOCKWISE ANTI_CLOCKWISE
-%token COMMENT_INLINE COMMENT_OPEN COMMENT_CLOSE ARROW DEGREE
-
+%token ARROW DEGREE
 %token                  NL
 %token                  END
 %token <int>            NUMBER
-
+%token <std::string>    COMMENT
+%type <int>             city_header
 %type <int>             operation
 %left '-' '+'
 %left '*' '/'
@@ -48,23 +48,32 @@
 %%
 
 program:
-    program NL | city
-
+		 city    NL program |
+		 comment NL |
+	     END { YYACCEPT; }
 
 city:
-	CONSTRUCT '(' NUMBER ')' '{' NL commands '}' NL
+ 	city_header '{' NL commands '}'
 	{
-		std::cout << "construire ville de taille: " << $3 << "\n";
-		YYACCEPT;
+		std::cout << "construire ville de taille: " << $1 << "\n";
 	}
 
+city_header:
+	CONSTRUCT '(' NUMBER ')' { $$ = $3; } |
+	CONSTRUCT                { $$ = 5;  }
+
 commands:
-	commands NL | command
+	command NL commands | command NL
 
 command:
     operation  {
         std::cout << "#-> " << $1 << std::endl;
     }
+
+comment:
+	COMMENT {
+		std::cout << "Comment: " << $1 << std::endl;
+	}
 
 operation:
     NUMBER {
