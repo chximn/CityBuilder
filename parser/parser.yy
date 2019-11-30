@@ -14,6 +14,7 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
+	#include "point.hh"
 
     class Scanner;
     class Driver;
@@ -42,6 +43,7 @@
 %token <std::string>    COMMENT
 %type <int>             city_header
 %type <int>             operation
+%type <Point>           coordinates
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -74,13 +76,25 @@ commands:
 	        NL commands
 
 command:
-    operation  {
-        std::cout << "#-> " << $1 << std::endl;
-    }
+    house
+
+house:
+	HOUSE coordinates {
+		std::cout << "house: " << $2.toString() << "\n";
+	} |
+
+	ROAD coordinates ARROW coordinates {
+		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
+	}
 
 comment:
 	COMMENT {
 		std::cout << "Comment: " << $1 << std::endl;
+	}
+
+coordinates:
+	'(' operation ',' operation ',' operation ')' {
+		$$ = Point($2, $4, $6);
 	}
 
 operation:
