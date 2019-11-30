@@ -51,6 +51,7 @@
 program:
 		 comment NL program |
 		 city    NL program |
+		         NL program |
 	     END { YYACCEPT; }
 
 city:
@@ -64,7 +65,13 @@ city_header:
 	CONSTRUCT                { $$ = 5;  }
 
 commands:
-	command NL commands | command NL
+	comment NL commands         |
+	command comment NL commands |
+	command NL commands         |
+	comment NL                  |
+	command comment NL          |
+	command NL                  |
+	        NL commands
 
 command:
     operation  {
