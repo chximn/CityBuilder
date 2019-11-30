@@ -14,6 +14,7 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
+	#include "point.hh"
 
     class Scanner;
     class Driver;
@@ -34,6 +35,7 @@
 }
 
 %token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST CLOCKWISE ANTI_CLOCKWISE
+%token <std::string> OTHER
 %token ARROW DEGREE
 %token                  NL
 %token                  END
@@ -41,6 +43,7 @@
 %token <std::string>    COMMENT
 %type <int>             city_header
 %type <int>             operation
+%type <Point>           coordinates
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -48,8 +51,9 @@
 %%
 
 program:
+		 comment NL program |
 		 city    NL program |
-		 comment NL |
+		         NL program |
 	     END { YYACCEPT; }
 
 city:
@@ -63,16 +67,34 @@ city_header:
 	CONSTRUCT                { $$ = 5;  }
 
 commands:
-	command NL commands | command NL
+	comment NL commands         |
+	command comment NL commands |
+	command NL commands         |
+	comment NL                  |
+	command comment NL          |
+	command NL                  |
+	        NL commands
 
 command:
-    operation  {
-        std::cout << "#-> " << $1 << std::endl;
-    }
+    house
+
+house:
+	HOUSE coordinates {
+		std::cout << "house: " << $2.toString() << "\n";
+	} |
+
+	ROAD coordinates ARROW coordinates {
+		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
+	}
 
 comment:
 	COMMENT {
 		std::cout << "Comment: " << $1 << std::endl;
+	}
+
+coordinates:
+	'(' operation ',' operation ',' operation ')' {
+		$$ = Point($2, $4, $6);
 	}
 
 operation:

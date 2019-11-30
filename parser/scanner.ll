@@ -57,9 +57,23 @@ using token = yy::Parser::token;
 "horaire"     return token::CLOCKWISE;
 "!horaire"    return token::ANTI_CLOCKWISE;
 
+<<<<<<< HEAD
 (%%(.|\s)+) {
   yylval->build<std::string>(YYText());
   return token::COMMENT;
+=======
+
+(\%\%(.|[ ])+) {
+	std::cout << "inline comment\n";
+	yylval->build<std::string>(YYText());
+	return token::COMMENT;
+}
+
+(\/\%\n(((.|[ ])|([^"%"][^"/"](.|[ ])*))?\n)+\%\/) {
+	std::cout << "multiline comment\n";
+	yylval->build<std::string>(YYText());
+	return token::COMMENT;
+>>>>>>> f3345d2a5f3f106f6b30df2044966a743e73645c
 }
 
 [0-9]+      {
@@ -71,6 +85,5 @@ using token = yy::Parser::token;
     loc->lines();
     return token::NL;
 }
-
 
 %%

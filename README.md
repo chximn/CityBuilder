@@ -30,29 +30,28 @@ Lexical analysis using Flex and Syntax analysis using Bison.
 ### House Management
 1. Destruct a house using `Detruire`
     ```
-    Detruire maison [ i ]
+    Detruire maison[i]
     ```
 2. Getting the position of a house using `Position`
     ```
-    Position maison [ i ]
+    Position maison[i]
     ```
 3. Turn the house (clockwise or anti clockwise using `Tourner`
     ```
-    Tourner maison [ 1 ] (horaire|!horaire)
+    Tourner maison[1] (horaire|!horaire)
     ```
-4. Getting the houselist/neighbours/neighborhood
+4. Getting the neighborhood
     ```
-    Voisinage maison [ i ]
+    Voisinage maison[i]
     ```
 5. Turn the house for a specific degree using `Orienter`
     ```
-    Orienter ( 0 , 0 , 0 ) 0 °
+    Orienter (0, 0, 0) 0°
     ```
 6. Change the position of a hous using `Deplacer`
     ```
-    Deplacer maison [ i ] −> (x , y , z)
+    Deplacer maison[i] −> (x, y, z)
     ```
-1.Orientation,destruction,position,NEIGHBORHOOD,HOUSELIST,move
 ## Data Structure
 
 ## Graphical User Interface
