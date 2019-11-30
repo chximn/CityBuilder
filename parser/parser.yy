@@ -15,6 +15,7 @@
     #include "constante.hh"
     #include "variable.hh"
 	#include "point.hh"
+	#include "house.hh"
 
     class Scanner;
     class Driver;
@@ -44,6 +45,7 @@
 %type <int>             city_header
 %type <int>             operation
 %type <Point>           coordinates
+%type <House>           house
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -85,11 +87,20 @@ house:
 
 	ROAD coordinates ARROW coordinates {
 		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
+	} |
+
+	DESTRUCT house {
+		std::cout << "destruct house\n";
 	}
 
 comment:
 	COMMENT {
 		std::cout << "Comment: " << $1 << std::endl;
+	}
+
+house:
+	HOUSELIST '[' NUMBER ']' {
+		$$ = House();
 	}
 
 coordinates:

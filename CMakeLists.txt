@@ -21,6 +21,7 @@ file(GLOB EXPRESSION_HEADERS
     expressions/constante.hh
     expressions/variable.hh
     expressions/point.hh
+	expressions/house.cc
     )
 
 add_library(libexpressions
@@ -30,6 +31,7 @@ add_library(libexpressions
     expressions/constante.cc
     expressions/variable.cc
     expressions/point.cc
+	expressions/house.cc
     ${EXPRESSION_HEADERS}
     )
 
