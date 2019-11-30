@@ -32,7 +32,7 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     ```
     Detruire maison[i]
     ```
-2. Getting the position of a house using `Position`
+2. Print the position of a house using `Position`
     ```
     Position maison[i]
     ```
