@@ -1,6 +1,7 @@
 %{
 
 #include "scanner.hh"
+#include <string>
 #include <cstdlib>
 
 #define YY_NO_UNISTD_H
@@ -36,9 +37,8 @@ using token = yy::Parser::token;
 "{"           return '{';
 "}"           return '}';
 ","           return ',';
-"%%"          return token::COMMENT_INLINE;
-"/%"          return token::COMMENT_OPEN;
-"%/"          return token::COMMENT_CLOSE;
+
+
 "->"          return token::ARROW;
 "["           return '[';
 "]"           return ']';
@@ -57,6 +57,11 @@ using token = yy::Parser::token;
 "horaire"     return token::CLOCKWISE;
 "!horaire"    return token::ANTI_CLOCKWISE;
 
+(%%(.|\s)+)|(\/%([^"%\/"]|\s|\n)+%\/) {
+	yylval->build<std::string>(YYText());
+	return token::COMMENT;
+}
+
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));
     return token::NUMBER;
@@ -66,5 +71,6 @@ using token = yy::Parser::token;
     loc->lines();
     return token::NL;
 }
+
 
 %%
