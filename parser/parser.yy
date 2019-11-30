@@ -91,6 +91,10 @@ house:
 
 	DESTRUCT house {
 		std::cout << "destruct house\n";
+	} |
+
+	POSITION hous {
+		std::cout << "show house\n";
 	}
 
 comment:
