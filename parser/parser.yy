@@ -34,6 +34,7 @@
 }
 
 %token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST CLOCKWISE ANTI_CLOCKWISE
+%token <std::string> OTHER
 %token ARROW DEGREE
 %token                  NL
 %token                  END
@@ -48,8 +49,8 @@
 %%
 
 program:
+		 comment NL program |
 		 city    NL program |
-		 comment NL |
 	     END { YYACCEPT; }
 
 city:
