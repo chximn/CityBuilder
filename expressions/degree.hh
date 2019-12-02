@@ -8,7 +8,7 @@ private:
 
 public:
 	degree() = default;
-	degree(int v): val(v) {}
+	degree(int v);
 	degree(degree const & d): val(d.val) {}
 
 	int get_value() const { return val; }
