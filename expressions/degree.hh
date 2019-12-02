@@ -15,4 +15,8 @@ public:
 	degree operator +(degree const & d);
 	degree operator -(float v);
 	degree operator -(degree const & d);
+	degree operator =(float v);
+	degree operator =(degree const & d);
+
+	void turn(bool);
 };
