@@ -78,9 +78,6 @@ commands:
 	        NL commands
 
 command:
-    house
-
-house:
 	HOUSE coordinates {
 		std::cout << "house: " << $2.toString() << "\n";
 	} |
@@ -93,7 +90,7 @@ house:
 		std::cout << "destruct house\n";
 	} |
 
-	POSITION hous {
+	POSITION house {
 		std::cout << "show house\n";
 	}
 
