@@ -79,16 +79,16 @@ commands:
 
 command:
 	HOUSE coordinates {
-		std::cout << "house: " << $2.toString() << "\n";
+		std::cout << "house: " << $2.to_string() << "\n";
 	} |
 
   	HOUSE {
 		point p(0, 0, 0);
-		std::cout << "house: " << p.toString() << "\n";
+		std::cout << "house: " << p.to_string() << "\n";
 	} |
 
 	ROAD coordinates ARROW coordinates {
-		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
+		std::cout << "road: " << $2.to_string() << " -> " << $4.to_string() << "\n";
 	} |
 
 	DESTRUCT house {
