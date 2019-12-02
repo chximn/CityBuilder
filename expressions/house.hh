@@ -1,6 +1,7 @@
 #pragma once
 
 #include "point.hh"
+#include "degree.hh"
 
 class house {
 private:

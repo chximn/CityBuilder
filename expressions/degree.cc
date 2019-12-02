@@ -1,31 +1,41 @@
 #include "degree.hh"
 
-degree degree::operator+(float v) {
-	return degree(val + v);
+const char * degree_not_valid::what() const noexcept {
+	return std::string("Invalid Degree Value\n").c_str();
+}
+
+degree degree::operator+(int v) {
+	if (v % 60 != 0) throw degree_not_valid();
+	return degree((val + v) % 360);
 }
 
 degree degree::operator+(degree const & d) {
-	return degree(val + d.val);
+	if (d.val % 60 != 0) throw degree_not_valid();
+	return degree((val + d.val) % 360);
 }
 
-degree degree::operator-(float v) {
-	return degree(val - v);
+degree degree::operator-(int v) {
+	if (v % 60 != 0) throw degree_not_valid();
+	return degree((val - v) % 360);
 }
 
 degree degree::operator-(degree const & d) {
-	return degree(val - d.val);
+	if (d.val % 60 != 0) throw degree_not_valid();
+	return degree((val - d.val) % 360);
 }
 
-degree degree::operator=(float v) {
-	val = v;
+degree degree::operator=(int v) {
+	if (v % 60 != 0) throw degree_not_valid();
+	val = v % 360;
 	return *this;
 }
 
 degree degree::operator =(degree const & d) {
+	if (d.val % 60 != 0) throw degree_not_valid();
 	val = d.val;
 	return *this;
 }
 
 void degree::turn(bool clockwise) {
-	val += 60 * (clockwise ? -1 : 1);
+	val = (val + 60 * (clockwise ? -1 : 1)) % 360;
 }
