@@ -14,6 +14,7 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
+	#include "degree.hh"
 	#include "point.hh"
 	#include "house.hh"
 
@@ -35,7 +36,8 @@
     #define yylex scanner.yylex
 }
 
-%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST CLOCKWISE ANTI_CLOCKWISE
+%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST
+%token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
 %token                  NL
@@ -44,6 +46,7 @@
 %token <std::string>    COMMENT
 %type <int>             city_header
 %type <int>             operation
+%type <degree>          degree
 %type <point>           coordinates
 %type <house>           house
 %left '-' '+'
@@ -97,7 +100,25 @@ command:
 
 	POSITION house {
 		std::cout << "show house: " << $2.to_string() << "\n";
+	} |
+
+	TURN house CLOCKWISE {
+		std::cout << "turn house: " << $2.to_string() << ", clockwise: " << $3 << "\n";
+	} |
+
+	NEIGHBORHOOD house {
+		std::cout << "neighborhood of: " << $2.to_string() << '\n';
+	} |
+
+	ORIENTATE coordinates degree {
+		std::cout << "orientate house in: " << $2.to_string() << " to " << $3.to_string() << "\n";
+	} |
+
+	MOVE house ARROW coordinates {
+		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
 	}
+
+
 
 comment:
 	COMMENT {
@@ -107,6 +128,11 @@ comment:
 house:
 	HOUSELIST '[' NUMBER ']' {
 		$$ = house();
+	}
+
+degree:
+	NUMBER DEGREE {
+		$$ = degree($1);
 	}
 
 coordinates:

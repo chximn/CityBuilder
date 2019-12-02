@@ -52,9 +52,16 @@ using token = yy::Parser::token;
 "Orientation" return token::ORIENTATION;
 "Voisinage"   return token::NEIGHBORHOOD;
 "maison"      return token::HOUSELIST;
-"horaire"     return token::CLOCKWISE;
-"!horaire"    return token::ANTI_CLOCKWISE;
 
+"horaire" {
+	yylval->build<bool>(true);
+	return token::CLOCKWISE;
+}
+
+"!horaire" {
+	yylval->build<bool>(false);
+	return token::CLOCKWISE;
+}
 
 (\%\%(.|[ ])+) {
 	std::cout << "inline comment\n";
