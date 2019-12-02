@@ -78,7 +78,8 @@ commands:
 	comment NL                  |
 	command comment NL          |
 	command NL                  |
-	        NL commands
+	        NL commands         |
+			NL
 
 command:
 	HOUSE coordinates {
