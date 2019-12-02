@@ -32,7 +32,7 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     ```
     Detruire maison[i]
     ```
-2. Getting the position of a house using `Position`
+2. Print the position of a house using `Position`
     ```
     Position maison[i]
     ```
@@ -53,5 +53,16 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     Deplacer maison[i] −> (x, y, z)
     ```
 ## Data Structure
+1. Point
+	```
+	Point:
+		x, y, z: int
+	```
+2. House
+	```
+	House:
+		coordinates: Point
+		orientation: int
+	```
 
 ## Graphical User Interface
