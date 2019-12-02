@@ -1,14 +1,14 @@
 #pragma once
 #include <string>
 
-class Point {
+class point {
 private:
 	int x, y, z;
 
 public:
-	Point() = default;
-	Point(Point const &) = default;
-	Point(int, int, int);
+	point() = default;
+	point(point const &) = default;
+	point(int, int, int);
 
 	int getX() const;
 	int getY() const;

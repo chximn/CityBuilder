@@ -1,3 +1,3 @@
 #include "house.hh"
 
-House::House(Point const & p): coordinates(p) {}
+house::house(point const & p): coordinates(p) {}

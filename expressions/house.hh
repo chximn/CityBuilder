@@ -2,11 +2,11 @@
 
 #include "point.hh"
 
-class House {
+class house {
 private:
-	Point coordinates;
+	point coordinates;
 
 public:
-	House() = default;
-	House(Point const &);
+	house() = default;
+	house(point const &);
 };
