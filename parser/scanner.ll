@@ -37,8 +37,6 @@ using token = yy::Parser::token;
 "{"           return '{';
 "}"           return '}';
 ","           return ',';
-
-
 "->"          return token::ARROW;
 "["           return '[';
 "]"           return ']';
@@ -63,12 +61,12 @@ using token = yy::Parser::token;
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
-
-(\/\%\n(((.|[ ])|([^"%"][^"/"](.|[ ])*))?\n)+\%\/) {
+(\%\/\n([ ]|[^"%/"]|\n)*+\n\/\%) {
 	std::cout << "multiline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
+
 
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));

@@ -80,8 +80,10 @@ commands:
 command:
 	HOUSE coordinates {
 		std::cout << "house: " << $2.toString() << "\n";
-	} |
-
+	}
+  |
+  HOUSE
+  |
 	ROAD coordinates ARROW coordinates {
 		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
 	} |

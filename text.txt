@@ -1,0 +1,5 @@
+// (\/\%\n(((.|[ ])|([^"%"][^"/"](.|[ ])*))?\n)+\%\/) {
+// 	std::cout << "multiline comment\n";
+// 	yylval->build<std::string>(YYText());
+// 	return token::COMMENT;
+// >>>>>>> f3345d2a5f3f106f6b30df2044966a743e73645c
