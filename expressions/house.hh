@@ -11,4 +11,7 @@ private:
 public:
 	house() = default;
 	house(point const &);
+
+	degree & get_orientation();
+	point  & get_coordinates();
 };
