@@ -5,6 +5,7 @@
 class house {
 private:
 	point coordinates;
+	degree orientation;
 
 public:
 	house() = default;
