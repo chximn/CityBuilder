@@ -44,7 +44,7 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     ```
     Voisinage maison[i]
     ```
-5. Turn the house for a specific degree using `Orienter`
+5. Turn the house to a specific degree using `Orienter`
     ```
     Orienter (0, 0, 0) 0°
     ```
