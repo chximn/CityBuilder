@@ -38,7 +38,7 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     ```
 3. Turn the house (clockwise or anti clockwise using `Tourner`
     ```
-    Tourner maison[1] (horaire|!horaire)
+    Tourner maison[i] (horaire|!horaire)
     ```
 4. Getting the neighborhood
     ```
