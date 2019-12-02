@@ -44,8 +44,8 @@
 %token <std::string>    COMMENT
 %type <int>             city_header
 %type <int>             operation
-%type <Point>           coordinates
-%type <House>           house
+%type <point>           coordinates
+%type <house>           house
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -81,7 +81,12 @@ command:
 	HOUSE coordinates {
 		std::cout << "house: " << $2.toString() << "\n";
 	} |
-	
+
+  	HOUSE {
+		point p(0, 0, 0);
+		std::cout << "house: " << p.toString() << "\n";
+	} |
+
 	ROAD coordinates ARROW coordinates {
 		std::cout << "road: " << $2.toString() << " -> " << $4.toString() << "\n";
 	} |
@@ -101,12 +106,12 @@ comment:
 
 house:
 	HOUSELIST '[' NUMBER ']' {
-		$$ = House();
+		$$ = house();
 	}
 
 coordinates:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = Point($2, $4, $6);
+		$$ = point($2, $4, $6);
 	}
 
 operation:
