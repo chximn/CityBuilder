@@ -50,6 +50,6 @@ void degree::turn(bool clockwise) {
 	if (val < 0) val += 360;
 }
 
-std::string degree::to_string() {
+std::string degree::to_string() const {
 	return std::to_string(val) + "deg";
 }

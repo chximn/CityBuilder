@@ -92,11 +92,11 @@ command:
 	} |
 
 	DESTRUCT house {
-		std::cout << "destruct house\n";
+		std::cout << "destruct house\n" << $2.to_string();
 	} |
 
 	POSITION house {
-		std::cout << "show house\n";
+		std::cout << "show house\n" << $2.to_string();
 	}
 
 comment:
