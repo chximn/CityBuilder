@@ -14,5 +14,5 @@ public:
 	int getY() const;
 	int getZ() const;
 
-	std::string toString() const;
+	std::string to_string() const;
 };

@@ -14,4 +14,6 @@ public:
 
 	degree & get_orientation();
 	point  & get_coordinates();
+
+	std::string to_string() const;
 };

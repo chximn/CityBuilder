@@ -15,7 +15,7 @@ int point::getZ() const {
 	return z;
 }
 
-std::string point::toString() const {
+std::string point::to_string() const {
 	return '(' + std::to_string(x) + ","
 	           + std::to_string(y) + ","
 			   + std::to_string(z) + ")";

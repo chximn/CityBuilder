@@ -21,6 +21,7 @@ public:
 	degree operator =(degree const & d);
 
 	void turn(bool);
+	std::string to_string() const;
 };
 
 class degree_not_valid : public std::exception {
