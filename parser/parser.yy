@@ -46,7 +46,7 @@
 %token <std::string>    COMMENT
 %token <std::string>    VAR_NAME
 %type <int>             city_header
-%type <int>             operation
+%type <ExpressionPtr>   operation
 %type <degree>          degree
 %type <point>           coordinates
 %type <house>           house
@@ -129,13 +129,12 @@ command:
 	MOVE house ARROW coordinates {
 		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
 	} |
-
     assignment
-
 
 assignment:
     VAR_NAME '=' operation {
-        std::cout << "affectation: " << $1 << " = " << $3 << "\n";
+        std::cout << "affectation: " << $1 << " = " << $3->calculer(driver.getContexte()) << "\n";
+        driver.setVariable($1, $3->calculer(driver.getContexte()));
     }
 comment:
 	COMMENT {
@@ -153,36 +152,37 @@ house:
 
 degree:
 	operation DEGREE {
-		$$ = degree($1);
+		$$ = degree($1->calculer(driver.getContexte()));
 	}
 
 coordinates:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = point($2, $4, $6);
+		$$ = point($2->calculer(driver.getContexte()),$4->calculer(driver.getContexte()),$6->calculer(driver.getContexte()));
 	}
 
 operation:
+VAR_NAME {
+      $$ = std::make_shared<Variable>($1);
+    } |
     NUMBER {
-        $$ = $1;
-    }
-    | '(' operation ')' {
-        $$ = $2;
-    }
-    | operation '+' operation {
-        $$ = $1 + $3;
-    }
-    | operation '-' operation {
-        $$ = $1 - $3;
-    }
-    | operation '*' operation {
-        $$ = $1 * $3;
-    }
-    | operation '/' operation {
-        $$ = $1 / $3;
-    }
-    | '-' operation %prec NEG {
-        $$ = - $2;
-    }
+     $$ = std::make_shared<Constante>($1);
+    } |
+    operation '+' operation {
+       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::plus);
+   } |
+   operation '-' operation  {
+      $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::moins);
+   } |
+   operation '/' operation  {
+       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::divise);
+   } |
+   operation '*' operation  {
+       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
+   } |
+   '-' operation %prec NEG {
+         $$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
+     }
+
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
