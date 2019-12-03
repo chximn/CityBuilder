@@ -78,14 +78,35 @@ Lexical analysis using Flex and Syntax analysis using Bison.
 ## Data Structure
 1. Point
 	```
-	Point:
-		x, y, z: int
+	%% used for coordinates
+	point:
+	  x, y, z: int
 	```
-2. House
+2. Degree
 	```
-	House:
-		coordinates: Point
-		orientation: int
+	%% circular degree
+	degree:
+		val: int
+
+	%% examples
+	%% constructing
+	degree d(3); %% error, should be mod 60
+	degree d1(120), d2(60);
+
+	%% assignment, addition between a degree and an int
+	degree d3 = d1 + 120;
+
+	%% turn 60deg clockwise
+	d2.turn(true);
+	
+	%% add two degrees
+	d3 = d1 + d2
+	```
+3. House
+	```
+	house:
+	  coordinates: point
+	  orientation: degree
 	```
 
 ## Graphical User Interface
