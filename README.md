@@ -94,7 +94,11 @@ Example: `#f20f44` , `(23, 213, 33)`
 	```
 	Coloriser <location:coordinates|maison[index:number]|name:var> <c:color>
 	```
-2. Neighboor, adds a neighbour in a random location with a specified distance
+2. Color: print the color of a house
+	```
+	Couleur <location:coordinates|maison[index:number]|name:var>
+	```
+3. Neighboor, adds a neighbour in a random location with a specified distance
 	```
 	Voisin <location:coordinates|maison[index:number]|name:var> <distance:number>
 	```
