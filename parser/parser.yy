@@ -126,8 +126,8 @@ command:
         std::cout << "color of " << $2 << " is " << $3 << " now \n";
     } |
 
-    COLOR_OF VAR_NAME {
-        std::cout << "color of " << $2 << " is " << " \n";
+    COLOR_OF house {
+        std::cout << "color is " << $2.get_color().to_string() << " \n";
     }
 
 house_construction:
