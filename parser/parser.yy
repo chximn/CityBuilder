@@ -133,8 +133,8 @@ command:
 
 assignment:
     VAR_NAME '=' operation {
-        std::cout << "affectation: " << $1 << " = " << $3->calculer(driver.getContexte()) << "\n";
-        driver.setVariable($1, $3->calculer(driver.getContexte()));
+        std::cout << "affectation: " << $1 << " = " << calculate($3) << "\n";
+        driver.setVariable($1, calculate($3));
     }
 comment:
 	COMMENT {
@@ -152,16 +152,16 @@ house:
 
 degree:
 	operation DEGREE {
-		$$ = degree($1->calculer(driver.getContexte()));
+		$$ = degree(calculate($1));
 	}
 
 coordinates:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = point($2->calculer(driver.getContexte()),$4->calculer(driver.getContexte()),$6->calculer(driver.getContexte()));
+		$$ = point(calculate($2),calculate($4),calculate($6));
 	}
 
 operation:
-VAR_NAME {
+	VAR_NAME {
       $$ = std::make_shared<Variable>($1);
     } |
     NUMBER {
@@ -187,4 +187,8 @@ VAR_NAME {
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
+}
+
+int calculate(ExpressionPtr p) {
+	return p->calculer(driver.getContexte());
 }
