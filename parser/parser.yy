@@ -34,6 +34,8 @@
 
     #undef  yylex
     #define yylex scanner.yylex
+
+	int calculate(ExpressionPtr, Driver const &);
 }
 
 %token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
@@ -50,7 +52,7 @@
 %type <ExpressionPtr>   operation
 %type <degree>          degree
 %type <point>           coordinates
-%type <house>           house
+%type <house>           house house_construction
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -84,25 +86,11 @@ commands:
 			NL
 
 command:
-	HOUSE coordinates {
-		std::cout << "house: " << $2.to_string() << "\n";
+	house_construction {
+		std::cout << "house construction: " << $1.to_string() << "\n";
 	} |
 
-  	HOUSE {
-		point p(0, 0, 0);
-		std::cout << "house: " << p.to_string() << "\n";
-	} |
-
-    HOUSE VAR_NAME coordinates  {
-      std::cout << $2<<"'s house at "<<$3.to_string()<< "\n";
-    } |
-
-    HOUSE VAR_NAME   {
-        point p(0, 0, 0);
-		std::cout<< $2<<"'s house at "<<p.to_string() << "\n";
-	} |
-
-	ROAD coordinates ARROW coordinates {
+	ROAD house ARROW house {
 		std::cout << "road: " << $2.to_string() << " -> " << $4.to_string() << "\n";
 	} |
 
@@ -123,7 +111,7 @@ command:
 		std::cout << "neighborhood of: " << $2.to_string() << '\n';
 	} |
 
-	ORIENTATE coordinates degree {
+	ORIENTATE house degree {
 		std::cout << "orientate house in: " << $2.to_string() << " to " << $3.to_string() << "\n";
 	} |
 
@@ -142,10 +130,27 @@ command:
         std::cout << "color of " << $2 << " is " << " \n";
     }
 
+house_construction:
+	HOUSE {
+		$$ = house();
+	} |
+
+	HOUSE coordinates {
+		$$ = house($2);
+	} |
+
+	HOUSE VAR_NAME coordinates {
+		$$ = house($3, degree(0), $2);
+	} |
+
+	HOUSE VAR_NAME {
+		$$ = house(point(0, 0, 0), degree(0), $2);
+	}
+
 assignment:
     VAR_NAME '=' operation {
-        std::cout << "affectation: " << $1 << " = " << $3->calculer(driver.getContexte()) << "\n";
-        driver.setVariable($1, $3->calculer(driver.getContexte()));
+        std::cout << "affectation: " << $1 << " = " << calculate($3, driver) << "\n";
+        driver.setVariable($1, calculate($3, driver));
     }
 comment:
 	COMMENT {
@@ -155,24 +160,31 @@ comment:
 house:
 	HOUSELIST '[' operation ']' {
 		$$ = house();
+		throw house_not_found_list(calculate($3, driver));
 	} |
 
     VAR_NAME {
         $$ = house();
-    }
+		throw house_not_found_var($1);
+    } |
+
+	coordinates {
+		$$ = house($1);
+		throw house_not_found_coordinates($1);
+	}
 
 degree:
 	operation DEGREE {
-		$$ = degree($1->calculer(driver.getContexte()));
+		$$ = degree(calculate($1, driver));
 	}
 
 coordinates:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = point($2->calculer(driver.getContexte()),$4->calculer(driver.getContexte()),$6->calculer(driver.getContexte()));
+		$$ = point(calculate($2, driver), calculate($4, driver), calculate($6, driver));
 	}
 
 operation:
-VAR_NAME {
+	VAR_NAME {
       $$ = std::make_shared<Variable>($1);
     } |
     NUMBER {
@@ -198,4 +210,8 @@ VAR_NAME {
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
+}
+
+int calculate(ExpressionPtr p, Driver const & d) {
+	return p->calculer(d.getContexte());
 }

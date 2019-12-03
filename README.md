@@ -1,3 +1,4 @@
+
 # CityBuilder
 Programming Language Theory and Compilation Project
 
@@ -48,21 +49,64 @@ Lexical analysis using Flex and Syntax analysis using Bison.
     ```
     Orienter (0, 0, 0) 0°
     ```
-6. Change the position of a hous using `Deplacer`
+6. Change the position of a house using `Deplacer`
     ```
     Deplacer maison[i] −> (x, y, z)
-    ```
+	```
+### Expressions
+1. Name a house when constructing
+	```
+	Maison white_house (0, 1, 3)
+	```
+2. Use variables and calculate expressions
+	```
+	i = 0
+	i = i + 4
+	Maison (i+1,i+2,i+3)
+	```
+3. Handle errors
+	```
+	%% no error
+	Maison(0,0,0)
+
+	%% should display and error because there is another house in the same coordinates
+	Maison(0,0,1-1)
+
+	%% should also display an error because there is no house at (1, 1, 1)
+	Route maison[1] -> (1,1,1)
+	```
 ## Data Structure
 1. Point
 	```
-	Point:
-		x, y, z: int
+	%% used for coordinates
+	point:
+	  x, y, z: int
 	```
-2. House
+2. Degree
 	```
-	House:
-		coordinates: Point
-		orientation: int
+	%% circular degree
+	degree:
+		val: int
+
+	%% examples
+	%% constructing
+	degree d(3); %% error, should be mod 60
+	degree d1(120), d2(60);
+
+	%% assignment, addition between a degree and an int
+	degree d3 = d1 + 120;
+
+	%% turn 60deg clockwise
+	d2.turn(true);
+	
+	%% add two degrees
+	d3 = d1 + d2
+	```
+3. House
+	```
+	house:
+	  coordinates: point
+	  orientation: degree
 	```
 
 ## Graphical User Interface
