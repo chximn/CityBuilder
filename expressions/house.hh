@@ -1,16 +1,17 @@
 #pragma once
-
 #include "point.hh"
 #include "degree.hh"
 #include <string>
 #include <exception>
 #include "point.hh"
+#include "color.hh"
 
 class house {
 private:
 	point coordinates;
 	degree orientation;
 	std::string name;
+	color _color;
 
 public:
 	house() = default;
@@ -18,10 +19,8 @@ public:
 	house(point const &, degree const &);
 	house(point const &, degree const &, std::string const &);
 
-	degree & get_orientation();
-	point  & get_coordinates();
-
 	std::string to_string() const;
+	color const & get_color() const;
 };
 
 

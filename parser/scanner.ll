@@ -52,7 +52,8 @@ using token = yy::Parser::token;
 "Orientation" return token::ORIENTATION;
 "Voisinage"   return token::NEIGHBORHOOD;
 "maison"      return token::HOUSELIST;
-
+"Coloriser"   return token::COLORIZE;
+"Couleur"     return token::COLOR_OF;
 "horaire" {
 	yylval->build<bool>(true);
 	return token::CLOCKWISE;
@@ -85,6 +86,10 @@ using token = yy::Parser::token;
 "\n"          {
     loc->lines();
     return token::NL;
+}
+#[0-9A-F]{6}    {
+    yylval->build<std::string>(YYText());
+    return token::COLOR;
 }
 
 %%

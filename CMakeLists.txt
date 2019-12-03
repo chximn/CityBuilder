@@ -21,8 +21,9 @@ file(GLOB EXPRESSION_HEADERS
     expressions/constante.hh
     expressions/variable.hh
     expressions/point.hh
-	expressions/house.cc
-	expressions/degree.cc
+	expressions/house.hh
+	expressions/degree.hh
+	expressions/color.hh
     )
 
 add_library(libexpressions
@@ -34,6 +35,7 @@ add_library(libexpressions
     expressions/point.cc
 	expressions/house.cc
 	expressions/degree.cc
+	expressions/color.cc
     ${EXPRESSION_HEADERS}
     )
 
