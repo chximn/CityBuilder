@@ -123,7 +123,7 @@ command:
       |
 
     COLORIZE VAR_NAME COLOR {
-        std::cout << "color of " << $2 << " is " << $3 << " now \n";
+        std::cout << "color of " << $2 << " is " << color($3).to_string() << " now \n";
     } |
 
     COLOR_OF house {

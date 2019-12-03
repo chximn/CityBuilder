@@ -87,7 +87,7 @@ using token = yy::Parser::token;
     loc->lines();
     return token::NL;
 }
-#[0-9A-F]{6}    {
+#[0-9a-f]{6}    {
     yylval->build<std::string>(YYText());
     return token::COLOR;
 }
