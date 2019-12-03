@@ -49,7 +49,7 @@
 %type <ExpressionPtr>   operation
 %type <degree>          degree
 %type <point>           coordinates
-%type <house>           house
+%type <house>           house house_construction
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -83,25 +83,11 @@ commands:
 			NL
 
 command:
-	HOUSE coordinates {
-		std::cout << "house: " << $2.to_string() << "\n";
+	house_construction {
+		std::cout << "house construction: " << $2.to_string() << "\n";
 	} |
 
-  	HOUSE {
-		point p(0, 0, 0);
-		std::cout << "house: " << p.to_string() << "\n";
-	} |
-
-    HOUSE VAR_NAME coordinates  {
-      std::cout << $2<<"'s house at "<<$3.to_string()<< "\n";
-    } |
-
-    HOUSE VAR_NAME   {
-        point p(0, 0, 0);
-		std::cout<< $2<<"'s house at "<<p.to_string() << "\n";
-	} |
-
-	ROAD coordinates ARROW coordinates {
+	ROAD house ARROW house {
 		std::cout << "road: " << $2.to_string() << " -> " << $4.to_string() << "\n";
 	} |
 
@@ -122,7 +108,7 @@ command:
 		std::cout << "neighborhood of: " << $2.to_string() << '\n';
 	} |
 
-	ORIENTATE coordinates degree {
+	ORIENTATE house degree {
 		std::cout << "orientate house in: " << $2.to_string() << " to " << $3.to_string() << "\n";
 	} |
 
@@ -130,6 +116,23 @@ command:
 		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
 	} |
     assignment
+
+house_construction:
+	HOUSE {
+		$$ = house();
+	} |
+
+	HOUSE coordinates {
+		$$ = house($2);
+	} |
+
+	HOUSE VAR_NAME coordinates {
+		$$ = house($3, degree(0), $2);
+	} |
+
+	HOUSE VAR_NAME {
+		$$ = house(point(0, 0, 0), degree(0), $2);
+	} |
 
 assignment:
     VAR_NAME '=' operation {
