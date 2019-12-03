@@ -79,7 +79,10 @@ using token = yy::Parser::token;
     yylval->build<int>(std::atoi(YYText()));
     return token::NUMBER;
 }
-
+[a-zA-Z_][0-9a-zA-Z_]*      {
+    yylval->build<std::string>(YYText());
+    return token::VAR_NAME;
+}
 "\n"          {
     loc->lines();
     return token::NL;

@@ -44,6 +44,7 @@
 %token                  END
 %token <int>            NUMBER
 %token <std::string>    COMMENT
+%token <std::string>    VAR_NAME
 %type <int>             city_header
 %type <int>             operation
 %type <degree>          degree
@@ -90,6 +91,9 @@ command:
 		point p(0, 0, 0);
 		std::cout << "house: " << p.to_string() << "\n";
 	} |
+    HOUSE VAR_NAME coordinates  {
+      std::cout << $2<<"'s house at "<<$3.to_string()<< "\n";
+  }|
 
 	ROAD coordinates ARROW coordinates {
 		std::cout << "road: " << $2.to_string() << " -> " << $4.to_string() << "\n";
@@ -102,6 +106,7 @@ command:
 	POSITION house {
 		std::cout << "show house: " << $2.to_string() << "\n";
 	} |
+
 
 	TURN house CLOCKWISE {
 		std::cout << "turn house: " << $2.to_string() << ", clockwise: " << $3 << "\n";
@@ -127,12 +132,12 @@ comment:
 	}
 
 house:
-	HOUSELIST '[' NUMBER ']' {
+	HOUSELIST '[' operation ']' {
 		$$ = house();
 	}
 
 degree:
-	NUMBER DEGREE {
+	operation DEGREE {
 		$$ = degree($1);
 	}
 
