@@ -128,10 +128,15 @@ command:
 
 	MOVE house ARROW coordinates {
 		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
-	}
+	} |
+
+    assignment
 
 
-
+assignment:
+    VAR_NAME '=' operation {
+        std::cout << "affectation: " << $1 << " = " << $3 << "\n";
+    }
 comment:
 	COMMENT {
 		std::cout << "Comment: " << $1 << std::endl;
@@ -178,7 +183,6 @@ operation:
     | '-' operation %prec NEG {
         $$ = - $2;
     }
-
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {

@@ -74,7 +74,6 @@ using token = yy::Parser::token;
 	return token::COMMENT;
 }
 
-
 [0-9]+      {
     yylval->build<int>(std::atoi(YYText()));
     return token::NUMBER;
