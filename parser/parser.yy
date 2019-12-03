@@ -151,7 +151,11 @@ house:
 
     VAR_NAME {
         $$ = house();
-    }
+    } |
+
+	coordinates {
+		$$ = house($1);
+	}
 
 degree:
 	operation DEGREE {
