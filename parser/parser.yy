@@ -91,9 +91,15 @@ command:
 		point p(0, 0, 0);
 		std::cout << "house: " << p.to_string() << "\n";
 	} |
+
     HOUSE VAR_NAME coordinates  {
       std::cout << $2<<"'s house at "<<$3.to_string()<< "\n";
-  }|
+    } |
+
+    HOUSE VAR_NAME   {
+        point p(0, 0, 0);
+		std::cout<< $2<<"'s house at "<<p.to_string() << "\n";
+	} |
 
 	ROAD coordinates ARROW coordinates {
 		std::cout << "road: " << $2.to_string() << " -> " << $4.to_string() << "\n";
@@ -134,7 +140,11 @@ comment:
 house:
 	HOUSELIST '[' operation ']' {
 		$$ = house();
-	}
+	} |
+
+    VAR_NAME {
+        $$ = house();
+    }
 
 degree:
 	operation DEGREE {
