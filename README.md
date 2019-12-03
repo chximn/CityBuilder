@@ -68,8 +68,10 @@ Lexical analysis using Flex and Syntax analysis using Bison.
 	```
 	%% no error
 	Maison(0,0,0)
+
 	%% should display and error because there is another house in the same coordinates
 	Maison(0,0,1-1)
+
 	%% should also display an error because there is no house at (1, 1, 1)
 	Route maison[1] -> (1,1,1)
 	```
