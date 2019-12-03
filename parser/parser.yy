@@ -34,6 +34,8 @@
 
     #undef  yylex
     #define yylex scanner.yylex
+
+	int calculate(ExpressionPtr, Driver const &);
 }
 
 %token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST
@@ -84,7 +86,7 @@ commands:
 
 command:
 	house_construction {
-		std::cout << "house construction: " << $2.to_string() << "\n";
+		std::cout << "house construction: " << $1.to_string() << "\n";
 	} |
 
 	ROAD house ARROW house {
@@ -132,12 +134,12 @@ house_construction:
 
 	HOUSE VAR_NAME {
 		$$ = house(point(0, 0, 0), degree(0), $2);
-	} |
+	}
 
 assignment:
     VAR_NAME '=' operation {
-        std::cout << "affectation: " << $1 << " = " << calculate($3) << "\n";
-        driver.setVariable($1, calculate($3));
+        std::cout << "affectation: " << $1 << " = " << calculate($3, driver) << "\n";
+        driver.setVariable($1, calculate($3, driver));
     }
 comment:
 	COMMENT {
@@ -147,24 +149,27 @@ comment:
 house:
 	HOUSELIST '[' operation ']' {
 		$$ = house();
+		throw house_not_found_list(calculate($3, driver));
 	} |
 
     VAR_NAME {
         $$ = house();
+		throw house_not_found_var($1);
     } |
 
 	coordinates {
 		$$ = house($1);
+		throw house_not_found_coordinates($1);
 	}
 
 degree:
 	operation DEGREE {
-		$$ = degree(calculate($1));
+		$$ = degree(calculate($1, driver));
 	}
 
 coordinates:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = point(calculate($2),calculate($4),calculate($6));
+		$$ = point(calculate($2, driver), calculate($4, driver), calculate($6, driver));
 	}
 
 operation:
@@ -196,6 +201,6 @@ void yy::Parser::error( const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
 }
 
-int calculate(ExpressionPtr p) {
-	return p->calculer(driver.getContexte());
+int calculate(ExpressionPtr p, Driver const & d) {
+	return p->calculer(d.getContexte());
 }
