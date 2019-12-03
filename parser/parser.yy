@@ -36,7 +36,7 @@
     #define yylex scanner.yylex
 }
 
-%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST
+%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
@@ -45,6 +45,7 @@
 %token <int>            NUMBER
 %token <std::string>    COMMENT
 %token <std::string>    VAR_NAME
+%token <std::string>    COLOR
 %type <int>             city_header
 %type <ExpressionPtr>   operation
 %type <degree>          degree
@@ -129,7 +130,17 @@ command:
 	MOVE house ARROW coordinates {
 		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
 	} |
+
     assignment
+      |
+
+    COLORIZE VAR_NAME COLOR {
+        std::cout << "color of " << $2 << " is " << $3 << " now \n";
+    } |
+
+    COLOR_OF VAR_NAME {
+        std::cout << "color of " << $2 << " is " << " \n";
+    }
 
 assignment:
     VAR_NAME '=' operation {
