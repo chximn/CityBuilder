@@ -12,7 +12,7 @@ find_package(BISON)
 find_package(FLEX)
 
 
-include_directories(parser expressions ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(parser expressions types ${CMAKE_CURRENT_BINARY_DIR})
 file(GLOB EXPRESSION_HEADERS
     expressions/expression.hh
     expressions/expressionBinaire.hh
@@ -20,24 +20,31 @@ file(GLOB EXPRESSION_HEADERS
     expressions/constante.hh
     expressions/variable.hh
 	parser/contexte.hh
-    types/point.hh
-	types/house.hh
-	types/degree.hh
-	types/color.hh
-    )
+)
 
 add_library(libexpressions
     expressions/expressionBinaire.cc
     expressions/expressionUnaire.cc
     expressions/constante.cc
-	expressions/contexte.cc
-    parser/variable.cc
-    types/point.cc
+	expressions/variable.cc
+	parser/contexte.cc
+    ${EXPRESSION_HEADERS}
+)
+
+file(GLOB TYPE_HEADERS
+	types/degree.hh
+	types/point.hh
+	types/house.hh
+	types/color.hh
+)
+
+add_library(libtypes
+	types/point.cc
 	types/house.cc
 	types/degree.cc
 	types/color.cc
-    ${EXPRESSION_HEADERS}
-    )
+	${TYPE_HEADERS}
+)
 
 BISON_TARGET(parser parser/parser.yy ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp VERBOSE ${CMAKE_CURRENT_BINARY_DIR}/automate.txt)
 FLEX_TARGET(scanner parser/scanner.ll  ${CMAKE_CURRENT_BINARY_DIR}/scanner.cpp)
@@ -52,4 +59,4 @@ add_executable(${PROJECT_NAME}
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(${PROJECT_NAME} libexpressions)
+target_link_libraries(${PROJECT_NAME} libexpressions libtypes)
