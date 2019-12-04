@@ -9,8 +9,8 @@ public:
     Variable() = delete;
     Variable(const Variable &) = default;
     Variable(const std::string & nom);
-    
-    double calculer(const Contexte& contexte) const override;
+
+    int calculer(const Contexte& contexte) const override;
 
 
 private:

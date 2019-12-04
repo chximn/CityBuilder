@@ -1,7 +1,7 @@
 #include "constante.hh"
 
-Constante::Constante(double valeur) : _valeur(valeur) {}
+Constante::Constante(int valeur) : _valeur(valeur) {}
 
-double Constante::calculer(const Contexte & contexte) const {
+int Constante::calculer(const Contexte & contexte) const {
     return _valeur;
 }

@@ -6,8 +6,8 @@ ExpressionBinaire::ExpressionBinaire(ExpressionPtr gauche, ExpressionPtr droite,
 
 }
 
-double ExpressionBinaire::calculer(const Contexte& contexte) const {
-    double gauche = _gauche->calculer(contexte), droite = _droite->calculer(contexte);
+int ExpressionBinaire::calculer(const Contexte& contexte) const {
+    int gauche = _gauche->calculer(contexte), droite = _droite->calculer(contexte);
     switch (_op) {
         case OperateurBinaire::plus: return gauche + droite;
         case OperateurBinaire::moins: return gauche - droite;

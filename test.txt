@@ -1,0 +1,36 @@
+%% Comment #1
+
+
+
+Construire(3){
+
+
+	Maison
+	Coloriser white_house #0f0f0f
+
+	%% coment
+	Maison (1, 2-3, 4)
+
+	%% oper
+	Route maison[1] -> (1, 2, -1*-1)
+
+	Detruire maison[2]
+
+	Position maison[1]
+
+	Tourner maison[2] horaire
+	Tourner maison[2] !horaire
+
+	Voisinage maison[2]
+
+	Orienter (0, 2, 3) 0°
+
+	%% Deplacer maison[2] -> (2, -3-3, 4)
+
+
+
+}
+
+%% comment4
+
+a
