@@ -2,13 +2,14 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include "point.hh"
 
 class color {
 private:
-    int r, g, b;
+    point rgb;
 public:
     color() = default;
-    color(int, int, int);
+    color(point const &);
     color(std::string const &);
     std::string to_string() const;
 };

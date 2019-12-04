@@ -1,7 +1,7 @@
 #include "color.hh"
 
-color::color(int _r, int _g, int _b): r(_r), g(_g), b(_b) {
-	if (_r < 0 || _r > 255 || _g < 0 || _g > 255 || _b < 0 || _b > 255) throw color_not_valid();
+color::color(point const & p): rgb(p) {
+	if (p.get_x() < 0 || p.get_x() > 255 || p.get_y() < 0 || p.get_y() > 255 || p.get_z() < 0 || p.get_z() > 255) throw color_not_valid();
 }
 
 color::color(std::string const & s) {
@@ -21,13 +21,13 @@ color::color(std::string const & s) {
 		else throw color_not_valid();
 	}
 
-	r = vals[0] * 16 + vals[1];
-	g = vals[2] * 16 + vals[3];
-	b = vals[4] * 16 + vals[5];
+	rgb.set_x(vals[0] * 16 + vals[1]);
+	rgb.set_y(vals[2] * 16 + vals[3]);
+	rgb.set_z(vals[4] * 16 + vals[5]);
 }
 
 std::string color::to_string() const {
-    return "(" + std::to_string(r) +
-           "," + std::to_string(g) +
-           "," + std::to_string(b) + ")";
+    return "(" + std::to_string(rgb.get_x()) +
+           "," + std::to_string(rgb.get_y()) +
+           "," + std::to_string(rgb.get_z()) + ")";
 }

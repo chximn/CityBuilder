@@ -22,11 +22,11 @@ public:
     int  getVariable(const std::string & name) const;
     void setVariable(const std::string & name, double value);
 
-	house const & get_house(std::string const &);
-	house const & get_house(unsigned int);
-	house const & get_house(point const &);
-
+	house & get_house(std::string const &);
+	house & get_house(unsigned int);
+	house & get_house(point const &);
 	void add_house(house const &);
+	void remove_house(house &);
 };
 
 #endif

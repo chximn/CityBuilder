@@ -20,8 +20,9 @@ public:
 	house(point const &, degree const &, std::string const &);
 
 	std::string to_string() const;
-	color const & get_color() const;
-	point const & get_coordinates() const;
+	color & get_color();
+	point & get_coordinates();
+	degree &get_orientation();
 	std::string const & get_name() const;
 };
 

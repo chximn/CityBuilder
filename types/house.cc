@@ -8,12 +8,16 @@ std::string house::to_string() const {
 	return name + coordinates.to_string() + ", " + orientation.to_string() + " : " + _color.to_string();
 }
 
-color const & house::get_color()const {
+color & house::get_color() {
 	return _color;
 }
 
-point const & house::get_coordinates() const {
+point & house::get_coordinates() {
 	return coordinates;
+}
+
+degree & house::get_orientation() {
+	return orientation;
 }
 
 std::string const & house::get_name() const {

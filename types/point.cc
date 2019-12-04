@@ -3,16 +3,28 @@
 point::point(int a, int b, int c):
 	x(a), y(b), z(c) {}
 
-int point::getX() const {
+int point::get_x() const {
 	return x;
 }
 
-int point::getY() const {
+int point::get_y() const {
 	return y;
 }
 
-int point::getZ() const {
+int point::get_z() const {
 	return z;
+}
+
+void point::set_x(int n) {
+	x = n;
+}
+
+void point::set_y(int n) {
+	y = n;
+}
+
+void point::set_z(int n) {
+	z = n;
 }
 
 std::string point::to_string() const {

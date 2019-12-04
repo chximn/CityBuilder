@@ -50,9 +50,10 @@
 %token <std::string>    COLOR
 %type <int>             city_header
 %type <ExpressionPtr>   operation
+%type <color>           color
 %type <degree>          degree
-%type <point>           coordinates
-%type <house>           house house_construction
+%type <point>           coordinates point
+%type <house>         house house_construction
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -88,6 +89,7 @@ commands:
 command:
 	house_construction {
 		std::cout << "house construction: " << $1.to_string() << "\n";
+		driver.add_house($1);
 	} |
 
 	ROAD house ARROW house {
@@ -96,15 +98,17 @@ command:
 
 	DESTRUCT house {
 		std::cout << "destruct house: " << $2.to_string() << "\n";
+		driver.remove_house($2);
 	} |
 
 	POSITION house {
 		std::cout << "show house: " << $2.to_string() << "\n";
+		std::cout << "position: " << $2.get_coordinates().to_string() << "\n";
 	} |
-
 
 	TURN house CLOCKWISE {
 		std::cout << "turn house: " << $2.to_string() << ", clockwise: " << $3 << "\n";
+		$2.get_orientation().turn($3);
 	} |
 
 	NEIGHBORHOOD house {
@@ -113,18 +117,21 @@ command:
 
 	ORIENTATE house degree {
 		std::cout << "orientate house in: " << $2.to_string() << " to " << $3.to_string() << "\n";
+		$2.get_orientation() = $3;
 	} |
 
 	MOVE house ARROW coordinates {
 		std::cout << "move house: " << $2.to_string() << " to " << $4.to_string() << "\n";
+		$2.get_coordinates() = $4;
 	} |
 
     assignment
       |
 
-    COLORIZE VAR_NAME COLOR {
-        std::cout << "color of " << $2 << " is " << color($3).to_string() << " now \n";
-    } |
+    COLORIZE house color {
+        std::cout << "color of " << $2.to_string() << " is " << color($3).to_string() << " now \n";
+		$2.get_color() = $3;
+	} |
 
     COLOR_OF house {
         std::cout << "color is " << $2.get_color().to_string() << " \n";
@@ -159,18 +166,24 @@ comment:
 
 house:
 	HOUSELIST '[' operation ']' {
-		$$ = house();
-		throw house_not_found_list(calculate($3, driver));
+		$$ = driver.get_house(calculate($3, driver));
 	} |
 
     VAR_NAME {
-        $$ = house();
-		throw house_not_found_var($1);
+        $$ = driver.get_house($1);
     } |
 
 	coordinates {
-		$$ = house($1);
-		throw house_not_found_coordinates($1);
+		$$ = driver.get_house($1);
+	}
+
+color:
+	COLOR {
+		$$ = color($1);
+	} |
+
+	point {
+		$$ = color($1);
 	}
 
 degree:
@@ -178,7 +191,9 @@ degree:
 		$$ = degree(calculate($1, driver));
 	}
 
-coordinates:
+coordinates: point
+
+point:
 	'(' operation ',' operation ',' operation ')' {
 		$$ = point(calculate($2, driver), calculate($4, driver), calculate($6, driver));
 	}
