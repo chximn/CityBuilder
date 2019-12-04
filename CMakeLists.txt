@@ -14,28 +14,28 @@ find_package(FLEX)
 
 include_directories(parser expressions ${CMAKE_CURRENT_BINARY_DIR})
 file(GLOB EXPRESSION_HEADERS
-    expressions/contexte.hh
     expressions/expression.hh
     expressions/expressionBinaire.hh
     expressions/expressionUnaire.hh
     expressions/constante.hh
     expressions/variable.hh
-    expressions/point.hh
-	expressions/house.hh
-	expressions/degree.hh
-	expressions/color.hh
+	parser/contexte.hh
+    types/point.hh
+	types/house.hh
+	types/degree.hh
+	types/color.hh
     )
 
 add_library(libexpressions
-    expressions/contexte.cc
     expressions/expressionBinaire.cc
     expressions/expressionUnaire.cc
     expressions/constante.cc
-    expressions/variable.cc
-    expressions/point.cc
-	expressions/house.cc
-	expressions/degree.cc
-	expressions/color.cc
+	expressions/contexte.cc
+    parser/variable.cc
+    types/point.cc
+	types/house.cc
+	types/degree.cc
+	types/color.cc
     ${EXPRESSION_HEADERS}
     )
 
