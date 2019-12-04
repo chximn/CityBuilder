@@ -33,3 +33,7 @@ house const & Driver::get_house(point const & coordinates) {
 
 	throw house_not_found_coordinates(coordinates);
 }
+
+void Driver::add_house(house const & f) {
+	houses.push_back(f);
+}

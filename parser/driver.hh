@@ -25,6 +25,8 @@ public:
 	house const & get_house(std::string const &);
 	house const & get_house(unsigned int);
 	house const & get_house(point const &);
+
+	void add_house(house const &);
 };
 
 #endif
