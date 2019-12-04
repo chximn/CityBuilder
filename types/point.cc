@@ -20,3 +20,7 @@ std::string point::to_string() const {
 	           + std::to_string(y) + ","
 			   + std::to_string(z) + ")";
 }
+
+bool point::operator==(point const & p) const {
+	return x == p.x && y == p.y && z == p.z;
+}

@@ -21,6 +21,8 @@ public:
 
 	std::string to_string() const;
 	color const & get_color() const;
+	point const & get_coordinates() const;
+	std::string const & get_name() const;
 };
 
 

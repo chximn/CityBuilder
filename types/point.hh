@@ -15,4 +15,6 @@ public:
 	int getZ() const;
 
 	std::string to_string() const;
+
+	bool operator==(point const &) const;
 };

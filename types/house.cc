@@ -11,3 +11,11 @@ std::string house::to_string() const {
 color const & house::get_color()const {
 	return _color;
 }
+
+point const & house::get_coordinates() const {
+	return coordinates;
+}
+
+std::string const & house::get_name() const {
+	return name;
+}
