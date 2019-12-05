@@ -20,6 +20,11 @@ using token = yy::Parser::token;
 %option yyclass="Scanner"
 %option noyywrap
 
+comment_begin   "%/"
+comment_content (("/"+[^/%])|[^/])*
+comment_end     "/"*"%"
+commentaire {comment_begin}{comment_content}{comment_end}
+
 %%
 %{
     yylval = lval;
@@ -69,7 +74,7 @@ using token = yy::Parser::token;
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
-(\%\/\n([ ]|[^"%/"]|\n)*+\n\/\%) {
+{comment} {
 	std::cout << "multiline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
