@@ -53,7 +53,7 @@
 %type <color>           color
 %type <degree>          degree
 %type <point>           coordinates point
-%type <house>         house house_construction
+%type <house_ptr>         house house_construction
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -89,7 +89,7 @@ commands:
 command:
 	house_construction {
 		std::cout << "house construction: " << $1.to_string() << "\n";
-		driver.add_house($1);
+		driver.add_house(std::make_shared<house>($1));
 	} |
 
 	ROAD house ARROW house {
