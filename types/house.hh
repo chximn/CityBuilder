@@ -3,8 +3,12 @@
 #include "degree.hh"
 #include <string>
 #include <exception>
+#include <memory>
 #include "point.hh"
 #include "color.hh"
+
+class house;
+using house_ptr = std::shared_ptr<house>;
 
 class house {
 private:
