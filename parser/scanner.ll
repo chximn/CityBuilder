@@ -23,7 +23,7 @@ using token = yy::Parser::token;
 comment_begin   "%/"
 comment_content (("/"+[^/%])|[^/])*
 comment_end     "/"*"%"
-commentaire {comment_begin}{comment_content}{comment_end}
+comment {comment_begin}{comment_content}{comment_end}
 
 %%
 %{
