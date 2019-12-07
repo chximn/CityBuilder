@@ -51,6 +51,7 @@ file(GLOB TYPE_HEADERS
 	types/point.hh
 	types/house.hh
 	types/color.hh
+    types/ville.hh
 )
 
 add_library(libtypes
@@ -58,6 +59,7 @@ add_library(libtypes
 	types/house.cc
 	types/degree.cc
 	types/color.cc
+    types/ville.cc
 	${TYPE_HEADERS}
 )
 

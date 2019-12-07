@@ -92,17 +92,17 @@ commands:
 command:
 	house_construction {
 		std::cout << "house construction: " << $1->to_string() << "\n";
-		driver.add_house($1);
+		driver.get_ville().add_house($1);
 	} |
 
 	ROAD house ARROW house {
 		std::cout << "road: " << $2->to_string() << " -> " << $4->to_string() << "\n";
-        $2->add_neighbor($4);
+        $2->add_neighbor($4);$4->add_neighbor($2);
     } |
 
 	DESTRUCT house {
 		std::cout << "destruct house: " << $2->to_string() << "\n";
-		driver.remove_house(*$2);
+		driver.get_ville().remove_house(*$2);
 	} |
 
 	POSITION house {
@@ -117,7 +117,9 @@ command:
 
 	NEIGHBORHOOD house {
 		std::cout << "neighborhood of: " << $2->to_string() << '\n';
-        $2->show_neighborhood();
+        std::vector<house_ptr> p=$2->get_neighbors();
+        for(auto const & pp:p)
+            std::cout << "-"<< pp->to_string() << "distance : " << $2->distance(pp) << "\n";
 	} |
 
 	ORIENTATE house degree {
@@ -130,7 +132,8 @@ command:
 		$2->get_coordinates() = $4;
 	} |
 
-    assignment |
+    assignment
+      |
 
     COLORIZE house color {
         std::cout << "color of " << $2->to_string() << " is " << color($3).to_string() << " now \n";
@@ -139,14 +142,7 @@ command:
 
     COLOR_OF house {
         std::cout << "color is " << $2->get_color().to_string() << " \n";
-    } |
-
-	NEIGHBOR house operation {
-		int distance = calculate($3, driver);
-		house_ptr hp = driver.add_neighbor($2, distance);
-		std::cout << "add random neighbour, with distance of " << distance << "\n";
-		std::cout << "new neighbour: " << hp->to_string() << "\n";
-	}
+    }
 
 house_construction:
 	HOUSE {
@@ -177,15 +173,15 @@ comment:
 
 house:
 	HOUSELIST '[' operation ']' {
-		$$ = driver.get_house(calculate($3, driver));
+		$$ = driver.get_ville().get_house(calculate($3, driver));
 	} |
 
     VAR_NAME {
-        $$ = driver.get_house($1);
+        $$ = driver.get_ville().get_house($1);
     } |
 
 	coordinates {
-		$$ = driver.get_house($1);
+		$$ = driver.get_ville().get_house($1);
 	}
 
 color:
