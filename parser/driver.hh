@@ -3,12 +3,14 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <memory>
 #include "contexte.hh"
 #include "../IG/villeGUI.hh"
 #include "point.hh"
 #include "house.hh"
 #include "ville.hh"
+
 class Driver {
 private:
     Contexte variables;

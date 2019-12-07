@@ -18,8 +18,25 @@ ville & Driver::get_ville()  {
 
 void Driver::show() {
 	V->setRayon(_ville.get_radius());
+
+	std::map<house_ptr,bool> visited;
 	for (auto const & h : _ville.get_houses()) {
-		point coordinates = h->get_coordinates();
-		V->construireMaison(coordinates.get_x(), coordinates.get_y(), coordinates.get_z());
+		point c = h->get_coordinates();
+		color clr = h->get_color();
+		degree d = h->get_orientation();
+
+		V->construireMaison(c.get_x(), c.get_y(), c.get_z());
+		V->setCouleur(c.get_x(), c.get_y(), c.get_z(), clr.get_r(), clr.get_g(), clr.get_b());
+		V->setOrientation(c.get_x(), c.get_y(), c.get_z(), d.get_value());
+
+		for (auto const & v : h->get_neighbors()) {
+			if (visited.find(v) != visited.end()) continue;
+			point vc = v->get_coordinates();
+
+			V->construireRoute(c.get_x(), c.get_y(), c.get_z(), vc.get_x(), vc.get_y(), vc.get_z());
+		}
+
+		visited[h] = true;
 	}
+
 }
