@@ -5,6 +5,7 @@
 #include <memory>
 #include <cmath>
 #include "house.hh"
+#include <exception>
 
 class city
 {
@@ -24,4 +25,11 @@ public:
     house_ptr add_neighbor(house_ptr, int);
 	void set_radius(int r) { radius = r; }
 	int get_radius() const { return radius; }
+};
+
+class out_of_radius : std::exception {
+public:
+	const char * what() const noexcept override {
+		return "Out Of Range";
+	}
 };
