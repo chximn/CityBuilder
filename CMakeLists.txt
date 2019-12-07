@@ -31,10 +31,12 @@ include_directories(parser expressions types commands ${CMAKE_CURRENT_BINARY_DIR
 
 file(GLOB COMMANDS_HEADERS
 	commands/command.hh
+	commands/house_ref.hh
 )
 
 add_library(libcommands
 	commands/command.cc
+	commands/house_ref.cc
 	${COMMANDS_HEADERS}
 )
 
