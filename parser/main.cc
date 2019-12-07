@@ -22,6 +22,6 @@ int main( int argc, char **argv) {
     yy::Parser * parser = new yy::Parser(*scanner, *driver);
 
     parser->parse();
-    driver->getVilleGUI()->show();
+    driver->getGUI()->show();
     return app.exec();
 }

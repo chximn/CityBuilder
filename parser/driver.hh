@@ -6,27 +6,29 @@
 #include <map>
 #include <memory>
 #include "contexte.hh"
-#include "../IG/villeGUI.hh"
+#include "../GUI/city.hh"
 #include "point.hh"
 #include "house.hh"
-#include "ville.hh"
+#include "city.hh"
+
+using CityGUI = VilleGUI;
 
 class Driver {
 private:
     Contexte variables;
-	ville _ville;
-	VilleGUI* V;
+	city _city;
+	CityGUI * gui;
 
 public:
-    Driver() { V = new VilleGUI(); }
+    Driver() { gui = new VilleGUI(); }
     ~Driver() = default;
     Driver(const Driver&) = default;
 
 	const Contexte& getContexte() const;
     int  getVariable(const std::string & name) const;
     void setVariable(const std::string & name, double value);
-    ville & get_ville();
-    VilleGUI * & getVilleGUI() { return V; };
+    city & get_city();
+    CityGUI * & getGUI() { return gui; };
 
 	void show();
 };

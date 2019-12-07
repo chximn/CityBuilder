@@ -5,15 +5,15 @@
 #include <memory>
 #include <cmath>
 #include "house.hh"
-class ville
+class city
 {
 private:
     std::vector<house_ptr> houses;
 	int radius;
 public:
-    ville() = default;
-    ~ville() = default;
-    ville(ville const &) = default;
+    city() = default;
+    ~city() = default;
+    city(city const &) = default;
     void add_house(house_ptr);
     void remove_house(house &);
     std::vector<house_ptr> & get_houses();

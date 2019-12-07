@@ -1,8 +1,8 @@
-#include "ville.hh"
-void ville::add_house(house_ptr h) {
+#include "city.hh"
+void city::add_house(house_ptr h) {
 	houses.push_back(h);
 }
-void ville::remove_house(house & f) {
+void city::remove_house(house & f) {
 	for (auto it = houses.begin(); it != houses.end(); it++) {
 		if ((*it)->get_coordinates() == f.get_coordinates()) {
 			houses.erase(it);
@@ -10,11 +10,11 @@ void ville::remove_house(house & f) {
 		}
 	}
 }
-std::vector<house_ptr>  & ville::get_houses() {
+std::vector<house_ptr>  & city::get_houses() {
     return houses;
 }
 
-house_ptr ville::get_house(std::string const & name) {
+house_ptr city::get_house(std::string const & name) {
 	for (auto & h : houses) {
 		if (h->get_name() == name) return h;
 	}
@@ -22,12 +22,12 @@ house_ptr ville::get_house(std::string const & name) {
 	throw house_not_found_var(name);
 }
 
-house_ptr ville::get_house(unsigned int index) {
+house_ptr city::get_house(unsigned int index) {
 	if (index >= houses.size()) throw house_not_found_list(index);
 	return houses.at(index);
 }
 
-house_ptr ville::get_house(point const & coordinates) {
+house_ptr city::get_house(point const & coordinates) {
 	for (auto & h : houses) {
 		if (h->get_coordinates() == coordinates) return h;
 	}
@@ -35,7 +35,7 @@ house_ptr ville::get_house(point const & coordinates) {
 	throw house_not_found_coordinates(coordinates);
 }
 
-house_ptr ville::add_neighbor(house_ptr h, int distance) {
+house_ptr city::add_neighbor(house_ptr h, int distance) {
 	point const & coordinates = h->get_coordinates();
 	point start(distance);
 	point pnt(start);

@@ -51,7 +51,7 @@ file(GLOB TYPE_HEADERS
 	types/point.hh
 	types/house.hh
 	types/color.hh
-    types/ville.hh
+    types/city.hh
 )
 
 add_library(libtypes
@@ -59,18 +59,14 @@ add_library(libtypes
 	types/house.cc
 	types/degree.cc
 	types/color.cc
-    types/ville.cc
+    types/city.cc
 	${TYPE_HEADERS}
 )
 
-file(GLOB GUI_HEADERS
-	IG/villeGUI.hh
+add_library(GUI
+	GUI/city.cc
 )
 
-add_library(GUI
-	IG/villeGUI.cc
-	${GUI_HEADERS}
-)
 target_link_libraries(GUI Qt5::Widgets)
 
 BISON_TARGET(parser parser/parser.yy ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp VERBOSE ${CMAKE_CURRENT_BINARY_DIR}/automate.txt)

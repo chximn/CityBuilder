@@ -73,7 +73,7 @@ city:
  	city_header '{' NL commands '}'
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
-		driver.get_ville().set_radius($1);
+		driver.get_city().set_radius($1);
 	}
 
 city_header:
@@ -93,7 +93,7 @@ commands:
 command:
 	house_construction {
 		std::cout << "house construction: " << $1->to_string() << "\n";
-		driver.get_ville().add_house($1);
+		driver.get_city().add_house($1);
 	} |
 
 	ROAD house ARROW house {
@@ -103,7 +103,7 @@ command:
 
 	DESTRUCT house {
 		std::cout << "destruct house: " << $2->to_string() << "\n";
-		driver.get_ville().remove_house(*$2);
+		driver.get_city().remove_house(*$2);
 	} |
 
 	POSITION house {
@@ -147,7 +147,7 @@ command:
 
 	NEIGHBOR house operation {
 		int distance = calculate($3, driver);
-		house_ptr hp = driver.get_ville().add_neighbor($2, distance);
+		house_ptr hp = driver.get_city().add_neighbor($2, distance);
 		std::cout << "add random neighbour, with distance of " << distance << "\n";
 		std::cout << "new neighbour: " << hp->to_string() << "\n";
 	}
@@ -181,15 +181,15 @@ comment:
 
 house:
 	HOUSELIST '[' operation ']' {
-		$$ = driver.get_ville().get_house(calculate($3, driver));
+		$$ = driver.get_city().get_house(calculate($3, driver));
 	} |
 
     VAR_NAME {
-        $$ = driver.get_ville().get_house($1);
+        $$ = driver.get_city().get_house($1);
     } |
 
 	coordinates {
-		$$ = driver.get_ville().get_house($1);
+		$$ = driver.get_city().get_house($1);
 	}
 
 color:

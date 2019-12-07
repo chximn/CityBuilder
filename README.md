@@ -138,6 +138,13 @@ Example: `#f20f44` , `(23, 213, 33)`
 	  _color: color
 	  neighbors: list of neighbors
 	```
+4. City
+	```
+	city:
+	  radius: number
+	  houses: list of built houses
+	```
+	
 ## Graphical User Interface
 Every GUI operation goes through the `VilleGUI` class, which contains the following methods:
 ```
