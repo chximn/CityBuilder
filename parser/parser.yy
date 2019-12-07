@@ -142,7 +142,14 @@ command:
 
     COLOR_OF house {
         std::cout << "color is " << $2->get_color().to_string() << " \n";
-    }
+    } |
+
+	NEIGHBOR house operation {
+		int distance = calculate($3, driver);
+		house_ptr hp = driver.get_ville().add_neighbor($2, distance);
+		std::cout << "add random neighbour, with distance of " << distance << "\n";
+		std::cout << "new neighbour: " << hp->to_string() << "\n";
+	}
 
 house_construction:
 	HOUSE {

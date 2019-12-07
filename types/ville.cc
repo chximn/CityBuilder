@@ -46,10 +46,10 @@ house_ptr ville::add_neighbor(house_ptr h, int distance) {
 		pnt2.translate(coordinates);
 
 		int found = true;
-		try { get_house(coordinates); }
+		try { get_house(pnt2); }
 		catch(...) { found = false; }
 
-		if (found) {
+		if (!found) {
 			success = true;
 			break;
 		}

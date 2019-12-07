@@ -24,6 +24,7 @@ public:
     int  getVariable(const std::string & name) const;
     void setVariable(const std::string & name, double value);
     ville & get_ville();
+    VilleGUI * & getVilleGUI() { return V; };
 
 	void show();
 };

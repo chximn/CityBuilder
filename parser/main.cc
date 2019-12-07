@@ -14,7 +14,7 @@
 
 int main( int argc, char **argv) {
 	srand((unsigned) time(0));
-	
+
     QApplication app(argc,argv);
 
     Driver * driver = new Driver;
@@ -22,6 +22,6 @@ int main( int argc, char **argv) {
     yy::Parser * parser = new yy::Parser(*scanner, *driver);
 
     parser->parse();
-    driver->getVille()->show();
+    driver->getVilleGUI()->show();
     return app.exec();
 }

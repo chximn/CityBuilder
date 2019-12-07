@@ -6,7 +6,7 @@ private:
 	int x, y, z;
 
 public:
-	point() = default;
+	point(): x(0), y(0), z(0) {}
 	point(point const &) = default;
 	point(int, int, int);
 	point(int);
