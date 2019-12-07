@@ -9,6 +9,7 @@ int ExpressionUnaire::calculer(const Contexte& contexte) const {
     int exp = _exp->calculer(contexte);
     switch (_op) {
         case OperateurUnaire::neg: return -exp;
+        case OperateurUnaire::non: return !exp;
         default: return 0;
     }
 }

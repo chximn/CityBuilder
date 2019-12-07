@@ -13,6 +13,13 @@ int ExpressionBinaire::calculer(const Contexte& contexte) const {
         case OperateurBinaire::moins: return gauche - droite;
         case OperateurBinaire::divise: return gauche / droite;
         case OperateurBinaire::multiplie: return gauche * droite;
+        case OperateurBinaire::equ: return gauche == droite;
+        case OperateurBinaire::inf: return gauche < droite;
+        case OperateurBinaire::sup: return gauche > droite;
+        case OperateurBinaire::inf_equ: return gauche <= droite;
+        case OperateurBinaire::sup_equ: return gauche >= droite;
+        case OperateurBinaire::et:  return gauche && droite;
+        case OperateurBinaire::ou:  return gauche || droite;
         default: return 0;
     }
 }
