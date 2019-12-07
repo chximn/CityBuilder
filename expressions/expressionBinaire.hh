@@ -5,7 +5,14 @@ enum class OperateurBinaire {
     plus,
     moins,
     divise,
-    multiplie
+    multiplie,
+    et,
+    ou,
+    inf_equ,
+    sup_equ,
+    equ,
+    inf,
+    sup
 };
 
 class ExpressionBinaire : public Expression {
@@ -15,7 +22,6 @@ public:
     ~ExpressionBinaire() = default;
 
     int calculer(const Contexte& contexte) const override;
-
 private:
     ExpressionPtr _gauche;
     ExpressionPtr _droite;

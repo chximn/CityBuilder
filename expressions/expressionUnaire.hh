@@ -3,7 +3,8 @@
 
 
 enum class OperateurUnaire {
-    neg
+    neg,
+    non
 };
 
 class ExpressionUnaire : public Expression {

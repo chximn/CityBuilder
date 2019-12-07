@@ -47,6 +47,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
+%token AND OR
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -64,6 +65,7 @@
 %type <std::vector<commands::command_ptr>> commands
 %left '-' '+'
 %left '*' '/'
+%precedence  NO
 %precedence  NEG
 
 %%
@@ -299,9 +301,33 @@ operation:
    } |
    operation '*' operation  {
        $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
-   } |
+    } |
    '-' operation %prec NEG {
          $$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
+     } |
+     operation '=' '=' operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::equ);
+     } |
+     operation '<' operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf);
+     } |
+     operation '>' operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
+     } |
+     operation '<' '=' operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::inf_equ);
+     } |
+     operation '>' '=' operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::sup_equ);
+     } |
+     '!' operation %prec NO {
+           $$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
+     } |
+     operation OR operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
+     } |
+     operation AND operation {
+         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
      }
 
 %%

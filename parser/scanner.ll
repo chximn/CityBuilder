@@ -45,6 +45,11 @@ comment {comment_begin}{comment_content}{comment_end}
 "->"          return token::ARROW;
 "["           return '[';
 "]"           return ']';
+"<"           return '<';
+">"           return '>';
+"non"         return '!';
+"et"          return token::AND;
+"ou"          return token::OR;
 "°"           return token::DEGREE;
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
