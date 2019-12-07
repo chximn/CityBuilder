@@ -26,7 +26,7 @@ public:
 	house_ptr get_house(unsigned int);
 	house_ptr get_house(point const &);
 	void add_house(house_ptr);
-	house_ptr create_neighbor(house_ptr, int);
+	house_ptr add_neighbor(house_ptr, int);
 	void remove_house(house &);
 
 };

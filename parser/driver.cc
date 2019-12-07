@@ -47,7 +47,7 @@ void Driver::remove_house(house & f) {
 	}
 }
 
-house_ptr Driver::create_neighbor(house_ptr h, int distance) {
+house_ptr Driver::add_neighbor(house_ptr h, int distance) {
 	point const & coordinates = h->get_coordinates();
 	point start(distance);
 	point pnt(start);
@@ -79,5 +79,8 @@ house_ptr Driver::create_neighbor(house_ptr h, int distance) {
 
 	pnt.translate(coordinates);
 	house_ptr hp = std::make_shared<house>(pnt);
+	add_house(hp);
+	hp->add_neighbor(h);
+	h->add_neighbor(hp);
 	return hp;
 }

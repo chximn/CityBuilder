@@ -136,7 +136,14 @@ command:
 
     COLOR_OF house {
         std::cout << "color is " << $2->get_color().to_string() << " \n";
-    }
+    } |
+
+	NEIGHBOR house operation {
+		int distance = calculate($3, driver);
+		house_ptr hp = driver.add_neighbor($2, distance);
+		std::cout << "add random neighbour, with distance of " << distance << "\n";
+		std::cout << "new neighbour: " << hp->to_string() << "\n";
+	}
 
 house_construction:
 	HOUSE {
@@ -153,14 +160,6 @@ house_construction:
 
 	HOUSE VAR_NAME {
 		$$ = std::make_shared<house>(point(0, 0, 0), degree(0), $2);
-	} |
-
-	NEIGHBOR house operation {
-		int distance = calculate($3, driver);
-		house_ptr hp = driver.create_neighbor($2, distance);
-		std::cout << "add random neighbour, with distance of " << distance << "\n";
-		std::cout << "new neighbour: " << hp->to_string() << "\n";
-		$$ = hp;
 	}
 
 assignment:
