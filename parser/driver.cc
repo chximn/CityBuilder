@@ -46,3 +46,41 @@ void Driver::remove_house(house & f) {
 		}
 	}
 }
+
+house_ptr Driver::add_neighbor(house_ptr h, int distance) {
+	point const & coordinates = h->get_coordinates();
+	point start(distance);
+	point pnt(start);
+	bool success;
+
+	while(1) {
+		point pnt2(pnt);
+		pnt2.translate(coordinates);
+
+		int found = true;
+		try { get_house(coordinates); }
+		catch(...) { found = false; }
+
+		if (found) {
+			success = true;
+			break;
+		}
+
+		pnt.rotate();
+		if (pnt == start) {
+			success = false;
+			break;
+		}
+	}
+
+	if (!success) {
+		throw full_neighborhood(coordinates);
+	}
+
+	pnt.translate(coordinates);
+	house_ptr hp = std::make_shared<house>(pnt);
+	add_house(hp);
+	hp->add_neighbor(h);
+	h->add_neighbor(hp);
+	return hp;
+}
