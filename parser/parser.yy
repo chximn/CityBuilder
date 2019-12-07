@@ -94,7 +94,8 @@ command:
 
 	ROAD house ARROW house {
 		std::cout << "road: " << $2->to_string() << " -> " << $4->to_string() << "\n";
-	} |
+        $2->add_neighbor($4);
+    } |
 
 	DESTRUCT house {
 		std::cout << "destruct house: " << $2->to_string() << "\n";
@@ -113,6 +114,7 @@ command:
 
 	NEIGHBORHOOD house {
 		std::cout << "neighborhood of: " << $2->to_string() << '\n';
+        $2->show_neighborhood();
 	} |
 
 	ORIENTATE house degree {

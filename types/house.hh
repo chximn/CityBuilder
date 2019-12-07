@@ -2,10 +2,12 @@
 #include "point.hh"
 #include "degree.hh"
 #include <string>
+#include <vector>
 #include <exception>
 #include <memory>
 #include "point.hh"
 #include "color.hh"
+#include <cmath>
 
 class house;
 using house_ptr = std::shared_ptr<house>;
@@ -16,7 +18,7 @@ private:
 	degree orientation;
 	std::string name;
 	color _color;
-
+	std::vector<house_ptr> neighbors;
 public:
 	house() = default;
 	house(point const &);
@@ -28,6 +30,10 @@ public:
 	point & get_coordinates();
 	degree &get_orientation();
 	std::string const & get_name() const;
+	void add_neighbor(house_ptr);
+	float distance(house_ptr);
+	void show_neighborhood();
+
 };
 
 
