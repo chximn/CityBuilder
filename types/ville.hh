@@ -9,6 +9,7 @@ class ville
 {
 private:
     std::vector<house_ptr> houses;
+	int radius;
 public:
     ville() = default;
     ~ville() = default;
@@ -20,5 +21,6 @@ public:
     house_ptr get_house(unsigned int);
     house_ptr get_house(point const &);
     house_ptr add_neighbor(house_ptr, int);
-
+	void set_radius(int r) { radius = r; }
+	int get_radius() const { return radius; }
 };

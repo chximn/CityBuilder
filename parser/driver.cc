@@ -17,6 +17,7 @@ ville & Driver::get_ville()  {
 }
 
 void Driver::show() {
+	V->setRayon(_ville.get_radius());
 	for (auto const & h : _ville.get_houses()) {
 		point coordinates = h->get_coordinates();
 		V->construireMaison(coordinates.get_x(), coordinates.get_y(), coordinates.get_z());

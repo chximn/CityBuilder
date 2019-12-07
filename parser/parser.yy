@@ -73,6 +73,7 @@ city:
  	city_header '{' NL commands '}'
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
+		driver.get_ville().set_radius($1);
 	}
 
 city_header:
