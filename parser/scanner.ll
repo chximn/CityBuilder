@@ -51,7 +51,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "si"          return token::IF;
 "sinon"       return token::ELSE;
 "Tant que"    return token::WHILE;
-"occupe"      return token::OCCUPID;
+"occupe"      return token::OCCUPIED;
 "vide"        return token::EMPTY;
 "et"          return token::AND;
 "ou"          return token::OR;

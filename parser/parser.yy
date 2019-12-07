@@ -47,7 +47,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR IF ELSE WHILE OCCUPID EMPTY
+%token AND OR IF ELSE WHILE OCCUPIED EMPTY
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -97,7 +97,7 @@ commands:
 	comment NL commands {
 		$$ = $3;
 	} |
-    
+
 	command comment NL commands {
 		$4.insert($4.begin(), $1);
 		$$ = $4;
@@ -328,7 +328,8 @@ operation:
      } |
      operation AND operation {
          $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
-     }
+     } |
+	 OCCUPIED
 
 %%
 
