@@ -1,13 +1,17 @@
 #include "house_ref.hh"
 
-std::string house_ref_name::to_string() const {
-	return name;
+house_ptr house_ref_name::execute(city & c, Contexte const & ctx) const {
+	return c.get_house(name);
 }
 
-std::string house_ref_index::to_string() const {
-	return "maison[" + std::to_string(index) + "]";
+house_ptr house_ref_index::execute(city & c, Contexte const & ctx) const {
+	return c.get_house(index->calculer(ctx));
 }
 
-std::string house_ref_coordinates::to_string() const {
-	return coordinates.to_string();;
+house_ptr house_ref_coordinates::execute(city & c, Contexte const & ctx) const {
+	return c.get_house(coordinates->execute(ctx));
+}
+
+house_ptr house_ref_create::execute(city & c, Contexte const & ctx) const {
+	return std::make_shared<house>(coordinates->execute(ctx), degree(0), name);
 }

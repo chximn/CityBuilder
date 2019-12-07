@@ -29,17 +29,6 @@ find_package(FLEX)
 
 include_directories(parser expressions types commands ${CMAKE_CURRENT_BINARY_DIR})
 
-file(GLOB COMMANDS_HEADERS
-	commands/command.hh
-	commands/house_ref.hh
-)
-
-add_library(libcommands
-	commands/command.cc
-	commands/house_ref.cc
-	${COMMANDS_HEADERS}
-)
-
 file(GLOB EXPRESSION_HEADERS
     expressions/expression.hh
     expressions/expressionBinaire.hh
@@ -56,6 +45,23 @@ add_library(libexpressions
 	expressions/variable.cc
 	expressions/contexte.cc
     ${EXPRESSION_HEADERS}
+)
+
+file(GLOB COMMANDS_HEADERS
+	commands/command.hh
+	commands/house_ref.hh
+	commands/point_ref.hh
+	commands/color_ref.hh
+	commands/degree_ref.hh
+)
+
+add_library(libcommands
+	commands/command.cc
+	commands/house_ref.cc
+	commands/point_ref.cc
+	commands/color_ref.cc
+	commands/degree_ref.cc
+	${COMMANDS_HEADERS}
 )
 
 file(GLOB TYPE_HEADERS

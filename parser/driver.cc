@@ -1,7 +1,7 @@
 #include "driver.hh"
 #include <iostream>
 
-const Contexte& Driver::getContexte() const {
+Contexte & Driver::getContexte() {
     return variables;
 }
 

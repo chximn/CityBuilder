@@ -1,7 +1,9 @@
 #include "city.hh"
+
 void city::add_house(house_ptr h) {
 	houses.push_back(h);
 }
+
 void city::remove_house(house & f) {
 	for (auto it = houses.begin(); it != houses.end(); it++) {
 		if ((*it)->get_coordinates() == f.get_coordinates()) {
@@ -10,6 +12,7 @@ void city::remove_house(house & f) {
 		}
 	}
 }
+
 std::vector<house_ptr>  & city::get_houses() {
     return houses;
 }

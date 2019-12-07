@@ -16,6 +16,10 @@
     #include "variable.hh"
 	#include "degree.hh"
 	#include "point.hh"
+	#include "color.hh"
+	#include "degree_ref.hh"
+	#include "point_ref.hh"
+	#include "color_ref.hh"
 	#include "house.hh"
 	#include "command.hh"
 
@@ -36,7 +40,7 @@
     #undef  yylex
     #define yylex scanner.yylex
 
-	int calculate(ExpressionPtr, Driver const &);
+	int calculate(ExpressionPtr, Driver &);
 }
 
 %token NEIGHBOR HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
@@ -51,12 +55,13 @@
 %token <std::string>    COLOR
 %type <int>             city_header
 %type <ExpressionPtr>   operation
-%type <color>           color
-%type <degree>          degree
-%type <point>           coordinates point
-%type <house_ptr>       house
-%type <house>           house_construction
-%type <command_ptr>     command
+%type <color_ref_ptr>   color
+%type <degree_ref_ptr>  degree
+%type <point_ref_ptr>   coordinates point
+%type <house_ref_ptr>   house
+%type <house_ref_ptr>   house_construction
+%type <commands::command_ptr>     command
+%type <std::vector<commands::command_ptr>> commands
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -77,6 +82,9 @@ city:
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
 		driver.get_city().set_radius($1);
+		for (auto const & c : $4) {
+			c->execute(driver.get_city(), driver.getContexte());
+		}
 	}
 
 city_header:
@@ -84,57 +92,93 @@ city_header:
 	CONSTRUCT                { $$ = 5;  }
 
 commands:
-	comment NL commands         |
-	command comment NL commands |
-	command NL commands         |
-	comment NL                  |
-	command comment NL          |
-	command NL                  |
-	        NL commands         |
-			NL
+	comment NL commands {
+		$$ = $3;
+	} |
+
+	command comment NL commands {
+		$4.insert($4.begin(), $1);
+		$$ = $4;
+	} |
+
+	command NL commands {
+		$3.insert($3.begin(), $1);
+		$$ = $3;
+	} |
+
+	comment NL {
+		$$ = std::vector<commands::command_ptr>();
+	} |
+
+	command comment NL {
+		auto v = std::vector<commands::command_ptr>();
+		v.push_back($1);
+		$$ = v;
+	} |
+
+	command NL {
+		auto v = std::vector<commands::command_ptr>();
+		v.push_back($1);
+		$$ = v;
+	} |
+
+	NL commands {
+		$$ = $2;
+	} |
+
+	NL {
+		$$ = std::vector<commands::command_ptr>();
+	}
 
 command:
 	house_construction {
-		std::cout << "house construction: " << $1.to_string() << "\n";
+		std::cout << "house construction" << "\n";
 		// driver.get_city().add_house($1);
 		$$ = std::make_shared<commands::construct_house>($1);
 	} |
 
 	ROAD house ARROW house {
-		std::cout << "road: " << $2->to_string() << " -> " << $4->to_string() << "\n";
-        $2->add_neighbor($4);$4->add_neighbor($2);
+		std::cout << "road" << "\n";
+        // $2->add_neighbor($4);$4->add_neighbor($2);
+		$$ = std::make_shared<commands::construct_road>($2, $4);
     } |
 
 	DESTRUCT house {
-		std::cout << "destruct house: " << $2->to_string() << "\n";
-		driver.get_city().remove_house(*$2);
+		std::cout << "destruct house" << "\n";
+		// driver.get_city().remove_house(*$2)
+		$$ = std::make_shared<commands::destruct_house>($2);
 	} |
 
 	POSITION house {
-		std::cout << "show house: " << $2->to_string() << "\n";
-		std::cout << "position: " << $2->get_coordinates().to_string() << "\n";
+		std::cout << "show house" << "\n";
+		// std::cout << "position: " << $2->get_coordinates().to_string() << "\n";
+		$$ = std::make_shared<commands::position_house>($2, std::cout);
 	} |
 
 	TURN house CLOCKWISE {
-		std::cout << "turn house: " << $2->to_string() << ", clockwise: " << $3 << "\n";
-		$2->get_orientation().turn($3);
+		std::cout << "turn house" << "\n";
+		// $2->get_orientation().turn($3);
+		$$ = std::make_shared<commands::turn_house>($2, $3);
 	} |
 
 	NEIGHBORHOOD house {
-		std::cout << "neighborhood of: " << $2->to_string() << '\n';
-        std::vector<house_ptr> p=$2->get_neighbors();
-        for(auto const & pp:p)
-            std::cout << "-"<< pp->to_string() << "distance : " << $2->distance(pp) << "\n";
+		std::cout << "neighborhood" << '\n';
+        // std::vector<house_ptr> p=$2->get_neighbors();
+        // for(auto const & pp:p)
+        //     std::cout << "-"<< pp->to_string() << "distance : " << $2->distance(pp) << "\n";
+		$$ = std::make_shared<commands::show_neighborhood>($2, std::cout);
 	} |
 
 	ORIENTATE house degree {
-		std::cout << "orientate house in: " << $2->to_string() << " to " << $3.to_string() << "\n";
-		$2->get_orientation() = $3;
+		std::cout << "orientate house\n";
+		// $2->get_orientation() = $3;
+		$$ = std::make_shared<commands::orientate_house>($2, $3);
 	} |
 
 	MOVE house ARROW coordinates {
-		std::cout << "move house: " << $2->to_string() << " to " << $4.to_string() << "\n";
-		$2->get_coordinates() = $4;
+		std::cout << "move house\n";
+		// $2->get_coordinates() = $4;
+		$$ = std::make_shared<commands::move_house>($2, $4);
 	} |
 
     assignment {
@@ -142,36 +186,48 @@ command:
 	} |
 
     COLORIZE house color {
-        std::cout << "color of " << $2->to_string() << " is " << color($3).to_string() << " now \n";
-		$2->get_color() = $3;
+        std::cout << "change color\n";
+		// $2->get_color() = $3;
+		$$ = std::make_shared<commands::colorize_house>($2, $3);
 	} |
 
     COLOR_OF house {
-        std::cout << "color is " << $2->get_color().to_string() << " \n";
-    } |
+		std::cout << "show color" << "\n";
+        // std::cout << "color is " << $2->get_color().to_string() << " \n";
+		$$ = std::make_shared<commands::show_color>($2, std::cout);
+	} |
 
 	NEIGHBOR house operation {
-		int distance = calculate($3, driver);
-		house_ptr hp = driver.get_city().add_neighbor($2, distance);
-		std::cout << "add random neighbour, with distance of " << distance << "\n";
-		std::cout << "new neighbour: " << hp->to_string() << "\n";
+		std::cout << "add random neighbour\n";
+		// int distance = calculate($3, driver);
+		// house_ptr hp = driver.get_city().add_neighbor($2, distance);
+		// std::cout << "new neighbour: " << hp->to_string() << "\n";
+		$$ = std::make_shared<commands::add_neighbor>($2, $3);
 	}
 
 house_construction:
 	HOUSE {
-		$$ = house();
+		auto zero = std::make_shared<Constante>(0);
+		auto p0 = std::make_shared<point_ref>(zero, zero, zero);
+		$$ = std::make_shared<house_ref_create>("", p0);
+		// $$ = house();
 	} |
 
 	HOUSE coordinates {
-		$$ = house($2);
+		$$ = std::make_shared<house_ref_create>("", $2);
+		// $$ = house($2);
 	} |
 
 	HOUSE VAR_NAME coordinates {
-		$$ = house($3, degree(0), $2);
+		$$ = std::make_shared<house_ref_create>($2, $3);
+		// $$ = house($3, degree(0), $2);
 	} |
 
 	HOUSE VAR_NAME {
-		$$ = house(point(0, 0, 0), degree(0), $2);
+		auto zero = std::make_shared<Constante>(0);
+		auto p0 = std::make_shared<point_ref>(zero, zero, zero);
+		$$ = std::make_shared<house_ref_create>($2, p0);
+		// $$ = house(point(0, 0, 0), degree(0), $2);
 	}
 
 assignment:
@@ -186,36 +242,43 @@ comment:
 
 house:
 	HOUSELIST '[' operation ']' {
-		$$ = driver.get_city().get_house(calculate($3, driver));
+		// $$ = driver.get_city().get_house(calculate($3, driver));
+		$$ = std::make_shared<house_ref_index>($3);
 	} |
 
     VAR_NAME {
-        $$ = driver.get_city().get_house($1);
+        // $$ = driver.get_city().get_house($1);
+		$$ = std::make_shared<house_ref_name>($1);
     } |
 
 	coordinates {
-		$$ = driver.get_city().get_house($1);
+		// $$ = driver.get_city().get_house($1);
+		$$ = std::make_shared<house_ref_coordinates>($1);
 	}
 
 color:
 	COLOR {
-		$$ = color($1);
+		// $$ = color($1);
+		$$ = std::make_shared<color_ref_hex>($1);
 	} |
 
 	point {
-		$$ = color($1);
+		// $$ = color($1);
+		$$ = std::make_shared<color_ref_point>($1);
 	}
 
 degree:
 	operation DEGREE {
-		$$ = degree(calculate($1, driver));
+		// $$ = degree(calculate($1, driver));
+		$$ = std::make_shared<degree_ref>($1);
 	}
 
 coordinates: point
 
 point:
 	'(' operation ',' operation ',' operation ')' {
-		$$ = point(calculate($2, driver), calculate($4, driver), calculate($6, driver));
+		// $$ = point(calculate($2, driver), calculate($4, driver), calculate($6, driver));
+		$$ = std::make_shared<point_ref>($2, $4, $6);
 	}
 
 operation:
@@ -247,6 +310,6 @@ void yy::Parser::error( const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
 }
 
-int calculate(ExpressionPtr p, Driver const & d) {
+int calculate(ExpressionPtr p, Driver & d) {
 	return p->calculer(d.getContexte());
 }

@@ -5,6 +5,7 @@
 #include <memory>
 #include <cmath>
 #include "house.hh"
+
 class city
 {
 private:
