@@ -48,6 +48,11 @@ comment {comment_begin}{comment_content}{comment_end}
 "<"           return '<';
 ">"           return '>';
 "non"         return '!';
+"si"          return token::IF;
+"sinon"       return token::ELSE;
+"Tant que"    return token::WHILE;
+"occupe"      return token::OCCUPID;
+"vide"        return token::EMPTY;
 "et"          return token::AND;
 "ou"          return token::OR;
 "°"           return token::DEGREE;
