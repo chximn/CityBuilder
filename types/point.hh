@@ -9,6 +9,7 @@ public:
 	point() = default;
 	point(point const &) = default;
 	point(int, int, int);
+	point(int);
 
 	int get_x() const;
 	int get_y() const;
@@ -21,4 +22,8 @@ public:
 	std::string to_string() const;
 
 	bool operator==(point const &) const;
+	bool operator!=(point const &) const;
+
+	void translate(point const &);
+	void rotate();
 };

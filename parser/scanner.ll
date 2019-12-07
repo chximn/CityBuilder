@@ -56,6 +56,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "Position"    return token::POSITION;
 "Orientation" return token::ORIENTATION;
 "Voisinage"   return token::NEIGHBORHOOD;
+"Voisin"      return token::NEIGHBOR;
 "maison"      return token::HOUSELIST;
 "Coloriser"   return token::COLORIZE;
 "Couleur"     return token::COLOR_OF;

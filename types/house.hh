@@ -5,6 +5,7 @@
 #include <exception>
 #include <memory>
 #include "point.hh"
+#include <cmath>
 #include "color.hh"
 
 class house;
@@ -68,5 +69,15 @@ public:
 	house_already_exists(point const & p): coordinates(p) {}
 	const char * what() const noexcept override {
 		return "Another house already exists\n";
+	}
+};
+
+class full_neighborhood : public std::exception {
+private:
+	point coordinates;
+public:
+	full_neighborhood(point const & p): coordinates(p) {}
+	const char * what() const noexcept override {
+		return "Full neighborhood\n";
 	}
 };

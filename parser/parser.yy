@@ -38,7 +38,7 @@
 	int calculate(ExpressionPtr, Driver const &);
 }
 
-%token HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
+%token NEIGHBOR HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
@@ -125,8 +125,7 @@ command:
 		$2->get_coordinates() = $4;
 	} |
 
-    assignment
-      |
+    assignment |
 
     COLORIZE house color {
         std::cout << "color of " << $2->to_string() << " is " << color($3).to_string() << " now \n";
@@ -152,6 +151,14 @@ house_construction:
 
 	HOUSE VAR_NAME {
 		$$ = std::make_shared<house>(point(0, 0, 0), degree(0), $2);
+	} |
+
+	NEIGHBOR house operation {
+		int distance = calculate($3, driver);
+		house_ptr hp = driver.create_neighbor($2, distance);
+		std::cout << "add random neighbour, with distance of " << distance << "\n";
+		std::cout << "new neighbour: " << hp->to_string() << "\n";
+		$$ = hp;
 	}
 
 assignment:
