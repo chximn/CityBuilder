@@ -7,11 +7,11 @@
 #include "contexte.hh"
 #include "point.hh"
 #include "house.hh"
-
+#include "ville.hh"
 class Driver {
 private:
     Contexte variables;
-	std::vector<house_ptr> houses;
+	ville _ville;
 
 public:
     Driver() = default;
@@ -21,13 +21,7 @@ public:
 	const Contexte& getContexte() const;
     int  getVariable(const std::string & name) const;
     void setVariable(const std::string & name, double value);
-
-	house_ptr get_house(std::string const &);
-	house_ptr get_house(unsigned int);
-	house_ptr get_house(point const &);
-	void add_house(house_ptr);
-	house_ptr add_neighbor(house_ptr, int);
-	void remove_house(house &);
+    ville & get_ville();
 
 };
 

@@ -1,13 +1,11 @@
 #pragma once
 #include "point.hh"
 #include "degree.hh"
+#include "color.hh"
 #include <string>
 #include <vector>
 #include <exception>
 #include <memory>
-#include "point.hh"
-#include <cmath>
-#include "color.hh"
 #include <cmath>
 
 class house;
