@@ -17,6 +17,7 @@
 	#include "degree.hh"
 	#include "point.hh"
 	#include "house.hh"
+	#include "command.hh"
 
     class Scanner;
     class Driver;
@@ -53,7 +54,9 @@
 %type <color>           color
 %type <degree>          degree
 %type <point>           coordinates point
-%type <house_ptr>       house house_construction
+%type <house_ptr>       house
+%type <house>           house_construction
+%type <command_ptr>     command
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -92,8 +95,9 @@ commands:
 
 command:
 	house_construction {
-		std::cout << "house construction: " << $1->to_string() << "\n";
-		driver.get_city().add_house($1);
+		std::cout << "house construction: " << $1.to_string() << "\n";
+		// driver.get_city().add_house($1);
+		$$ = std::make_shared<commands::construct_house>($1);
 	} |
 
 	ROAD house ARROW house {
@@ -133,8 +137,9 @@ command:
 		$2->get_coordinates() = $4;
 	} |
 
-    assignment
-      |
+    assignment {
+
+	} |
 
     COLORIZE house color {
         std::cout << "color of " << $2->to_string() << " is " << color($3).to_string() << " now \n";
@@ -154,19 +159,19 @@ command:
 
 house_construction:
 	HOUSE {
-		$$ = std::make_shared<house>();
+		$$ = house();
 	} |
 
 	HOUSE coordinates {
-		$$ = std::make_shared<house>($2);
+		$$ = house($2);
 	} |
 
 	HOUSE VAR_NAME coordinates {
-		$$ = std::make_shared<house>($3, degree(0), $2);
+		$$ = house($3, degree(0), $2);
 	} |
 
 	HOUSE VAR_NAME {
-		$$ = std::make_shared<house>(point(0, 0, 0), degree(0), $2);
+		$$ = house(point(0, 0, 0), degree(0), $2);
 	}
 
 assignment:

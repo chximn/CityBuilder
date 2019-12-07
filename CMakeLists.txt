@@ -27,7 +27,17 @@ find_package(BISON)
 find_package(FLEX)
 
 
-include_directories(parser expressions types ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(parser expressions types commands ${CMAKE_CURRENT_BINARY_DIR})
+
+file(GLOB COMMANDS_HEADERS
+	commands/command.hh
+)
+
+add_library(libcommands
+	commands/command.cc
+	${COMMANDS_HEADERS}
+)
+
 file(GLOB EXPRESSION_HEADERS
     expressions/expression.hh
     expressions/expressionBinaire.hh
@@ -82,4 +92,4 @@ add_executable(${PROJECT_NAME}
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(${PROJECT_NAME} GUI libexpressions libtypes)
+target_link_libraries(${PROJECT_NAME} GUI libexpressions libtypes libcommands)

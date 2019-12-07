@@ -1,0 +1,17 @@
+%% Comment #1
+
+Construire(3){
+	Maison white_house (1, -1, 0)
+	Voisin white_house 1
+	Voisin white_house 1
+	Voisin white_house 1
+	Voisin white_house 1
+	Voisin white_house 1
+	Coloriser white_house #f0ff00
+	Tourner white_house horaire
+	Tourner maison[1] !horaire
+	Voisin maison[1] 1
+	Voisin maison[2] 2
+}
+
+%% comment4
