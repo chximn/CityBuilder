@@ -134,5 +134,21 @@ Example: `#f20f44` , `(23, 213, 33)`
 	house:
 	  coordinates: point
 	  orientation: degree
+	  name: string
+	  _color: color
+	  neighbors: list of neighbors
 	```
 ## Graphical User Interface
+	Every GUI operation goes through the `VilleGUI` class, which contains the following methods:
+	```
+	void setRayon(unsigned int x);
+	unsigned int getRayon();
+	void construireMaison(int x, int y, int z);
+	void detruireMaison(int x, int y, int z);
+	void construireRoute(int x1, int y1, int z1, int x2, int y2, int z2);
+	void detruireRoute(int x1, int y1, int z1, int x2, int y2, int z2);
+	void setCouleur(int x, int y, int z, int r, int g, int b;
+	CouleurGUI getCouleur(int x, int y, int z);
+	void setOrientation(int x, int y, int z, int o);
+	int getOrientation(int x, int y, int z);
+	```

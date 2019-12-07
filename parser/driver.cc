@@ -84,3 +84,10 @@ house_ptr Driver::add_neighbor(house_ptr h, int distance) {
 	h->add_neighbor(hp);
 	return hp;
 }
+
+void Driver::show() {
+	for (auto const & h : houses) {
+		point coordinates = h->get_coordinates();
+		V->construireMaison(coordinates.get_x(), coordinates.get_y(), coordinates.get_z());
+	}
+}

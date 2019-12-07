@@ -7,22 +7,21 @@
 #include <iostream>
 #include <fstream>
 
+#include <QtGui>
+#include <QApplication>
+
 #include <cstring>
 
-int main( int  argc, char* argv[]) {
-	// Random
+int main( int argc, char **argv) {
 	srand((unsigned) time(0));
+	
+    QApplication app(argc,argv);
 
-    // Global
-    Driver driver;
+    Driver * driver = new Driver;
+    Scanner * scanner = new Scanner(std::cin, std::cout);
+    yy::Parser * parser = new yy::Parser(*scanner, *driver);
 
-    // Flex
-    Scanner scanner(std::cin, std::cout);
-
-    // Bison
-    yy::Parser parser(scanner, driver);
-
-    parser.parse();
-
-    return 0;
+    parser->parse();
+    driver->getVille()->show();
+    return app.exec();
 }

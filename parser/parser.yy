@@ -64,7 +64,10 @@ program:
 		 comment NL program |
 		 city    NL program |
 		         NL program |
-	     END { YYACCEPT; }
+	     END {
+		 	driver.show();
+			YYACCEPT;
+		 }
 
 city:
  	city_header '{' NL commands '}'

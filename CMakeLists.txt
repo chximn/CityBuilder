@@ -1,12 +1,27 @@
 project(city_builder)
 cmake_minimum_required(VERSION 3.1.0)
 
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 set(CMAKE_CXX_EXTENSIONS off)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     add_compile_options(-Wall -Wpedantic)
 endif()
+
+foreach(p
+    CMP0071 # 3.10: Let AUTOMOC and AUTOUIC process GENERATED files
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
 
 find_package(BISON)
 find_package(FLEX)
@@ -46,6 +61,16 @@ add_library(libtypes
 	${TYPE_HEADERS}
 )
 
+file(GLOB GUI_HEADERS
+	IG/villeGUI.hh
+)
+
+add_library(GUI
+	IG/villeGUI.cc
+	${GUI_HEADERS}
+)
+target_link_libraries(GUI Qt5::Widgets)
+
 BISON_TARGET(parser parser/parser.yy ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp VERBOSE ${CMAKE_CURRENT_BINARY_DIR}/automate.txt)
 FLEX_TARGET(scanner parser/scanner.ll  ${CMAKE_CURRENT_BINARY_DIR}/scanner.cpp)
 ADD_FLEX_BISON_DEPENDENCY(scanner parser)
@@ -59,4 +84,4 @@ add_executable(${PROJECT_NAME}
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(${PROJECT_NAME} libexpressions libtypes)
+target_link_libraries(${PROJECT_NAME} GUI libexpressions libtypes)

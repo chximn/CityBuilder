@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "contexte.hh"
+#include "../IG/villeGUI.hh"
 #include "point.hh"
 #include "house.hh"
 
@@ -12,9 +13,10 @@ class Driver {
 private:
     Contexte variables;
 	std::vector<house_ptr> houses;
+	VilleGUI* V;
 
 public:
-    Driver() = default;
+    Driver() { V = new VilleGUI(); }
     ~Driver() = default;
     Driver(const Driver&) = default;
 
@@ -28,7 +30,9 @@ public:
 	void add_house(house_ptr);
 	house_ptr add_neighbor(house_ptr, int);
 	void remove_house(house &);
+	VilleGUI* getVille() {return V;}
 
+	void show();
 };
 
 #endif
