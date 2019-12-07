@@ -31,9 +31,8 @@ public:
 	degree &get_orientation();
 	std::string const & get_name() const;
 	void add_neighbor(house_ptr);
-	float distance(house_ptr);
-	void show_neighborhood();
-
+	std::vector<house_ptr> get_neighbors();
+	int distance(house_ptr);
 };
 
 
