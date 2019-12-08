@@ -13,3 +13,8 @@ int ExpressionUnaire::calculer(const Contexte& contexte) const {
         default: return 0;
     }
 }
+
+int ExpressionOccupied::calculer(const Contexte& contexte) const {
+	try { _house->execute(_city, contexte); return 1; }
+	catch(...) { return 0; }
+}

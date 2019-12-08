@@ -183,9 +183,11 @@ command:
 		$$ = std::make_shared<commands::move_house>($2, $4);
 	} |
 
-    assignment {
-
-	} |
+	VAR_NAME '=' operation {
+        std::cout << "affectation" << "\n";
+		$$ = std::make_shared<commands::assignment>($1, $3);
+        // driver.setVariable($1, calculate($3, driver));
+    } |
 
     COLORIZE house color {
         std::cout << "change color\n";
@@ -232,11 +234,6 @@ house_construction:
 		// $$ = house(point(0, 0, 0), degree(0), $2);
 	}
 
-assignment:
-    VAR_NAME '=' operation {
-        std::cout << "affectation: " << $1 << " = " << calculate($3, driver) << "\n";
-        driver.setVariable($1, calculate($3, driver));
-    }
 comment:
 	COMMENT {
 		std::cout << "Comment: " << $1 << std::endl;
@@ -329,7 +326,15 @@ operation:
      operation AND operation {
          $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
      } |
-	 OCCUPIED
+
+	 OCCUPIED point {
+		 $$ = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
+	 } |
+
+	 EMPTY point {
+		 auto occup = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
+		 $$ = std::make_shared<ExpressionUnaire>(occup, OperateurUnaire::non);
+	 }
 
 %%
 
