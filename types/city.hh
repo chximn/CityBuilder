@@ -25,6 +25,11 @@ public:
     house_ptr add_neighbor(house_ptr, int);
 	void set_radius(int r) { radius = r; }
 	int get_radius() const { return radius; }
+
+	void a_star(house_ptr, house_ptr);
+	void tarjan();
+	void kruksal();
+	void k_coloring();
 };
 
 class out_of_radius : std::exception {
