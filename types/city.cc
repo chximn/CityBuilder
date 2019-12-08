@@ -110,6 +110,8 @@ std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
 			throw path_not_found();
 		}
 
+		std::cout << "Noeud choisi: " << current->get_name() << "\n";
+
 		if (current == goal) {
 			house_ptr pred = goal;
 
@@ -131,6 +133,8 @@ std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
 				records[n].pred = current;
 				records[n].g = tentative;
 				records[n].f = tentative + n->distance(goal);
+
+				std::cout << "calcule: pred=" << current->get_name() << ", dist=" << tentative << ", h=" << n->distance(goal) << "\n";
 			}
 		}
 	}
@@ -177,7 +181,6 @@ std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
 		records[current].visited = true;
 
 		for (auto const & r : records) {
-			std::cout << r.first->get_name() << "\n";
 			if (r.second.visited) continue;
 		}
 
