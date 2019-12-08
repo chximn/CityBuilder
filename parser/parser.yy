@@ -47,7 +47,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR IF ELSE WHILE OCCUPIED EMPTY
+%token AND OR IF ELSE WHILE OCCUPIED EMPTY REPEAT RTIMES
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -55,6 +55,7 @@
 %token <std::string>    VAR_NAME
 %token <std::string>    COLOR
 %type <int>             city_header
+%type <ExpressionPtr>   condition
 %type <ExpressionPtr>   operation
 %type <color_ref_ptr>   color
 %type <degree_ref_ptr>  degree
@@ -62,7 +63,7 @@
 %type <house_ref_ptr>   house
 %type <house_ref_ptr>   house_construction
 %type <commands::command_ptr>     command
-%type <std::vector<commands::command_ptr>> commands
+%type <std::vector<commands::command_ptr>> commands body
 %left '-' '+'
 %left '*' '/'
 %precedence  NO
@@ -132,13 +133,29 @@ commands:
 		$$ = std::vector<commands::command_ptr>();
 	}
 
+body: '{' NL commands '}' {
+	$$ = $3;
+}
+
+condition : '(' operation ')' {
+	$$ = $2;
+}
+
 command:
-	IF '(' operation ')' '{' NL commands '}' NL {
-		$$ = std::make_shared<commands::if_condition>($3, $7);
+	IF condition body NL {
+		$$ = std::make_shared<commands::if_condition>($2, $3);
 	} |
 
-	IF '(' operation ')' '{' NL commands '}' NL ELSE '{' NL commands '}' {
-		$$ = std::make_shared<commands::if_else_condition>($3, $7, $13);
+	IF condition body NL ELSE body {
+		$$ = std::make_shared<commands::if_else_condition>($2, $3, $6);
+	} |
+
+	WHILE condition body {
+		$$ = std::make_shared<commands::while_loop>($2, $3);
+	} |
+
+	REPEAT operation RTIMES body {
+		$$ = std::make_shared<commands::repeat_loop>($2, $4);
 	} |
 
 	house_construction {

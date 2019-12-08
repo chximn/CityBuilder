@@ -78,3 +78,21 @@ void if_else_condition::execute(city & c, Contexte & ctx) {
 		}
 	}
 }
+
+void while_loop::execute(city & c, Contexte & ctx) {
+	while (_condition->calculer(ctx)) {
+		for (auto const & cmd : _body) {
+			cmd->execute(c, ctx);
+		}
+	}
+}
+
+void repeat_loop::execute(city & c, Contexte & ctx) {
+	int ends = _times->calculer(ctx);
+
+	for (int i = 0; i < ends; i++) {
+		for (auto const & cmd : _body) {
+			cmd->execute(c, ctx);
+		}
+	}
+}

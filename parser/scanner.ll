@@ -51,6 +51,8 @@ comment {comment_begin}{comment_content}{comment_end}
 "Si"          return token::IF;
 "Sinon"       return token::ELSE;
 "Tant que"    return token::WHILE;
+"Repeter"     return token::REPEAT;
+"fois"        return token::RTIMES;
 "occupe"      return token::OCCUPIED;
 "vide"        return token::EMPTY;
 "et"          return token::AND;

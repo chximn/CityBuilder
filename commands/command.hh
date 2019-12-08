@@ -151,4 +151,22 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class while_loop : public command {
+private:
+	ExpressionPtr _condition;
+	std::vector<command_ptr> _body;
+public:
+	while_loop(ExpressionPtr c, std::vector<command_ptr> vc): _condition(c), _body(vc) {}
+	void execute(city &, Contexte  &) override;
+};
+
+class repeat_loop : public command {
+private:
+	ExpressionPtr _times;
+	std::vector<command_ptr> _body;
+public:
+	repeat_loop(ExpressionPtr t, std::vector<command_ptr> vc): _times(t), _body(vc) {}
+	void execute(city &, Contexte  &) override;
+};
+
 }
