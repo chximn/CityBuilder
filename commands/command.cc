@@ -98,17 +98,26 @@ void repeat_loop::execute(city & c, Contexte & ctx) {
 }
 
 void pcc::execute(city & c, Contexte & ctx) {
+
+	auto m0 = std::chrono::high_resolution_clock::now();
 	auto l = c.a_star(_house1->execute(c, ctx), _house2->execute(c, ctx));
+	auto m1 = std::chrono::high_resolution_clock::now();
 
-	auto it = l.begin();
-	os << (*it)->get_name();
-	while(true) {
-		if (++it == l.end()) {
-			os << "\n";
-			return;
-		}
-
-		os << " -> " << (*it)->get_name();
+	for (auto const & h : l) {
+		os << h->get_name() << " ";
 	}
+	os << "\n";
 
+
+	auto m2 = std::chrono::high_resolution_clock::now();
+	auto l2 = c.a_star(_house1->execute(c, ctx), _house2->execute(c, ctx));
+	auto m3 = std::chrono::high_resolution_clock::now();
+	for (auto const & h : l2) {
+		os << h->get_name() << " ";
+	}
+	os << "\n";
+
+
+	std::cout << "A* took " << (m1-m0).count() << " microseconds" << "\n";
+	std::cout << "Dijkstra took " << (m3-m2).count() << " microseconds" << "\n";
 }

@@ -31,6 +31,7 @@ public:
 	int get_radius() const { return radius; }
 
  	std::list<house_ptr> a_star(house_ptr, house_ptr);
+ 	std::list<house_ptr> dijkstra(house_ptr, house_ptr);
 	void tarjan();
 	void kruksal();
 	void k_coloring();

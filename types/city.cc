@@ -137,3 +137,60 @@ std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
 
 	return path;
 }
+
+std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
+	std::list<house_ptr> path;
+
+	struct record {
+		int dist = inf;
+		house_ptr pred = nullptr;
+		bool visited = false;
+	};
+
+	std::map<house_ptr, record> records;
+
+	records[start] = record{0,nullptr, false};
+
+	while (true) {
+		house_ptr current = nullptr;
+
+
+		for (auto const & p : records) {
+			if (p.second.visited) continue;
+
+			if (current == nullptr || records[p.first].dist < records[current].dist) {
+				current = p.first;
+			}
+		}
+
+		if (current == nullptr) {
+			house_ptr pred = goal;
+
+			while (pred != nullptr) {
+				path.push_front(pred);
+				pred = records[pred].pred;
+			}
+
+			return path;
+		}
+
+		records[current].visited = true;
+
+		for (auto const & r : records) {
+			std::cout << r.first->get_name() << "\n";
+			if (r.second.visited) continue;
+		}
+
+		for (auto const & n : current->get_neighbors()) {
+			if (records[n].visited) continue;
+
+			int tentative = records[current].dist + current->distance(n);
+			if (tentative < records[n].dist) {
+				records[n].pred = current;
+				records[n].dist = tentative;
+			}
+		}
+	}
+
+	return path;
+}

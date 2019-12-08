@@ -9,6 +9,7 @@
 #include "color_ref.hh"
 #include "contexte.hh"
 #include "expression.hh"
+#include <chrono>
 
 namespace commands {
 

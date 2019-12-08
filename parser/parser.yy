@@ -84,7 +84,9 @@ program:
 city:
  	city_header '{' NL commands '}'
 	{
-		std::cout << "construire ville de taille: " << $1 << "\n";
+		// std::cout << "construire ville de taille: " << $1 << "\n";
+
+		std::cout << "\n";
 		driver.get_city().set_radius($1);
 		for (auto const & c : $4) {
 			c->execute(driver.get_city(), driver.getContexte());
@@ -160,37 +162,37 @@ command:
 	} |
 
 	house_construction {
-		std::cout << "house construction" << "\n";
+		// std::cout << "house construction" << "\n";
 		// driver.get_city().add_house($1);
 		$$ = std::make_shared<commands::construct_house>($1);
 	} |
 
 	ROAD house ARROW house {
-		std::cout << "road" << "\n";
+		// std::cout << "road" << "\n";
         // $2->add_neighbor($4);$4->add_neighbor($2);
 		$$ = std::make_shared<commands::construct_road>($2, $4);
     } |
 
 	DESTRUCT house {
-		std::cout << "destruct house" << "\n";
+		// std::cout << "destruct house" << "\n";
 		// driver.get_city().remove_house(*$2)
 		$$ = std::make_shared<commands::destruct_house>($2);
 	} |
 
 	POSITION house {
-		std::cout << "show house" << "\n";
+		// std::cout << "show house" << "\n";
 		// std::cout << "position: " << $2->get_coordinates().to_string() << "\n";
 		$$ = std::make_shared<commands::position_house>($2, std::cout);
 	} |
 
 	TURN house CLOCKWISE {
-		std::cout << "turn house" << "\n";
+		// std::cout << "turn house" << "\n";
 		// $2->get_orientation().turn($3);
 		$$ = std::make_shared<commands::turn_house>($2, $3);
 	} |
 
 	NEIGHBORHOOD house {
-		std::cout << "neighborhood" << '\n';
+		// std::cout << "neighborhood" << '\n';
         // std::vector<house_ptr> p=$2->get_neighbors();
         // for(auto const & pp:p)
         //     std::cout << "-"<< pp->to_string() << "distance : " << $2->distance(pp) << "\n";
@@ -198,37 +200,37 @@ command:
 	} |
 
 	ORIENTATE house degree {
-		std::cout << "orientate house\n";
+		// std::cout << "orientate house\n";
 		// $2->get_orientation() = $3;
 		$$ = std::make_shared<commands::orientate_house>($2, $3);
 	} |
 
 	MOVE house ARROW coordinates {
-		std::cout << "move house\n";
+		// std::cout << "move house\n";
 		// $2->get_coordinates() = $4;
 		$$ = std::make_shared<commands::move_house>($2, $4);
 	} |
 
 	VAR_NAME '=' operation {
-        std::cout << "affectation" << "\n";
+        // std::cout << "affectation" << "\n";
 		$$ = std::make_shared<commands::assignment>($1, $3);
         // driver.setVariable($1, calculate($3, driver));
     } |
 
     COLORIZE house color {
-        std::cout << "change color\n";
+        // std::cout << "change color\n";
 		// $2->get_color() = $3;
 		$$ = std::make_shared<commands::colorize_house>($2, $3);
 	} |
 
     COLOR_OF house {
-		std::cout << "show color" << "\n";
+		// std::cout << "show color" << "\n";
         // std::cout << "color is " << $2->get_color().to_string() << " \n";
 		$$ = std::make_shared<commands::show_color>($2, std::cout);
 	} |
 
 	NEIGHBOR house operation {
-		std::cout << "add random neighbour\n";
+		// std::cout << "add random neighbour\n";
 		// int distance = calculate($3, driver);
 		// house_ptr hp = driver.get_city().add_neighbor($2, distance);
 		// std::cout << "new neighbour: " << hp->to_string() << "\n";
@@ -236,7 +238,7 @@ command:
 	} |
 
 	PCC house ARROW house {
-		std::cout << "plus court chemin\n";
+		// std::cout << "plus court chemin\n";
 		$$ = std::make_shared<commands::pcc>($2, $4, std::cout);
 	}
 
@@ -267,7 +269,7 @@ house_construction:
 
 comment:
 	COMMENT {
-		std::cout << "Comment: " << $1 << std::endl;
+		// std::cout << "Comment: " << $1 << std::endl;
 	}
 
 house:
