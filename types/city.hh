@@ -1,11 +1,15 @@
 #pragma once
+#include <list>
 #include <string>
+#include <map>
 #include <vector>
 #include <exception>
 #include <memory>
 #include <cmath>
 #include "house.hh"
 #include <exception>
+#include <iostream>
+#include <algorithm>
 
 class city
 {
@@ -26,7 +30,7 @@ public:
 	void set_radius(int r) { radius = r; }
 	int get_radius() const { return radius; }
 
-	void a_star(house_ptr, house_ptr);
+ 	std::list<house_ptr> a_star(house_ptr, house_ptr);
 	void tarjan();
 	void kruksal();
 	void k_coloring();
@@ -36,5 +40,12 @@ class out_of_radius : std::exception {
 public:
 	const char * what() const noexcept override {
 		return "Out Of Range";
+	}
+};
+
+class path_not_found : std::exception {
+public:
+	const char * what() const noexcept override {
+		return "Path not found!";
 	}
 };

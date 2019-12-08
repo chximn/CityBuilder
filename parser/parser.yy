@@ -48,6 +48,7 @@
 %token <std::string> OTHER
 %token ARROW DEGREE
 %token AND OR IF ELSE WHILE OCCUPIED EMPTY REPEAT RTIMES
+%token PCC
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -232,6 +233,11 @@ command:
 		// house_ptr hp = driver.get_city().add_neighbor($2, distance);
 		// std::cout << "new neighbour: " << hp->to_string() << "\n";
 		$$ = std::make_shared<commands::add_neighbor>($2, $3);
+	} |
+
+	PCC house ARROW house {
+		std::cout << "plus court chemin\n";
+		$$ = std::make_shared<commands::pcc>($2, $4, std::cout);
 	}
 
 house_construction:

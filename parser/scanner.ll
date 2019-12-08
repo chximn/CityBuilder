@@ -72,6 +72,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "maison"      return token::HOUSELIST;
 "Coloriser"   return token::COLORIZE;
 "Couleur"     return token::COLOR_OF;
+"PCC"         return token::PCC;
 "horaire" {
 	yylval->build<bool>(true);
 	return token::CLOCKWISE;

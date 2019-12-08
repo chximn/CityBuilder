@@ -169,4 +169,14 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class pcc : public command {
+private:
+	house_ref_ptr _house1;
+	house_ref_ptr _house2;
+	std::ostream & os;
+public:
+	pcc(house_ref_ptr h1, house_ref_ptr h2, std::ostream & s): _house1(h1), _house2(h2), os(s) {}
+	void execute(city &, Contexte  &) override;
+};
+
 }

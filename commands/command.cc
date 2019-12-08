@@ -96,3 +96,19 @@ void repeat_loop::execute(city & c, Contexte & ctx) {
 		}
 	}
 }
+
+void pcc::execute(city & c, Contexte & ctx) {
+	auto l = c.a_star(_house1->execute(c, ctx), _house2->execute(c, ctx));
+
+	auto it = l.begin();
+	os << (*it)->get_name();
+	while(true) {
+		if (++it == l.end()) {
+			os << "\n";
+			return;
+		}
+
+		os << " -> " << (*it)->get_name();
+	}
+
+}

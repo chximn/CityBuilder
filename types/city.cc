@@ -1,8 +1,10 @@
 #include "city.hh"
 
+int inf = 2147483647;
+
 void city::add_house(house_ptr h) {
 	auto coords = h->get_coordinates();
-	if (coords.get_x() > radius || coords.get_y() > radius || coords.get_z() > radius) throw out_of_radius(); 
+	if (coords.get_x() > radius || coords.get_y() > radius || coords.get_z() > radius) throw out_of_radius();
 	houses.push_back(h);
 }
 
@@ -76,4 +78,62 @@ house_ptr city::add_neighbor(house_ptr h, int distance) {
 	hp->add_neighbor(h);
 	h->add_neighbor(hp);
 	return hp;
+}
+
+std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
+
+	std::list<house_ptr> path;
+
+	struct record {
+		int g = inf;
+		int f = inf;
+		house_ptr pred = nullptr;
+		bool visited = false;
+	};
+
+	std::map<house_ptr, record> records;
+
+	records[start] = record{0,start->distance(goal),nullptr};
+
+	while (!records.empty()) {
+		house_ptr current = nullptr;
+
+		for (auto const & p : records) {
+			if (p.second.visited) continue;
+
+			if (current == nullptr || records[p.first].f < records[current].f) {
+				current = p.first;
+			}
+		}
+
+		if (current == nullptr) {
+			throw path_not_found();
+		}
+
+		if (current == goal) {
+			house_ptr pred = goal;
+
+			while (pred != nullptr) {
+				path.push_front(pred);
+				pred = records[pred].pred;
+			}
+
+			return path;
+		}
+
+		records[current].visited = true;
+
+		for (auto const & n : current->get_neighbors()) {
+			if (records[n].visited) continue;
+
+			int tentative = records[current].g + current->distance(n);
+			if (tentative < records[n].g) {
+				records[n].pred = current;
+				records[n].g = tentative;
+				records[n].f = tentative + n->distance(goal);
+			}
+		}
+	}
+
+	return path;
 }
