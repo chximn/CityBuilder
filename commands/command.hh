@@ -132,4 +132,23 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class if_condition : public command {
+private:
+	ExpressionPtr _condition;
+	std::vector<command_ptr> _body;
+public:
+	if_condition(ExpressionPtr c, std::vector<command_ptr> vc): _condition(c), _body(vc) {}
+	void execute(city &, Contexte  &) override;
+};
+
+class if_else_condition : public command {
+private:
+	ExpressionPtr _condition;
+	std::vector<command_ptr> _body;
+	std::vector<command_ptr> _body2;
+public:
+	if_else_condition(ExpressionPtr c, std::vector<command_ptr> vc, std::vector<command_ptr> vc2): _condition(c), _body(vc), _body2(vc2) {}
+	void execute(city &, Contexte  &) override;
+};
+
 }

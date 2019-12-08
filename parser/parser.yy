@@ -133,6 +133,14 @@ commands:
 	}
 
 command:
+	IF '(' operation ')' '{' NL commands '}' NL {
+		$$ = std::make_shared<commands::if_condition>($3, $7);
+	} |
+
+	IF '(' operation ')' '{' NL commands '}' NL ELSE '{' NL commands '}' {
+		$$ = std::make_shared<commands::if_else_condition>($3, $7, $13);
+	} |
+
 	house_construction {
 		std::cout << "house construction" << "\n";
 		// driver.get_city().add_house($1);

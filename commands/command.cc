@@ -56,3 +56,25 @@ void add_neighbor::execute(city & c, Contexte  & ctx) {
 void assignment::execute(city & c, Contexte  & ctx) {
 	ctx[_var] = _expression->calculer(ctx);
 }
+
+void if_condition::execute(city & c, Contexte & ctx) {
+	if (_condition->calculer(ctx)) {
+		for (auto const & cmd : _body) {
+			cmd->execute(c, ctx);
+		}
+	}
+}
+
+void if_else_condition::execute(city & c, Contexte & ctx) {
+	if (_condition->calculer(ctx)) {
+		for (auto const & cmd : _body) {
+			cmd->execute(c, ctx);
+		}
+	}
+
+	else {
+		for (auto const & cmd : _body2) {
+			cmd->execute(c, ctx);
+		}
+	}
+}
