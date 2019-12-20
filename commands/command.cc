@@ -15,7 +15,7 @@ void construct_road::execute(city & c, Contexte  & ctx) {
 }
 
 void destruct_house::execute(city & c, Contexte  & ctx) {
-	c.remove_house(*(_house->execute(c, ctx)));
+	c.remove_house(_house->execute(c, ctx));
 }
 
 void position_house::execute(city & c, Contexte  & ctx) {
@@ -120,4 +120,45 @@ void pcc::execute(city & c, Contexte & ctx) {
 
 	std::cout << "A* took       " << (m1-m0).count() << " microseconds" << "\n";
 	std::cout << "Dijkstra took " << (m3-m2).count() << " microseconds" << "\n";
+}
+
+void tarjan_algorithm::execute(city & c, Contexte & ctx) {
+	std::vector<std::vector<house_ptr>> blocks = c.tarjan();
+
+	color colors[] = {
+		color("#ff0000"),
+		color("#00ff00"),
+		color("#0000ff"),
+		color("#ffff00"),
+		color("#ff00ff"),
+		color("#00ffff"),
+		color("#000000"),
+		color("#888888"),
+		color("#55ff55"),
+		color("#5555ff"),
+		color("#ff55ff"),
+		color("#8855ff"),
+		color("#005588")
+	};
+
+	int i = 0;
+	for (auto const & block : blocks) {
+		for (auto const & h : block) {
+			h->get_color() = colors[i];
+		}
+		i++;
+	}
+}
+
+void kruksal_algorithm::execute(city & c, Contexte & ctx) {
+	auto s = c.kruksal();
+	c.clear_houses();
+
+	for (auto const & r : s) {
+		c.add_house(r->get_house1());
+		c.add_house(r->get_house2());
+
+		r->get_house1()->add_neighbor(r->get_house2());
+		r->get_house2()->add_neighbor(r->get_house1());
+	}
 }

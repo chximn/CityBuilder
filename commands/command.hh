@@ -180,4 +180,16 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class tarjan_algorithm : public command {
+public:
+	tarjan_algorithm() = default;
+	void execute(city &, Contexte  &) override;
+};
+
+class kruksal_algorithm : public command {
+public:
+	kruksal_algorithm() = default;
+	void execute(city &, Contexte  &) override;
+};
+
 }

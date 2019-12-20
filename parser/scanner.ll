@@ -73,6 +73,8 @@ comment {comment_begin}{comment_content}{comment_end}
 "Coloriser"   return token::COLORIZE;
 "Couleur"     return token::COLOR_OF;
 "PCC"         return token::PCC;
+"Tarjan"      return token::TARJAN;
+"Kruskal"     return token::KRUSKAL;
 "horaire" {
 	yylval->build<bool>(true);
 	return token::CLOCKWISE;
@@ -84,12 +86,10 @@ comment {comment_begin}{comment_content}{comment_end}
 }
 
 (\%\%(.|[ ])+) {
-	std::cout << "inline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
 {comment} {
-	std::cout << "multiline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }

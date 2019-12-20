@@ -48,7 +48,7 @@
 %token <std::string> OTHER
 %token ARROW DEGREE
 %token AND OR IF ELSE WHILE OCCUPIED EMPTY REPEAT RTIMES
-%token PCC
+%token PCC TARJAN KRUSKAL
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -240,6 +240,14 @@ command:
 	PCC house ARROW house {
 		// std::cout << "plus court chemin\n";
 		$$ = std::make_shared<commands::pcc>($2, $4, std::cout);
+	} |
+
+	TARJAN {
+		$$ = std::make_shared<commands::tarjan_algorithm>();
+	} |
+
+	KRUSKAL {
+		$$ = std::make_shared<commands::kruksal_algorithm>();
 	}
 
 house_construction:

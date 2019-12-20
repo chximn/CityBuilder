@@ -8,13 +8,22 @@ void city::add_house(house_ptr h) {
 	houses.push_back(h);
 }
 
-void city::remove_house(house & f) {
+void city::remove_house(house_ptr f) {
 	for (auto it = houses.begin(); it != houses.end(); it++) {
-		if ((*it)->get_coordinates() == f.get_coordinates()) {
+		if ((*it)->get_coordinates() == f->get_coordinates()) {
+
+			for (auto const & h : houses) {
+				h->remove_neigbor(f);
+			}
+
 			houses.erase(it);
 			break;
 		}
 	}
+}
+
+void city::clear_houses() {
+	houses.clear();
 }
 
 std::vector<house_ptr>  & city::get_houses() {
@@ -196,4 +205,101 @@ std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
 	}
 
 	return path;
+}
+
+struct record {
+	int index = -1;
+	int lowlink;
+	bool on_stack;
+};
+
+
+void strong_connect(house_ptr v, std::map<house_ptr, record> & records, std::stack<house_ptr> & s, int & index, std::vector<std::vector<house_ptr>> & vsg) {
+	records[v].index = index;
+	records[v].lowlink = index;
+	index++;
+	s.push(v);
+	records[v].on_stack = true;
+
+	for (auto const & w: v->get_neighbors()) {
+		if (records[w].index == -1) {
+			strong_connect(w, records, s, index, vsg);
+			int a = records[v].lowlink;
+			int b = records[v].lowlink;
+			records[v].lowlink = (a < b) ? a : b;
+		}
+
+		else if (records[w].on_stack) {
+			int a = records[v].lowlink;
+			int b = records[w].index;
+			records[v].lowlink = (a < b) ? a : b;
+		}
+	}
+
+	if (records[v].lowlink == records[v].index) {
+		std::vector<house_ptr> sg;
+		house_ptr w;
+		do {
+			w = s.top();
+			s.pop();
+			records[w].on_stack = false;
+			sg.push_back(w);
+		} while(w != v);
+
+		vsg.push_back(sg);
+	}
+}
+
+std::vector<std::vector<house_ptr>> city::tarjan() {
+	std::vector<std::vector<house_ptr>> vsg;
+	int index = 0;
+	std::stack<house_ptr> s;
+	std::map<house_ptr, record> records;
+
+	for (auto const & h : houses) {
+		if (records[h].index == -1) {
+			strong_connect(h, records, s, index, vsg);
+		}
+	}
+
+	return vsg;
+}
+
+std::vector<road_ptr> city::get_roads() const {
+	std::vector<road_ptr> vec;
+
+	for (auto const & h : houses) {
+		for (auto const & v : h->get_neighbors()) {
+			vec.push_back(std::make_shared<road>(h, v));
+		}
+	}
+
+	return vec;
+}
+
+std::set<road_ptr> city::kruksal() {
+	std::set<road_ptr> mst;
+
+	std::set<std::set<house_ptr>> partitions;
+
+	for (auto const & h : houses) {
+		partitions.insert(std::set<house_ptr>{h});
+	}
+
+	std::vector<road_ptr> edges = get_roads();
+	std::sort(edges.begin(), edges.end(), [](auto r1, auto r2){ return r1->get_distance() < r2->get_distance(); });
+
+ 	for (auto const & e : edges) {
+		auto setu = *std::find_if(partitions.begin(), partitions.end(), [e](auto const & v){ return v.find(e->get_house1()) != v.end(); });
+		auto itv =   std::find_if(partitions.begin(), partitions.end(), [e](auto const & v){ return v.find(e->get_house2()) != v.end(); });
+		auto setv = *itv;
+
+		if (std::find_if(setu.begin(), setu.end(), [e](auto const & v){ return v == e->get_house2(); }) == setu.end()) {
+			mst.insert(e);
+			setu.insert(setv.begin(), setv.end());
+			partitions.erase(itv);
+		}
+	}
+
+	return mst;
 }
