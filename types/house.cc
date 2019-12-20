@@ -27,6 +27,7 @@ void house::add_neighbor(house_ptr h) {
 	neighbors.push_back(h);
 }
 
+
 std::vector<house_ptr> house::get_neighbors() {
 	return neighbors;
 }
@@ -40,6 +41,10 @@ void house::remove_neigbor(house_ptr h) {
 		}
 		it++;
 	}
+}
+
+void house::clear_neighbors() {
+	neighbors.clear();
 }
 
 int house::distance(house_ptr p) {

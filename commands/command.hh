@@ -3,6 +3,7 @@
 #include <ostream>
 #include "city.hh"
 #include "house.hh"
+#include "road.hh"
 #include "house_ref.hh"
 #include "point_ref.hh"
 #include "degree_ref.hh"

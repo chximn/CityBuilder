@@ -13,6 +13,7 @@ void city::remove_house(house_ptr f) {
 		if ((*it)->get_coordinates() == f->get_coordinates()) {
 
 			for (auto const & h : houses) {
+				f->remove_neigbor(h);
 				h->remove_neigbor(f);
 			}
 
@@ -23,6 +24,11 @@ void city::remove_house(house_ptr f) {
 }
 
 void city::clear_houses() {
+
+	for (auto const & h : houses) {
+		h->clear_neighbors();
+	}
+
 	houses.clear();
 }
 
@@ -279,25 +285,26 @@ std::vector<road_ptr> city::get_roads() const {
 
 std::set<road_ptr> city::kruksal() {
 	std::set<road_ptr> mst;
+	std::map<house_ptr, int> partitions;
 
-	std::set<std::set<house_ptr>> partitions;
-
+	int i;
 	for (auto const & h : houses) {
-		partitions.insert(std::set<house_ptr>{h});
+		partitions[h] = i;
+		i++;
 	}
 
 	std::vector<road_ptr> edges = get_roads();
 	std::sort(edges.begin(), edges.end(), [](auto r1, auto r2){ return r1->get_distance() < r2->get_distance(); });
 
  	for (auto const & e : edges) {
-		auto setu = *std::find_if(partitions.begin(), partitions.end(), [e](auto const & v){ return v.find(e->get_house1()) != v.end(); });
-		auto itv =   std::find_if(partitions.begin(), partitions.end(), [e](auto const & v){ return v.find(e->get_house2()) != v.end(); });
-		auto setv = *itv;
+		auto setu = partitions[e->get_house1()];
+		auto setv = partitions[e->get_house2()];
 
-		if (std::find_if(setu.begin(), setu.end(), [e](auto const & v){ return v == e->get_house2(); }) == setu.end()) {
+		if (setu != setv) {
 			mst.insert(e);
-			setu.insert(setv.begin(), setv.end());
-			partitions.erase(itv);
+			for (auto & hhh : partitions) {
+				if (hhh.second == setv) hhh.second = setu;
+			}
 		}
 	}
 

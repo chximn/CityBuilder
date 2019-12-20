@@ -154,9 +154,23 @@ void kruksal_algorithm::execute(city & c, Contexte & ctx) {
 	auto s = c.kruksal();
 	c.clear_houses();
 
+	std::map<house_ptr, bool> visited;
+
 	for (auto const & r : s) {
-		c.add_house(r->get_house1());
-		c.add_house(r->get_house2());
+		std::cout << r->get_house1()->to_string() << "\n";
+		std::cout << r->get_house2()->to_string() << "\n";
+
+		auto h1 = r->get_house1();
+		if (visited.find(h1) == visited.end()) {
+			visited[h1] = true;
+			c.add_house(h1);
+		}
+
+		auto h2 = r->get_house2();
+		if (visited.find(h2) == visited.end()) {
+			visited[h2] = true;
+			c.add_house(h2);
+		}
 
 		r->get_house1()->add_neighbor(r->get_house2());
 		r->get_house2()->add_neighbor(r->get_house1());
