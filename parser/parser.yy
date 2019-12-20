@@ -48,7 +48,7 @@
 %token <std::string> OTHER
 %token ARROW DEGREE
 %token AND OR IF ELSE WHILE OCCUPIED EMPTY REPEAT RTIMES
-%token PCC TARJAN KRUSKAL
+%token PCC TARJAN KRUSKAL WELSH_POWELL
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -248,6 +248,10 @@ command:
 
 	KRUSKAL {
 		$$ = std::make_shared<commands::kruksal_algorithm>();
+	} |
+
+	WELSH_POWELL {
+		$$ = std::make_shared<commands::welsh_powell_algorithm>();
 	}
 
 house_construction:

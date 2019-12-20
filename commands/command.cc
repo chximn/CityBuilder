@@ -176,3 +176,28 @@ void kruksal_algorithm::execute(city & c, Contexte & ctx) {
 		r->get_house2()->add_neighbor(r->get_house1());
 	}
 }
+
+void welsh_powell_algorithm::execute(city & c, Contexte & ctx) {
+	std::map<house_ptr, int> mp = c.welsh_powell();
+
+	color colors[] = {
+		color("#ff0000"),
+		color("#00ff00"),
+		color("#0000ff"),
+		color("#ffff00"),
+		color("#ff00ff"),
+		color("#00ffff"),
+		color("#000000"),
+		color("#888888"),
+		color("#55ff55"),
+		color("#5555ff"),
+		color("#ff55ff"),
+		color("#8855ff"),
+		color("#005588")
+	};
+
+	for (auto & hc : mp) {
+		std::cout << hc.second << "\n";
+		hc.first->get_color() = colors[hc.second];
+	}
+}

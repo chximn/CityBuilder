@@ -190,7 +190,13 @@ public:
 class kruksal_algorithm : public command {
 public:
 	kruksal_algorithm() = default;
-	void execute(city &, Contexte  &) override;
+	void execute(city &, Contexte &) override;
+};
+
+class welsh_powell_algorithm : public command {
+public:
+	welsh_powell_algorithm() = default;
+	void execute(city &, Contexte &) override;
 };
 
 }

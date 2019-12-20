@@ -310,3 +310,34 @@ std::set<road_ptr> city::kruksal() {
 
 	return mst;
 }
+
+std::map<house_ptr, int> city::welsh_powell() {
+	std::sort(houses.begin(), houses.end(), [](auto h1, auto h2){ return h1->get_neighbors().size() > h2->get_neighbors().size(); });
+
+	std::map<house_ptr, int> colors;
+
+	int color = -1;
+	for (auto const & h : houses) {
+
+		for (int i = 0; i <= color + 1; i++) {
+			bool neigh_col = false;
+
+			for (auto const & n : h->get_neighbors()) {
+				if (colors.find(n) != colors.end()) {
+					if (colors[n] == i) {
+						neigh_col = true;
+						break;
+					}
+				}
+			}
+
+			if (!neigh_col) {
+				colors[h] = i;
+				if (i > color) color = i;
+				break;
+			}
+		}
+	}
+
+	return colors;
+}

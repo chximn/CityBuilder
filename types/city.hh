@@ -40,7 +40,7 @@ public:
  	std::list<house_ptr> dijkstra(house_ptr, house_ptr);
 	std::vector<std::vector<house_ptr>> tarjan();
 	std::set<road_ptr> kruksal();
-	void k_coloring();
+	std::map<house_ptr, int> welsh_powell();
 
 };
 

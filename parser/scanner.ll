@@ -75,6 +75,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "PCC"         return token::PCC;
 "Tarjan"      return token::TARJAN;
 "Kruskal"     return token::KRUSKAL;
+"Welsh-Powell" return token::WELSH_POWELL;
 "horaire" {
 	yylval->build<bool>(true);
 	return token::CLOCKWISE;

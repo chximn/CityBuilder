@@ -28,7 +28,7 @@ void house::add_neighbor(house_ptr h) {
 }
 
 
-std::vector<house_ptr> house::get_neighbors() {
+std::vector<house_ptr> const & house::get_neighbors() {
 	return neighbors;
 }
 
