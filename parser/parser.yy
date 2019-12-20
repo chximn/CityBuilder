@@ -47,7 +47,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR IF ELSE WHILE OCCUPIED EMPTY REPEAT RTIMES
+%token AND OR IF ELSE VOID WHILE OCCUPIED EMPTY REPEAT RTIMES
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -81,7 +81,7 @@ program:
 		 }
 
 city:
- 	city_header '{' NL commands '}'
+ 	city_header '{' NL commands '}' NL function
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
 		driver.get_city().set_radius($1);
@@ -258,6 +258,12 @@ house_construction:
 		$$ = std::make_shared<house_ref_create>($2, p0);
 		// $$ = house(point(0, 0, 0), degree(0), $2);
 	}
+argument:
+    VAR_NAME |argument
+function:
+    VOID VAR_NAME '(' argument ')'  {
+        
+}
 
 comment:
 	COMMENT {

@@ -48,6 +48,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "<"           return '<';
 ">"           return '>';
 "non"         return '!';
+"void"        return token::VOID;
 "Si"          return token::IF;
 "Sinon"       return token::ELSE;
 "Tant que"    return token::WHILE;
