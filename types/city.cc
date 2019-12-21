@@ -7,42 +7,36 @@ void city::add_house(house_ptr h) {
 }
 
 house_ptr city::add_random_house(house_ptr h) {
-	try {
+	point coordinates(0, 0, 0);
 
-		point coordinates(0, 0, 0);
-		get_house(coordinates);
+	int i = 1;
+	while (true) {
+		point start(i);
+		point pnt(start);
+		bool success;
 
-		int i = 1;
-		while (true) {
-			point start(i);
-			point pnt(start);
-			bool success;
+		while(true) {
+			point pnt2(pnt);
+			pnt2.translate(coordinates);
 
-			while(true) {
-				point pnt2(pnt);
-				pnt2.translate(coordinates);
+			int found = true;
+			try { get_house(pnt2); }
+			catch(...) { found = false; }
 
-				int found = true;
-				try { get_house(pnt2); }
-				catch(...) { found = false; }
+			if (!found) { success = true; break; }
 
-				if (!found) { success = true; break; }
-
-				pnt.rotate();
-				if (pnt == start) { success = false; break; }
-			}
-
-			if (success) {
-				h->get_coordinates() = pnt;
-				add_house(h);
-				return h;
-			}
-
-			i++;
+			pnt.rotate();
+			if (pnt == start) { success = false; break; }
 		}
-	}
 
-	catch(...) { return h; }
+		if (success) {
+			h->get_coordinates() = pnt;
+			add_house(h);
+			return h;
+		}
+
+		i++;
+	}
 }
 
 void city::remove_house(house & f) {
