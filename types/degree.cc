@@ -46,7 +46,7 @@ degree degree::operator =(degree const & d) {
 }
 
 void degree::turn(bool clockwise) {
-	val = (val + 60 * (clockwise ? -1 : 1)) % 360;
+	val = (val + 60 * (clockwise ? +1 : -1)) % 360;
 	if (val < 0) val += 360;
 }
 

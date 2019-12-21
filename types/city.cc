@@ -61,8 +61,8 @@ house_ptr city::get_house(std::string const & name) {
 }
 
 house_ptr city::get_house(unsigned int index) {
-	if (index >= houses.size()) throw house_not_found_list(index);
-	return houses.at(index);
+	if (index-1 >= houses.size()) throw house_not_found_list(index);
+	return houses.at(index-1);
 }
 
 house_ptr city::get_house(point const & coordinates) {
