@@ -31,6 +31,7 @@ public:
 	std::string const & get_name() const;
 	void add_neighbor(house_ptr);
 	std::vector<house_ptr> get_neighbors();
+	void remove_neighbor(house_ptr);
 	int distance(house_ptr);
 };
 

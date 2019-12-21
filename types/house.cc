@@ -32,3 +32,12 @@ std::vector<house_ptr> house::get_neighbors() {
 int house::distance(house_ptr p) {
 	return (abs(coordinates.get_x() - p->coordinates.get_x())+ abs(coordinates.get_y() - p->coordinates.get_y())+ abs(coordinates.get_z() - p->coordinates.get_z()));
 }
+
+void house::remove_neighbor(house_ptr h) {
+	for (auto it = neighbors.begin(); it != neighbors.end(); it++) {
+		if ((*it) == h) {
+			neighbors.erase(it);
+			break;
+		}
+	}
+}

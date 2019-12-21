@@ -124,6 +124,11 @@ void city::set_radius(int r) {
 	while (it != houses.end()) {
 		auto ppp = std::make_shared<house>(point(0,0,0));
 		if ((*it)->distance(ppp) > r) {
+			for (auto & v : (*it)->get_neighbors()) {
+				v->remove_neighbor(*it);
+				(*it)->remove_neighbor(v);
+			}
+
 			it = houses.erase(it);
 		}
 		else it++;
