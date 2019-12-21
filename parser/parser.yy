@@ -22,6 +22,7 @@
 	#include "color_ref.hh"
 	#include "house.hh"
 	#include "command.hh"
+	#include <utility>
 
     class Scanner;
     class Driver;
@@ -48,6 +49,9 @@
 %token <std::string> OTHER
 %token ARROW DEGREE
 %token AND OR IF ELSE VOID WHILE OCCUPIED EMPTY REPEAT RTIMES
+%type <std::vector<std::string>> arguments
+%type <std::vector<ExpressionPtr>> args
+%type <std::pair<std::string, std::vector<std::string>>> function_header
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -64,6 +68,7 @@
 %type <house_ref_ptr>   house_construction
 %type <commands::command_ptr>     command
 %type <std::vector<commands::command_ptr>> commands body
+
 %left '-' '+'
 %left '*' '/'
 %precedence  NO
@@ -72,16 +77,17 @@
 %%
 
 program:
-		 comment NL program |
-		 city    NL program |
-		         NL program |
+		 comment  NL program |
+		 city     NL program |
+		 function NL program |
+		          NL program |
 	     END {
 		 	driver.show();
 			YYACCEPT;
 		 }
 
 city:
- 	city_header '{' NL commands '}' NL function
+ 	city_header '{' NL commands '}'
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
 		driver.get_city().set_radius($1);
@@ -232,6 +238,10 @@ command:
 		// house_ptr hp = driver.get_city().add_neighbor($2, distance);
 		// std::cout << "new neighbour: " << hp->to_string() << "\n";
 		$$ = std::make_shared<commands::add_neighbor>($2, $3);
+	} |
+
+	VAR_NAME '(' args ')' {
+		$$ = std::make_shared<commands::function_call>($1, $3, driver.get_functions());
 	}
 
 house_construction:
@@ -258,12 +268,40 @@ house_construction:
 		$$ = std::make_shared<house_ref_create>($2, p0);
 		// $$ = house(point(0, 0, 0), degree(0), $2);
 	}
-argument:
-    VAR_NAME |argument
+
+args:
+	operation ',' args {
+		$3.insert($3.begin(), $1);
+		$$ = $3;
+	} |
+
+	operation {
+		$$ = std::vector<ExpressionPtr>{$1};
+	}
+
+arguments:
+    VAR_NAME ',' arguments {
+		$3.insert($3.begin(), $1);
+		$$ = $3;
+	} |
+
+	VAR_NAME {
+		$$ = std::vector<std::string>{$1};
+	}
+
 function:
-    VOID VAR_NAME '(' argument ')'  {
-        
-}
+ 	function_header '{' NL commands '}' {
+		driver.add_function(commands::function($1.first, $1.second, $4));
+	}
+
+function_header:
+	VOID VAR_NAME '(' arguments ')' {
+		$$ = std::pair<std::string, std::vector<std::string>>{$2, $4};
+	} |
+
+	VOID VAR_NAME {
+		$$ = std::pair<std::string, std::vector<std::string>>{$2, std::vector<std::string>{}};
+	}
 
 comment:
 	COMMENT {

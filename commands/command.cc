@@ -53,7 +53,7 @@ void add_neighbor::execute(city & c, Contexte  & ctx) {
 	c.add_neighbor(_house->execute(c, ctx), _expression->calculer(ctx));
 }
 
-void assignment::execute(city & c, Contexte  & ctx) {
+void assignment::execute(city & c, Contexte & ctx) {
 	ctx[_var] = _expression->calculer(ctx);
 }
 
@@ -95,4 +95,43 @@ void repeat_loop::execute(city & c, Contexte & ctx) {
 			cmd->execute(c, ctx);
 		}
 	}
+}
+
+void function::execute(city & cit, Contexte & ctx) {
+	for (auto const & c : _body) {
+		c->execute(cit, ctx);
+	}
+}
+
+void function_call::execute(city & c, Contexte & ctx) {
+
+	std::string n = _name;
+
+	auto it = std::find_if(_functions.begin(), _functions.end(), [n](auto const & f){
+		return f._name == n;
+	});
+
+	if (it != _functions.end()) {
+	    auto func = *it;
+
+		Contexte func_ctx;
+
+		int i = 0;
+		for (auto const & a : _arguments) {
+			int v = a->calculer(ctx);
+
+			try {
+				func_ctx[func._arguments.at(i)] = v;
+			}
+
+			catch (...) {}
+
+			func_ctx["$"+std::to_string(i+1)] = v;
+			i++;
+		}
+
+		func.execute(c, func_ctx);
+	}
+
+	else throw "function does not exist";
 }

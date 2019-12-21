@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <ostream>
 
 class Contexte {
 private:
@@ -18,6 +19,7 @@ public:
     int& operator[](const std::string & nom);
     const int& operator[](const std::string & nom) const;
 
+	void show(std::ostream & os);
 };
 
 

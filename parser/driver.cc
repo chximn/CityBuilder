@@ -16,6 +16,14 @@ city & Driver::get_city()  {
     return _city;
 }
 
+void Driver::add_function(commands::function const & cmd) {
+	functions.push_back(cmd);
+}
+
+std::vector<commands::function> & Driver::get_functions() {
+	return functions;
+}
+
 void Driver::show() {
 	gui->setRayon(_city.get_radius());
 

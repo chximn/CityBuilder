@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <ostream>
+#include <algorithm>
 #include "city.hh"
 #include "house.hh"
 #include "house_ref.hh"
@@ -166,6 +167,29 @@ private:
 	std::vector<command_ptr> _body;
 public:
 	repeat_loop(ExpressionPtr t, std::vector<command_ptr> vc): _times(t), _body(vc) {}
+	void execute(city &, Contexte  &) override;
+};
+
+class function_call;
+
+class function : public command {
+private:
+	std::string _name;
+	std::vector<std::string> _arguments;
+	std::vector<command_ptr> _body;
+public:
+	function(std::string const & n, std::vector<std::string> const & a, std::vector<command_ptr> const & b): _name(n), _arguments(a), _body(b) {}
+	void execute(city &, Contexte  &) override;
+	friend function_call;
+};
+
+class function_call : public command {
+private:
+	std::string _name;
+	std::vector<ExpressionPtr> _arguments;
+	std::vector<function> & _functions;
+public:
+	function_call(std::string const & n, std::vector<ExpressionPtr> const & e, std::vector<function> & f): _name(n), _arguments(e), _functions(f) {}
 	void execute(city &, Contexte  &) override;
 };
 
