@@ -1,0 +1,5 @@
+Construire{
+  Maison(1,0,-1)
+  Maison(2,0,-2)
+  Route(1,0,-1) -> (2,0,-2)
+}

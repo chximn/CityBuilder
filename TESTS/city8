@@ -1,0 +1,6 @@
+Construire ( 5 ) {
+  Maison (0, 0, 0)
+  %% Orienter la maison créée vers la gauche
+  Tourner maison[1] horaire
+  Tourner (0,0,0) horaire
+}

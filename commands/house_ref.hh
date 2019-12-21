@@ -50,3 +50,11 @@ public:
 	house_ref_create(std::string s, point_ref_ptr p): name(s), coordinates(p) {}
 	house_ptr execute(city &, Contexte const &) const override;
 };
+
+class house_ref_create_random : public house_ref {
+private:
+	std::string name;
+public:
+	house_ref_create_random(std::string s): name(s) {}
+	house_ptr execute(city &, Contexte const &) const override;
+};

@@ -1,0 +1,5 @@
+Construire {
+  Maison (1+1, 4-5, 1*-1)
+  Deplacer maison[1] -> (1+1+1+1+1,2+3*10-(15*2+7),0)
+  Orienter (5,-5,0) 78+32°
+}

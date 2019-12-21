@@ -1,0 +1,7 @@
+Construire {
+  Maison M1 (0, 0, 0)
+  Deplacer M1 -> (1,0,-1)
+  Orienter M1 150°
+  Maison M2 (0,2,-2)
+  Route M1 -> M2
+}

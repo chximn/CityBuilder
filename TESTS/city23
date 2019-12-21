@@ -1,0 +1,14 @@
+void nMaisons ( n ) {
+  Maison M1 (0,0,0)
+  i=0
+  Tant que ( i < n) {
+   Voisin M1 1
+   i=i+1
+  }
+}
+
+Construire {
+  nMaisons(5)
+}
+
+

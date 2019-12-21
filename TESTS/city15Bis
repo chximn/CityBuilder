@@ -1,0 +1,8 @@
+Construire (2+3) {
+  Maison M1 (1+1, 4-5, 1*-1)
+  Maison M2 (2,0,-2)
+  Deplacer maison[1] -> (1+1+1+1+1,2+3*10-(15*2+7),0)
+  Orienter M1 78+32°
+  Route (4/2,65*0,---2) -> ((5),-5,0+0+0)
+  Position M1
+}

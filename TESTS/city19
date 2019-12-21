@@ -1,0 +1,5 @@
+Construire {
+  Maison (0,0,0)
+  Voisin (0,0,0) 3
+  Voisin (0,0,0) 3
+}

@@ -1,0 +1,7 @@
+Construire{
+  Maison(0,0,0)
+  Coloriser maison[1] #00ff00
+  Maison M2 (1,0,-1)
+  Coloriser M2 (0,0,255)
+  Couleur M2
+}

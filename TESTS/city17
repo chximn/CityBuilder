@@ -1,0 +1,12 @@
+Construire (-5) {
+  
+}
+
+Construire {
+  Maison (0,0,0)
+  Tourner maison[1] horaire
+  Maison (0,0,0)
+  Route maison[1] -> (1,0,-1)
+  Maison (5,2,3)
+  Maison (6,0,-6)
+}

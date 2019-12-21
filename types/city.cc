@@ -2,8 +2,47 @@
 
 void city::add_house(house_ptr h) {
 	auto coords = h->get_coordinates();
-	if (coords.get_x() > radius || coords.get_y() > radius || coords.get_z() > radius) throw out_of_radius(); 
+	if (coords.get_x() > radius || coords.get_y() > radius || coords.get_z() > radius) throw out_of_radius();
 	houses.push_back(h);
+}
+
+house_ptr city::add_random_house(house_ptr h) {
+	try {
+
+		point coordinates(0, 0, 0);
+		get_house(coordinates);
+
+		int i = 1;
+		while (true) {
+			point start(i);
+			point pnt(start);
+			bool success;
+
+			while(true) {
+				point pnt2(pnt);
+				pnt2.translate(coordinates);
+
+				int found = true;
+				try { get_house(pnt2); }
+				catch(...) { found = false; }
+
+				if (!found) { success = true; break; }
+
+				pnt.rotate();
+				if (pnt == start) { success = false; break; }
+			}
+
+			if (success) {
+				h->get_coordinates() = pnt;
+				add_house(h);
+				return h;
+			}
+
+			i++;
+		}
+	}
+
+	catch(...) { return h; }
 }
 
 void city::remove_house(house & f) {
@@ -76,4 +115,17 @@ house_ptr city::add_neighbor(house_ptr h, int distance) {
 	hp->add_neighbor(h);
 	h->add_neighbor(hp);
 	return hp;
+}
+
+void city::set_radius(int r) {
+	radius = r;
+
+	auto it = houses.begin();
+	while (it != houses.end()) {
+		auto ppp = std::make_shared<house>(point(0,0,0));
+		if ((*it)->distance(ppp) > r) {
+			it = houses.erase(it);
+		}
+		else it++;
+	}
 }

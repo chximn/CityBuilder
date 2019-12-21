@@ -1,0 +1,6 @@
+Construire (6) {
+  Maison (0, 0, 0)
+  Maison
+  Tourner maison[2] !horaire
+  Deplacer maison[2] -> (2,-1,-1)
+}

@@ -261,9 +261,7 @@ assignment:
 
 house_construction:
 	HOUSE {
-		auto zero = std::make_shared<Constante>(0);
-		auto p0 = std::make_shared<point_ref>(zero, zero, zero);
-		$$ = std::make_shared<house_ref_create>("", p0);
+		$$ = std::make_shared<house_ref_create_random>("");
 		// $$ = house();
 	} |
 
@@ -278,9 +276,7 @@ house_construction:
 	} |
 
 	HOUSE VAR_NAME {
-		auto zero = std::make_shared<Constante>(0);
-		auto p0 = std::make_shared<point_ref>(zero, zero, zero);
-		$$ = std::make_shared<house_ref_create>($2, p0);
+		$$ = std::make_shared<house_ref_create_random>($2);
 		// $$ = house(point(0, 0, 0), degree(0), $2);
 	}
 

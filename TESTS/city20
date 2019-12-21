@@ -1,0 +1,10 @@
+Construire {
+  Maison M1 (1, -1, 0 )
+  Si (occupe(2, -2, 0)) {
+    Route M1 -> (2, -2, 0)
+  }
+  Sinon {
+    Maison (2, -2, 0)
+    Route M1 -> (2, -2, 0)
+  }
+}

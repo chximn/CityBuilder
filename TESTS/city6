@@ -1,0 +1,15 @@
+Construire (5) {
+  %% Début du programme
+  Maison
+  %/
+  Construit une maison à des coordonnées
+  aléatoires dans la limite de la taille
+  de la ville
+  /%
+  Maison (0, 0, 0)
+  %% Construit une maison à l'emplacement de coordonnées (0 ,0 ,0)
+  Maison (2, -1, -1)
+  Route (0, 0, 0) -> (2, -1, -1)
+  %% Construit une route entre les maisons situées aux coordonnées (0, 0, 0) et (2, -1, -1)
+  %% fin du programme
+}

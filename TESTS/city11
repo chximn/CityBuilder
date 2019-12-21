@@ -1,0 +1,6 @@
+Construire (6) {
+  Maison (0, 0, 0)
+  Maison (3,0,-3)
+  Route maison[1] -> maison[2]
+  Deplacer maison[2] -> (5,-2,-3)
+}
