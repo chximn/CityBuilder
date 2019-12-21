@@ -38,7 +38,7 @@ private:
 public:
     MaisonGUI(int x, int y, int z);
     ~MaisonGUI() {}
-    void setCouleur(int r,int v,int b);
+    void setCouleur(int r,int v,int b); 
     CouleurGUI getCouleur() {CouleurGUI C; C.rouge = m_couleur.red(); C.vert = m_couleur.green(); C.bleu = m_couleur.blue();  return C;}
     QColor getColor() {return m_couleur;}
     void setOrientation(int o) {m_orientation=o;}
@@ -108,5 +108,5 @@ public:
     void drawRoad(QPainter& p, RouteGUI* R);
     void drawRoadIn(QPainter& p, PositionGUI P1, PositionGUI P2, bool start, bool end);
     void drawRoundAbout(QPainter& p, int x, int y, int z);
-    void drawMap(QPainter& p, unsigned int r);
+    void drawMap(QPainter& p, unsigned int r);      
 };

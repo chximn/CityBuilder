@@ -103,13 +103,14 @@ unsigned int VilleGUI::housesDistance(PositionGUI P1, PositionGUI P2){
 
 PositionGUI cube_round(PositionGUIF P){
     PositionGUI P2;
-    P2.x = round(P.x);
-    P2.y = round(P.y);
-    P2.z = round(P.z);
+	// std::cout << "Not ROUND " <<  "x=" << P.x <<"y=" << P.y <<"z=" << P.z << std::endl;
+    P2.x = round(P.x-0.005);
+    P2.y = round(P.y+0.005);
+    P2.z = round(P.z-0.005);
 
-    int x_diff = abs(P2.x - P.x);
-    int y_diff = abs(P2.y - P.y);
-    int z_diff = abs(P2.z - P.z);
+    float x_diff = abs(P2.x - P.x);
+    float y_diff = abs(P2.y - P.y);
+    float z_diff = abs(P2.z - P.z);
 
     if ((x_diff > y_diff) and (x_diff > z_diff))
         P2.x = -P2.y-P2.z;
@@ -118,6 +119,7 @@ PositionGUI cube_round(PositionGUIF P){
     else
         P2.z = -P2.x-P2.y;
 
+    // std::cout << "ROUND " <<  "x=" << P2.x <<"y=" << P2.y <<"z=" << P2.z << std::endl;
     return P2;
 }
 
@@ -130,10 +132,12 @@ PositionGUIF cube_lerp(PositionGUI a, PositionGUI b, float t) {
     P.x = lerp(a.x, b.x, t);
     P.y = lerp(a.y, b.y, t);
     P.z = lerp(a.z, b.z, t);
+    // std::cout << "x=" << P.x <<"y=" << P.y <<"z=" << P.z << std::endl;
     return P;
 }
 
 void VilleGUI::drawRoad(QPainter& p, RouteGUI* R){
+  // std::cout << "Route : (" << R->getPositionOrigine().x << "," << R->getPositionOrigine().y << "," << R->getPositionOrigine().z << ") -> " << R->getPositionDestination().x << "," << R->getPositionDestination().y << "," << R->getPositionDestination().z << ")";
   unsigned int distance = housesDistance(R->getPositionOrigine(),R->getPositionDestination());
   std::vector<PositionGUI> chemin;
   for (unsigned int i = 0 ; i<=distance; ++i){
