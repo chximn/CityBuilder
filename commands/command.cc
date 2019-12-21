@@ -135,3 +135,17 @@ void function_call::execute(city & c, Contexte & ctx) {
 
 	else throw "function does not exist";
 }
+
+
+
+void for_loop::execute(city & c, Contexte & ctx) {
+	_init->execute(c, ctx);
+
+	while (_cond->calculer(ctx)) {
+		for (auto const & cmd : _body) {
+			cmd->execute(c, ctx);
+		}
+
+		_inc->execute(c, ctx);
+	}
+}

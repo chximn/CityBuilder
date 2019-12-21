@@ -48,7 +48,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR IF ELSE VOID WHILE OCCUPIED EMPTY REPEAT RTIMES
+%token AND OR IF ELSE VOID WHILE OCCUPIED EMPTY REPEAT RTIMES FOR
 %type <std::vector<std::string>> arguments
 %type <std::vector<ExpressionPtr>> args
 %type <std::pair<std::string, std::vector<std::string>>> function_header
@@ -68,6 +68,7 @@
 %type <house_ref_ptr>   house_construction
 %type <commands::command_ptr>     command
 %type <std::vector<commands::command_ptr>> commands body
+%type <commands::command_ptr> assignment
 
 %left '-' '+'
 %left '*' '/'
@@ -164,6 +165,10 @@ command:
 		$$ = std::make_shared<commands::repeat_loop>($2, $4);
 	} |
 
+	FOR '(' assignment ';' operation ';' assignment ')' body {
+		$$ = std::make_shared<commands::for_loop>($3, $5, $7, $9);
+	} |
+
 	house_construction {
 		std::cout << "house construction" << "\n";
 		// driver.get_city().add_house($1);
@@ -214,11 +219,9 @@ command:
 		$$ = std::make_shared<commands::move_house>($2, $4);
 	} |
 
-	VAR_NAME '=' operation {
-        std::cout << "affectation" << "\n";
-		$$ = std::make_shared<commands::assignment>($1, $3);
-        // driver.setVariable($1, calculate($3, driver));
-    } |
+	assignment {
+		$$ = $1;
+	} |
 
     COLORIZE house color {
         std::cout << "change color\n";
@@ -242,6 +245,13 @@ command:
 
 	VAR_NAME '(' args ')' {
 		$$ = std::make_shared<commands::function_call>($1, $3, driver.get_functions());
+	}
+
+assignment:
+	VAR_NAME '=' operation {
+		std::cout << "affectation" << "\n";
+		$$ = std::make_shared<commands::assignment>($1, $3);
+		// driver.setVariable($1, calculate($3, driver));
 	}
 
 house_construction:
@@ -290,8 +300,8 @@ arguments:
 	}
 
 function:
- 	function_header '{' NL commands '}' {
-		driver.add_function(commands::function($1.first, $1.second, $4));
+ 	function_header body {
+		driver.add_function(commands::function($1.first, $1.second, $2));
 	}
 
 function_header:
@@ -351,59 +361,73 @@ point:
 
 operation:
 	VAR_NAME {
-      $$ = std::make_shared<Variable>($1);
+		$$ = std::make_shared<Variable>($1);
     } |
-    NUMBER {
-     $$ = std::make_shared<Constante>($1);
-    } |
-    operation '+' operation {
-       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::plus);
-   } |
-   operation '-' operation  {
-      $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::moins);
-   } |
-   operation '/' operation  {
-       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::divise);
-   } |
-   operation '*' operation  {
-       $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
-    } |
-   '-' operation %prec NEG {
-         $$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
-     } |
-     operation '=' '=' operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::equ);
-     } |
-     operation '<' operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf);
-     } |
-     operation '>' operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
-     } |
-     operation '<' '=' operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::inf_equ);
-     } |
-     operation '>' '=' operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::sup_equ);
-     } |
-     '!' operation %prec NO {
-           $$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
-     } |
-     operation OR operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
-     } |
-     operation AND operation {
-         $$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
-     } |
 
-	 OCCUPIED point {
-		 $$ = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
-	 } |
+	NUMBER {
+		$$ = std::make_shared<Constante>($1);
+    } |
 
-	 EMPTY point {
-		 auto occup = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
-		 $$ = std::make_shared<ExpressionUnaire>(occup, OperateurUnaire::non);
-	 }
+	operation '+' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::plus);
+	} |
+
+	operation '-' operation  {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::moins);
+	} |
+
+	operation '/' operation  {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::divise);
+	} |
+
+	operation '*' operation  {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
+	} |
+
+	'-' operation %prec NEG {
+		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
+	} |
+
+	operation '=' '=' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::equ);
+	} |
+
+	operation '<' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf);
+	} |
+
+	operation '>' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
+	} |
+
+	operation '<' '=' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::inf_equ);
+	} |
+
+	operation '>' '=' operation {
+    	$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::sup_equ);
+    } |
+
+	'!' operation %prec NO {
+    	$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
+    } |
+
+	operation OR operation {
+    	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
+    } |
+
+	operation AND operation {
+    	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
+    } |
+
+	OCCUPIED point {
+		$$ = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
+	} |
+
+	EMPTY point {
+		auto occup = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
+		$$ = std::make_shared<ExpressionUnaire>(occup, OperateurUnaire::non);
+	}
 
 %%
 

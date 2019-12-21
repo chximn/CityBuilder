@@ -32,6 +32,7 @@ comment {comment_begin}{comment_content}{comment_end}
 
 <<EOF>> return token::END;
 
+";"           return ';';
 "+"           return '+';
 "*"           return '*';
 "-"           return '-';
@@ -52,6 +53,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "Si"          return token::IF;
 "Sinon"       return token::ELSE;
 "Tant que"    return token::WHILE;
+"Pour"        return token::FOR;
 "Repeter"     return token::REPEAT;
 "fois"        return token::RTIMES;
 "occupe"      return token::OCCUPIED;

@@ -193,4 +193,15 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class for_loop : public command {
+private:
+	command_ptr   _init;
+	ExpressionPtr _cond;
+	command_ptr   _inc;
+	std::vector<command_ptr> _body;
+public:
+	for_loop(command_ptr a, ExpressionPtr b, command_ptr c, std::vector<command_ptr> d): _init(a), _cond(b), _inc(c), _body(d) {}
+	void execute(city &, Contexte  &) override;
+};
+
 }
