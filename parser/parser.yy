@@ -66,9 +66,10 @@
 %type <point_ref_ptr>   coordinates point
 %type <house_ref_ptr>   house
 %type <house_ref_ptr>   house_construction
-%type <commands::command_ptr>     command
+%type <commands::command_ptr>     command city
 %type <std::vector<commands::command_ptr>> commands body
 %type <commands::command_ptr> assignment
+%type <std::vector<commands::command_ptr>> program
 
 %left '-' '+'
 %left '*' '/'
@@ -77,24 +78,28 @@
 
 %%
 
+entry:
+	program {
+		for (auto const & c : $1) {
+			c->execute(driver.get_city(), driver.getContexte());
+		}
+
+		driver.show();
+		YYACCEPT;
+	}
+
 program:
-		 comment  NL program |
-		 city     NL program |
-		 function NL program |
-		          NL program |
-	     END {
-		 	driver.show();
-			YYACCEPT;
-		 }
+		 comment  NL program { $$ = $3; } |
+		 city     NL program { $3.insert($3.begin(), $1); $$ = $3; } |
+		 function NL program { $$ = $3; } |
+		          NL program { $$ = $2; } |
+	     END { $$ = std::vector<commands::command_ptr>{}; }
 
 city:
  	city_header '{' NL commands '}'
 	{
 		std::cout << "construire ville de taille: " << $1 << "\n";
-		driver.get_city().set_radius($1);
-		for (auto const & c : $4) {
-			c->execute(driver.get_city(), driver.getContexte());
-		}
+		$$ = std::make_shared<commands::city_construction>($1, $4);
 	}
 
 city_header:

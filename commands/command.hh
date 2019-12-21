@@ -204,4 +204,13 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class city_construction : public command {
+private:
+	int _radius;
+	std::vector<command_ptr> _body;
+public:
+	city_construction(int a, std::vector<command_ptr> b): _radius(a), _body(b) {}
+	void execute(city &, Contexte  &) override;
+};
+
 }

@@ -136,8 +136,6 @@ void function_call::execute(city & c, Contexte & ctx) {
 	else throw "function does not exist";
 }
 
-
-
 void for_loop::execute(city & c, Contexte & ctx) {
 	_init->execute(c, ctx);
 
@@ -147,5 +145,12 @@ void for_loop::execute(city & c, Contexte & ctx) {
 		}
 
 		_inc->execute(c, ctx);
+	}
+}
+
+void city_construction::execute(city & c, Contexte & ctx) {
+	c.set_radius(_radius);
+	for (auto const & cmd : _body) {
+		cmd->execute(c, ctx);
 	}
 }
