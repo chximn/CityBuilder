@@ -96,7 +96,8 @@ house_ptr city::add_neighbor(house_ptr h, int distance) {
 }
 
 std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
-
+	std::cout<<"------------------------------------------------------------------------------\n";
+	std::cout<<"A star : \n";
 	std::list<house_ptr> path;
 
 	struct record {
@@ -149,15 +150,18 @@ std::list<house_ptr> city::a_star(house_ptr start, house_ptr goal) {
 				records[n].g = tentative;
 				records[n].f = tentative + n->distance(goal);
 
-				std::cout << "calcule: pred=" << current->get_name() << ", dist=" << tentative << ", h=" << n->distance(goal) << "\n";
+				std::cout << "calcule:" << current->get_name()<<"->"<<n->get_name()<< ", distance=" << tentative << ", heuristique=" << n->distance(goal) << "\n";
 			}
 		}
+		std::cout<<std::endl;
 	}
 
 	return path;
 }
 
 std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
+	std::cout<<"------------------------------------------------------------------------------\n";
+	std::cout<<"Dijkstra : \n ";
 	std::list<house_ptr> path;
 
 	struct record {
@@ -189,9 +193,9 @@ std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
 				path.push_front(pred);
 				pred = records[pred].pred;
 			}
-
 			return path;
 		}
+		std::cout << " Noeud choisi: " << current->get_name() << "\n";
 
 		records[current].visited = true;
 
@@ -206,10 +210,11 @@ std::list<house_ptr> city::dijkstra(house_ptr start, house_ptr goal) {
 			if (tentative < records[n].dist) {
 				records[n].pred = current;
 				records[n].dist = tentative;
+				std::cout << "calcule: " << current->get_name()<<"->"<<n->get_name()<< ", distance=" << tentative << "\n";
 			}
 		}
+		std::cout<<std::endl;
 	}
-
 	return path;
 }
 
@@ -285,6 +290,7 @@ std::vector<road_ptr> city::get_roads() const {
 
 std::set<road_ptr> city::kruksal() {
 	std::set<road_ptr> mst;
+	std::vector<house_ptr> visited;
 	std::map<house_ptr, int> partitions;
 
 	int i;
@@ -294,6 +300,7 @@ std::set<road_ptr> city::kruksal() {
 	}
 
 	std::vector<road_ptr> edges = get_roads();
+	//trie des arc;
 	std::sort(edges.begin(), edges.end(), [](auto r1, auto r2){ return r1->get_distance() < r2->get_distance(); });
 
  	for (auto const & e : edges) {
@@ -302,9 +309,19 @@ std::set<road_ptr> city::kruksal() {
 
 		if (setu != setv) {
 			mst.insert(e);
+				 visited.push_back(e->get_house1());
+				 visited.push_back(e->get_house2());
+				 std::cout<<std::endl;
+				 std::cout<<"-Sommet concerné : "<<e->get_house1()->get_name()<<std::endl;
 			for (auto & hhh : partitions) {
-				if (hhh.second == setv) hhh.second = setu;
+				if (hhh.second == setv)
+				{
+					hhh.second = setu;
+					std::cout<<"sommet à l'extremite: "<<hhh.first->get_name()<<std::endl;
+				}
 			}
+			std::cout<<"Arête choisie :"<<e->get_house1()->get_name()<<"->"<<e->get_house2()->get_name()<<std::endl;
+			std::cout<<"    distance :"<<e->get_distance()<<std::endl;
 		}
 	}
 
