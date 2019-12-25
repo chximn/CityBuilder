@@ -23,8 +23,3 @@ public:
 	void turn(bool);
 	std::string to_string() const;
 };
-
-class degree_not_valid : public std::exception {
-public:
-	const char * what() const noexcept override;
-};
