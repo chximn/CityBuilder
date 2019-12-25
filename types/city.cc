@@ -232,8 +232,12 @@ void strong_connect(house_ptr v, std::map<house_ptr, record> & records, std::sta
 	s.push(v);
 	records[v].on_stack = true;
 
+	std::cout<<"*** racine choisie : "<<v->get_name()<<" ***"<<std::endl;
 	for (auto const & w: v->get_neighbors()) {
 		if (records[w].index == -1) {
+			std::cout<<"+sommet non visité : "<<w->get_name()<<std::endl;
+			std::cout<<"+Arête sélectionnée :"<<v->get_name()<<"->"<<w->get_name()<<std::endl;
+			std::cout<<" "<<std::endl;
 			strong_connect(w, records, s, index, vsg);
 			int a = records[v].lowlink;
 			int b = records[v].lowlink;
@@ -241,6 +245,7 @@ void strong_connect(house_ptr v, std::map<house_ptr, record> & records, std::sta
 		}
 
 		else if (records[w].on_stack) {
+			std::cout<<"+sommet deja visité : "<<w->get_name()<<std::endl;
 			int a = records[v].lowlink;
 			int b = records[w].index;
 			records[v].lowlink = (a < b) ? a : b;

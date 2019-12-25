@@ -160,14 +160,12 @@ void kruksal_algorithm::execute(city & c, Contexte & ctx) {
 	// 	std::cout << r->get_house1()->to_string() << "\n";
 	// 	std::cout << r->get_house2()->to_string() << "\n";
 		auto h1 = r->get_house1();
-		//std::cout<<"sommet racine:"<<h1->to_string()<<std::endl;
 		if (visited.find(h1) == visited.end()) {
 			visited[h1] = true;
 			c.add_house(h1);
 		}
 
 		auto h2 = r->get_house2();
-		//std::cout<<"sommet a lextremit du sommet racine "<<h2->to_string()<<std::endl;
 		if (visited.find(h2) == visited.end()) {
 			visited[h2] = true;
 			c.add_house(h2);

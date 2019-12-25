@@ -1,0 +1,8 @@
+Pour l'implementation des algorithmes on les a declarés dans le scanner pour pouvoir les utiliser ensuite dans le parser
+une fois l'analyseur rencontre pcm, Kruskal, tarjan ou bien welsh_powell on fait appele à la fonction correspandante qui a été declarée et implementée auparavant dans les fichier cc de city
+
+vous trouverez dans ce dossier trois exemples pour les test:
+exemplepcm.txt pour tester l'algorithm a_star ainsi que Dijkstra
+et deux autre pour tarjan et Kruskal
+
+en ce qui concerne l'algorithme welsh_powell vous pouvez tester avec un des trois exemples ci-dessus.
