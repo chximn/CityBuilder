@@ -13,8 +13,16 @@ void construct_road::execute(city & c, Contexte  & ctx) {
 	h1->add_neighbor(h2);
 	h2->add_neighbor(h1);
 }
+void destruct_road::execute(city & c, Contexte  & ctx) {
+	auto h1 = _house1->execute(c, ctx);
+	auto h2 = _house2->execute(c, ctx);
+	h1->remove_neighbor(h2);
+	h2->remove_neighbor(h1);
+}
 
 void destruct_house::execute(city & c, Contexte  & ctx) {
+	for(auto const & x:_house->execute(c, ctx)->get_neighbors())
+		x->remove_neighbor((_house->execute(c, ctx)));
 	c.remove_house(*(_house->execute(c, ctx)));
 }
 
@@ -23,7 +31,8 @@ void position_house::execute(city & c, Contexte  & ctx) {
 }
 
 void turn_house::execute(city & c, Contexte  & ctx) {
-	_house->execute(c, ctx)->get_orientation().turn(_clockwise);
+	c.remove_house(*(_house->execute(c, ctx)));
+	 _house->execute(c, ctx)->get_orientation().turn(_clockwise);
 }
 
 void show_neighborhood::execute(city & c, Contexte  & ctx) {

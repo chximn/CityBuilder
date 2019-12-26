@@ -42,6 +42,16 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class destruct_road : public command {
+private:
+	house_ref_ptr _house1;
+	house_ref_ptr _house2;
+
+public:
+	destruct_road(house_ref_ptr h1, house_ref_ptr h2): _house1(h1), _house2(h2) {}
+	void execute(city &, Contexte  &) override;
+};
+
 class destruct_house : public command {
 private:
 	house_ref_ptr _house;

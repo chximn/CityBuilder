@@ -186,6 +186,11 @@ command:
 		$$ = std::make_shared<commands::construct_road>($2, $4);
     } |
 
+    DESTRUCT house ARROW house {
+        std::cout << "destruct road" << "\n";
+        $$ = std::make_shared<commands::destruct_road>($2,$4);
+    } |
+
 	DESTRUCT house {
 		std::cout << "destruct house" << "\n";
 		// driver.get_city().remove_house(*$2)
