@@ -26,5 +26,5 @@ Construire(3) {
     Route H -> G
 	Route I -> A
 
-	Kruskal
+	Welsh-Powell
 }

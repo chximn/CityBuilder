@@ -9,10 +9,6 @@ Construire(3) {
 	Maison H (-2, 2, 0)
 	Maison I (-3, 0, 3)
 
-	Coloriser B #00ff00
-	Coloriser E #0000ff
-	Coloriser F #f0ff0f
-
 	Route A -> B
 	Route A -> G
 	Route A -> H

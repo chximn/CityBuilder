@@ -198,8 +198,11 @@ void welsh_powell_algorithm::execute(city & c, Contexte & ctx) {
 		color("#005588")
 	};
 
+	int size = 0;
 	for (auto & hc : mp) {
-		std::cout << hc.second << "\n";
 		hc.first->get_color() = colors[hc.second];
+		if (hc.second + 1 > size) size = hc.second + 1;
 	}
+
+	std::cout << "le nombre chromatique du graphe < " << size << "\n";
 }
