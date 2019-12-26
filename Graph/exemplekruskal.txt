@@ -36,9 +36,5 @@ Construire(3) {
     Route H -> G
 	Route I -> A
 
-	 %%	PCC A -> F
-	 Tarjan
-	  %%Kruskal
-	%% Welsh-Powell
-
+	Tarjan
 }
