@@ -43,7 +43,7 @@
 	int calculate(ExpressionPtr, Driver &);
 }
 
-%token NEIGHBOR HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
+%token NEIGHBOR HOUSE ROAD DIRECTED CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
@@ -173,6 +173,10 @@ command:
 		$$ = std::make_shared<commands::construct_road>($2, $4);
     } |
 
+	ROAD house ARROW house DIRECTED {
+		$$ = std::make_shared<commands::construct_road>($2, $4, true);
+	} |
+
 	DESTRUCT house {
 		// std::cout << "destruct house" << "\n";
 		// driver.get_city().remove_house(*$2)
@@ -219,7 +223,7 @@ command:
 
     COLORIZE house color {
         // std::cout << "change color\n";
-		// $2->get_color() = $3;
+		// $2->get_color() = $3;ORIENTED
 		$$ = std::make_shared<commands::colorize_house>($2, $3);
 	} |
 

@@ -255,12 +255,12 @@ void strong_connect(house_ptr v, std::map<house_ptr, record> & records, std::sta
 	if (records[v].lowlink == records[v].index) {
 		std::vector<house_ptr> sg;
 		house_ptr w;
-		do {
+		while (!s.empty()) {
 			w = s.top();
 			s.pop();
 			records[w].on_stack = false;
 			sg.push_back(w);
-		} while(w != v);
+		}
 
 		vsg.push_back(sg);
 	}

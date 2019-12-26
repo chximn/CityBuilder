@@ -11,7 +11,10 @@ void construct_road::execute(city & c, Contexte  & ctx) {
 	auto h2 = _house2->execute(c, ctx);
 
 	h1->add_neighbor(h2);
-	h2->add_neighbor(h1);
+
+	if (!_directed) {
+		h2->add_neighbor(h1);
+	}
 }
 
 void destruct_house::execute(city & c, Contexte  & ctx) {

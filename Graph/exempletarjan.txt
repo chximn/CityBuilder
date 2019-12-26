@@ -2,26 +2,35 @@ Construire(3) {
 	Maison A (-1, 3, -2)
 	Maison B (0, 2, -2)
 	Maison C (1, 0, -1)
-	Maison D (2, -1, -1)
-	Maison E (1, -1, 0)
+	Maison D (3, -2, -1)
+	Maison E (0, -1, 1)
 	Maison F (2, -3, 1)
-	Maison G (-1, 0, 1)
-	Maison H (-2, 2, 0)
+	Maison G (-1, 2, -1)
+	Maison H (-2, 1, 1)
 	Maison I (-3, 0, 3)
 
-	Coloriser A #00ff00
-	Coloriser B #00ff00
-	Coloriser C #00ff00
-	Coloriser D #0000ff
-	Coloriser E #f0ff0f
-	Coloriser F #00ff00
-	Coloriser G #00ff00
-	Coloriser H #00ff00
-	Coloriser I #0000ff
 
-	Route A -> B
-	Route B -> F
+	%% L'algorithme de tarjan fonctionne avec les graphes orientés
+	%% et pour indiquer qu'une route est un arc orienté, on utilise
+	%% le mot cle "oriente"
 
+	Route A -> B oriente
+	Route B -> G oriente
+	Route G -> A oriente
 
+	Route D -> C oriente
+	Route C -> E oriente
+	Route E -> F oriente
+	Route F -> D oriente
+
+	Route H -> I oriente
+	Route I -> H oriente
+
+	Route E -> G oriente
+	Route E -> H oriente
+
+	%% après l'application de l'algorithme de tarjan
+	%% les maisons du meme composant fortement connexe,
+	%% auront la meme couleur
 	Tarjan
 }

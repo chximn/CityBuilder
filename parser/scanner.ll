@@ -60,6 +60,7 @@ comment {comment_begin}{comment_content}{comment_end}
 "°"           return token::DEGREE;
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
+"oriente"     return token::DIRECTED;
 "Construire"  return token::CONSTRUCT;
 "Tourner"     return token::TURN;
 "Orienter"    return token::ORIENTATE;

@@ -30,9 +30,10 @@ void Driver::show() {
 		gui->setOrientation(c.get_x(), c.get_y(), c.get_z(), d.get_value());
 
 		for (auto const & v : h->get_neighbors()) {
-			if (visited.find(v) != visited.end()) continue;
-			point vc = v->get_coordinates();
+			auto vn = v->get_neighbors();
+			if (visited.find(v) != visited.end() && std::find(vn.begin(), vn.end(), h) != vn.end()) continue;
 
+			point vc = v->get_coordinates();
 			gui->construireRoute(c.get_x(), c.get_y(), c.get_z(), vc.get_x(), vc.get_y(), vc.get_z());
 		}
 

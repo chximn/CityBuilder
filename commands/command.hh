@@ -37,9 +37,10 @@ class construct_road : public command {
 private:
 	house_ref_ptr _house1;
 	house_ref_ptr _house2;
-
+	bool _directed = false;
 public:
 	construct_road(house_ref_ptr h1, house_ref_ptr h2): _house1(h1), _house2(h2) {}
+	construct_road(house_ref_ptr h1, house_ref_ptr h2, bool d): _house1(h1), _house2(h2), _directed(d) {}
 	void execute(city &, Contexte  &) override;
 };
 
