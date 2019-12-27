@@ -9,7 +9,7 @@
 #include "degree_ref.hh"
 #include "color_ref.hh"
 #include "contexte.hh"
-#include "expression.hh"
+#include "error.hh"
 
 namespace commands {
 
@@ -17,10 +17,12 @@ class command;
 using command_ptr = std::shared_ptr<command>;
 
 class command {
-private:
+protected:
+	int error_line;
 public:
-	command() = default;
-	virtual void execute(city &, Contexte  &) = 0;
+	command(): error_line(error::get_line()) {}
+	void set_contextus();
+	virtual void execute(city &, Contexte &) = 0;
 };
 
 class construct_house : public command {

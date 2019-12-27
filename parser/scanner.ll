@@ -86,7 +86,7 @@ comment {comment_begin}{comment_content}{comment_end}
 	return token::CLOCKWISE;
 }
 
-(\%\%(.|[ ])+) {
+(\%\%(.|[ ])*) {
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }

@@ -99,7 +99,7 @@ program:
 city:
  	city_header '{' NL commands '}'
 	{
-		std::cout << "construire ville de taille: " << $1 << "\n";
+		// std::cout << "construire ville de taille: " << $1 << "\n";
 		$$ = std::make_shared<commands::city_construction>($1, $4);
 	}
 

@@ -2,7 +2,9 @@
 
 void city::add_house(house_ptr h) {
 	auto coords = h->get_coordinates();
-	if (coords.get_x() > radius || coords.get_y() > radius || coords.get_z() > radius) throw out_of_radius();
+	if (coords.get_x() > radius|| coords.get_y() > radius || coords.get_z() > radius)
+		error::report("La position " + coords.to_string() + " est hors du périmètre de la ville.");
+
 	houses.push_back(h);
 }
 

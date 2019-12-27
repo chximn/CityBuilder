@@ -2,11 +2,19 @@
 
 using namespace commands;
 
+void command::set_contextus() {
+	error::context(error_line);
+}
+
 void construct_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	c.add_house(_house->execute(c, ctx));
 }
 
 void construct_road::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	auto h1 = _house1->execute(c, ctx);
 	auto h2 = _house2->execute(c, ctx);
 
@@ -14,6 +22,8 @@ void construct_road::execute(city & c, Contexte  & ctx) {
 	h2->add_neighbor(h1);
 }
 void destruct_road::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	auto h1 = _house1->execute(c, ctx);
 	auto h2 = _house2->execute(c, ctx);
 	h1->remove_neighbor(h2);
@@ -21,21 +31,29 @@ void destruct_road::execute(city & c, Contexte  & ctx) {
 }
 
 void destruct_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	for(auto const & x:_house->execute(c, ctx)->get_neighbors())
 		x->remove_neighbor((_house->execute(c, ctx)));
 	c.remove_house(*(_house->execute(c, ctx)));
 }
 
 void position_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	os << _house->execute(c, ctx)->get_coordinates().to_string();
 }
 
 void turn_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	c.remove_house(*(_house->execute(c, ctx)));
 	 _house->execute(c, ctx)->get_orientation().turn(_clockwise);
 }
 
 void show_neighborhood::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	auto house = _house->execute(c, ctx);
 	for (auto  & h : house->get_neighbors()) {
 		os << h->to_string() << ", distance : " << house->distance(h) << "\n";
@@ -43,31 +61,45 @@ void show_neighborhood::execute(city & c, Contexte  & ctx) {
 }
 
 void orientate_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	_house->execute(c, ctx)->get_orientation() = _degree->execute(ctx);
 }
 
 void move_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	_house->execute(c, ctx)->get_coordinates() = _coordinates->execute(ctx);
 }
 
 void colorize_house::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	_house->execute(c, ctx)->get_color() = _color->execute(ctx);
 	// std::cout << _house->execute(c, ctx)->to_string() << "\n";
 }
 
 void show_color::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	os << "La couleur de la maison est: " << _house->execute(c, ctx)->get_color().to_string() << "\n";
 }
 
 void add_neighbor::execute(city & c, Contexte  & ctx) {
+	set_contextus();
+	
 	c.add_neighbor(_house->execute(c, ctx), _expression->calculer(ctx));
 }
 
 void assignment::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	ctx[_var] = _expression->calculer(ctx);
 }
 
 void if_condition::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	if (_condition->calculer(ctx)) {
 		for (auto const & cmd : _body) {
 			cmd->execute(c, ctx);
@@ -76,6 +108,8 @@ void if_condition::execute(city & c, Contexte & ctx) {
 }
 
 void if_else_condition::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	if (_condition->calculer(ctx)) {
 		for (auto const & cmd : _body) {
 			cmd->execute(c, ctx);
@@ -90,6 +124,8 @@ void if_else_condition::execute(city & c, Contexte & ctx) {
 }
 
 void while_loop::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	while (_condition->calculer(ctx)) {
 		for (auto const & cmd : _body) {
 			cmd->execute(c, ctx);
@@ -98,6 +134,8 @@ void while_loop::execute(city & c, Contexte & ctx) {
 }
 
 void repeat_loop::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	int ends = _times->calculer(ctx);
 
 	for (int i = 0; i < ends; i++) {
@@ -108,12 +146,16 @@ void repeat_loop::execute(city & c, Contexte & ctx) {
 }
 
 void function::execute(city & cit, Contexte & ctx) {
+	set_contextus();
+	
 	for (auto const & c : _body) {
 		c->execute(cit, ctx);
 	}
 }
 
 void function_call::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 
 	std::string n = _name;
 
@@ -143,10 +185,13 @@ void function_call::execute(city & c, Contexte & ctx) {
 		func.execute(c, func_ctx);
 	}
 
-	else throw "function does not exist";
+	// else throw "function does not exist";
+	else error::report(error_line, "Fonction \"" + _name + "\" n'existe pas");
 }
 
 void for_loop::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	_init->execute(c, ctx);
 
 	while (_cond->calculer(ctx)) {
@@ -159,6 +204,8 @@ void for_loop::execute(city & c, Contexte & ctx) {
 }
 
 void city_construction::execute(city & c, Contexte & ctx) {
+	set_contextus();
+	
 	c.set_radius(_radius);
 	for (auto const & cmd : _body) {
 		cmd->execute(c, ctx);

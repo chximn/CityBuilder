@@ -5,7 +5,7 @@
 #include <memory>
 #include <cmath>
 #include "house.hh"
-#include <exception>
+#include "error.hh"
 
 class city
 {
@@ -31,11 +31,4 @@ public:
 	void tarjan();
 	void kruksal();
 	void k_coloring();
-};
-
-class out_of_radius : std::exception {
-public:
-	const char * what() const noexcept override {
-		return "Out Of Range";
-	}
 };
