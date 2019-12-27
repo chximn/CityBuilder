@@ -74,6 +74,8 @@ house_ptr city::get_house(point const & coordinates) {
 }
 
 house_ptr city::add_neighbor(house_ptr h, int distance) {
+	if (distance <= 0) throw "distance must be atleast 1\n";
+
 	point const & coordinates = h->get_coordinates();
 	point start(distance);
 	point pnt(start);
