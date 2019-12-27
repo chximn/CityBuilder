@@ -13,7 +13,8 @@ house_ptr city::add_random_house(house_ptr h) {
 	point coordinates(0, 0, 0);
 
 	int i = 1;
-	while (true) {
+	while (i < radius) {
+
 		point start(i);
 		point pnt(start);
 		bool success;
@@ -37,6 +38,8 @@ house_ptr city::add_random_house(house_ptr h) {
 
 		i++;
 	}
+
+	error::report("Il n'y a plus de place pour une maison, probleme de surpopulation!");
 }
 
 void city::remove_house(house_ptr f) {

@@ -17,9 +17,8 @@ class command;
 using command_ptr = std::shared_ptr<command>;
 
 class command {
-private:
-	int error_line;
 protected:
+	int error_line;
 	void set_contextus();
 public:
 	command(): error_line(error::get_line()) {}
