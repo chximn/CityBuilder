@@ -39,11 +39,18 @@ house_ptr city::add_random_house(house_ptr h) {
 	}
 }
 
-void city::remove_house(house & f) {
-	for (auto it = houses.begin(); it != houses.end(); it++) {
-		if ((*it)->get_coordinates() == f.get_coordinates()) {
-			houses.erase(it);
-			break;
+void city::remove_house(house_ptr f) {
+	auto it = houses.begin();
+
+	while (it != houses.end()) {
+		if ((*it)->get_coordinates() == f->get_coordinates()) {
+			(*it)->clear_neighbors();
+			it = houses.erase(it);
+		}
+
+		else {
+			(*it)->remove_neighbor(f);
+			it++;
 		}
 	}
 }

@@ -41,3 +41,7 @@ void house::remove_neighbor(house_ptr h) {
 		}
 	}
 }
+
+void house::clear_neighbors() {
+	neighbors.clear();
+}

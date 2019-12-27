@@ -18,9 +18,9 @@ public:
     city(city const &) = default;
     void add_house(house_ptr);
 	house_ptr add_random_house(house_ptr);
-    void remove_house(house &);
-    std::vector<house_ptr> & get_houses();
+    void remove_house(house_ptr);
 
+	std::vector<house_ptr> & get_houses();
 	house_ptr get_house(std::string const &);
     house_ptr get_house(unsigned int);
     house_ptr get_house(point const &);
