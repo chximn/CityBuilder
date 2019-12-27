@@ -33,6 +33,9 @@ comment {comment_begin}{comment_content}{comment_end}
 
 <<EOF>> return token::END;
 
+"=="          return token::EQUAL;
+">="          return token::GE;
+"<="          return token::LE;
 ";"           return ';';
 "+"           return '+';
 "*"           return '*';

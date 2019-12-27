@@ -50,7 +50,7 @@
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR  ELSE VOID  OCCUPIED EMPTY  RTIMES
+%token AND OR EQUAL LE GE ELSE VOID  OCCUPIED EMPTY  RTIMES
 %type <std::vector<std::string>> arguments
 %type <std::vector<ExpressionPtr>> args
 %type <std::pair<std::string, std::vector<std::string>>> function_header
@@ -84,7 +84,7 @@
 entry:
 	program {
 		std::cout << "\n";
-		
+
 		for (auto const & c : $1) {
 			c->execute(driver.get_city(), driver.getContexte());
 		}
@@ -407,7 +407,7 @@ operation:
     } |
 
     '(' operation ')' {
-    $$ = $2;
+	    $$ = $2;
     } |
 
 	operation '+' operation {
@@ -426,41 +426,41 @@ operation:
 		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
 	} |
 
-	'-' operation %prec NEG {
-		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
-	} |
-
-	operation '=' '=' operation {
-		$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::equ);
-	} |
-
-	operation '<' operation {
+	operation '<' operation  {
 		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf);
 	} |
 
-	operation '>' operation {
-		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
-	} |
+	// operation '>' operation {
+	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
+	// } |
 
-	operation '<' '=' operation {
-		$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::inf_equ);
-	} |
+	// operation EQUAL operation {
+	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::equ);
+	// } |
 
-	operation '>' '=' operation {
-    	$$ = std::make_shared<ExpressionBinaire>($1,$4, OperateurBinaire::sup_equ);
-    } |
+	// operation LE operation {
+	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf_equ);
+	// } |
+	//
+	// operation GE operation {
+    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup_equ);
+    // } |
+
+	// operation OR operation {
+    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
+    // } |
+	//
+	// operation AND operation {
+    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
+    // } |
 
 	'!' operation %prec NO {
-    	$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
-    } |
+		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
+	} |
 
-	operation OR operation {
-    	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
-    } |
-
-	operation AND operation {
-    	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
-    } |
+	'-' operation %prec NEG {
+		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
+	} |
 
 	OCCUPIED point {
 		$$ = std::make_shared<ExpressionOccupied>(std::make_shared<house_ref_coordinates>($2), driver.get_city());
