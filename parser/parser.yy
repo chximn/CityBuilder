@@ -23,6 +23,7 @@
 	#include "house.hh"
 	#include "command.hh"
 	#include <utility>
+	#include "error.hh"
 
     class Scanner;
     class Driver;
@@ -41,7 +42,7 @@
     #undef  yylex
     #define yylex scanner.yylex
 
-	int calculate(ExpressionPtr, Driver &);
+	// int calculate(ExpressionPtr, Driver &);
 }
 
 %token NEIGHBOR HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
@@ -98,7 +99,7 @@ program:
 city:
  	city_header '{' NL commands '}'
 	{
-		// std::cout << "construire ville de taille: " << $1 << "\n";
+		std::cout << "construire ville de taille: " << $1 << "\n";
 		$$ = std::make_shared<commands::city_construction>($1, $4);
 	}
 
@@ -437,10 +438,10 @@ operation:
 
 %%
 
-void yy::Parser::error( const location_type &l, const std::string & err_msg) {
+void yy::Parser::error(const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
 }
 
-int calculate(ExpressionPtr p, Driver & d) {
-	return p->calculer(d.getContexte());
-}
+// int calculate(ExpressionPtr p, Driver & d) {
+// 	return p->calculer(d.getContexte());
+// }

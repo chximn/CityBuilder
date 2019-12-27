@@ -3,6 +3,7 @@
 #include "scanner.hh"
 #include <string>
 #include <cstdlib>
+#include "error.hh"
 
 #define YY_NO_UNISTD_H
 
@@ -86,12 +87,10 @@ comment {comment_begin}{comment_content}{comment_end}
 }
 
 (\%\%(.|[ ])+) {
-	std::cout << "inline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
 {comment} {
-	std::cout << "multiline comment\n";
 	yylval->build<std::string>(YYText());
 	return token::COMMENT;
 }
@@ -106,6 +105,7 @@ comment {comment_begin}{comment_content}{comment_end}
 }
 "\n"          {
     loc->lines();
+	error::increment_line();
     return token::NL;
 }
 #[0-9a-f]{6}    {

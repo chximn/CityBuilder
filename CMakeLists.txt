@@ -81,6 +81,15 @@ add_library(libtypes
 	${TYPE_HEADERS}
 )
 
+file(GLOB ERROR_HEADERS
+	parser/error.hh
+)
+
+add_library(liberror
+	parser/error.cc
+	${ERROR_HEADERS}
+)
+
 add_library(GUI
 	GUI/city.cc
 )
@@ -100,4 +109,4 @@ add_executable(${PROJECT_NAME}
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(${PROJECT_NAME} GUI libexpressions libtypes libcommands)
+target_link_libraries(${PROJECT_NAME} GUI libexpressions libtypes libcommands liberror)
