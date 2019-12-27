@@ -40,8 +40,7 @@ void destruct_house::execute(city & c, Contexte  & ctx) {
 
 void position_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
-
-	os << _house->execute(c, ctx)->get_coordinates().to_string();
+	os << "Position maison : " << _house->execute(c, ctx)->get_coordinates().to_string() << "\n";
 }
 
 void turn_house::execute(city & c, Contexte  & ctx) {
