@@ -31,7 +31,6 @@ house_ptr city::add_random_house(house_ptr h) {
 
 		if (success) {
 			h->get_coordinates() = pnt;
-			add_house(h);
 			return h;
 		}
 

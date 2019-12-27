@@ -52,6 +52,7 @@ void move_house::execute(city & c, Contexte  & ctx) {
 
 void colorize_house::execute(city & c, Contexte  & ctx) {
 	_house->execute(c, ctx)->get_color() = _color->execute(ctx);
+	// std::cout << _house->execute(c, ctx)->to_string() << "\n";
 }
 
 void show_color::execute(city & c, Contexte  & ctx) {
