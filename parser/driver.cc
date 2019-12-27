@@ -17,6 +17,12 @@ city & Driver::get_city()  {
 }
 
 void Driver::add_function(commands::function const & cmd) {
+	for (auto const & f : functions) {
+		if (f.get_name() == cmd.get_name()) {
+			error::report("La redefinition d'une fonction (" + f.get_name() + ") est interdite");
+		}
+	}
+
 	functions.push_back(cmd);
 }
 
