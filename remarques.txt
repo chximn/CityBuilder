@@ -5,7 +5,12 @@ Binôme: Anis BOUCHEKHIMA
 
 
 Ce dossier comporte les deux projets de théorie de langage de compilation et algorithmes des graphes,
-on verra par la suite comment faire appel aux algorithmes implémentés des graphes
+on verra par la suite comment faire appel aux algorithmes implémentés des graphes.
+
+Versions utilisées:
+* Bison: 3.4.2
+* Flex: 2.6.4
+* Qt: 5.13.1
 
 
 #	1.	Partie théorie de langage et compilation
