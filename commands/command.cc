@@ -89,7 +89,6 @@ void colorize_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
 
 	_house->execute(c, ctx)->get_color() = _color->execute(ctx);
-	// std::cout << _house->execute(c, ctx)->to_string() << "\n";
 }
 
 void show_color::execute(city & c, Contexte  & ctx) {
@@ -287,8 +286,6 @@ void kruksal_algorithm::execute(city & c, Contexte & ctx) {
 	std::map<house_ptr, bool> visited;
 
 	 for (auto const & r : s) {
-	// 	std::cout << r->get_house1()->to_string() << "\n";
-	// 	std::cout << r->get_house2()->to_string() << "\n";
 		auto h1 = r->get_house1();
 		if (visited.find(h1) == visited.end()) {
 			visited[h1] = true;
