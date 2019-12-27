@@ -1,5 +1,5 @@
 #	Tests
-##	Exemple 23
+##	Exemple 21
 Dans cet exemple
 d'après la photo présentée dans le documents,
 on augmente la distance chaque itération,
@@ -7,4 +7,8 @@ donc l'instruction correte est "Voisin M1 i".
 et dans la premiere iteration, i vaut 0,
 et on peut pas construire un voisin avec une distance de 0
 donc on doit initialiser i à 1
+on trouve l'exemple corrigé dans le dossier des tests
+
+##	Exemple 23
+La meme chose que l'exemple 21
 on trouve l'exemple corrigé dans le dossier des tests

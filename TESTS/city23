@@ -1,7 +1,9 @@
 void nMaisons ( n ) {
   Maison M1 (0,0,0)
+  %%i=0
   i=1
   Tant que ( i < n) {
+   %% Voisin M1 1
    Voisin M1 i
    i=i+1
   }
