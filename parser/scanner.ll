@@ -51,11 +51,15 @@ comment {comment_begin}{comment_content}{comment_end}
 ">"           return '>';
 "non"         return '!';
 "void"        return token::VOID;
+
+"Construire"  return token::CONSTRUCT;
 "Si"          return token::IF;
-"Sinon"       return token::ELSE;
 "Tant que"    return token::WHILE;
 "Pour"        return token::FOR;
 "Repeter"     return token::REPEAT;
+
+
+"Sinon"       return token::ELSE;
 "fois"        return token::RTIMES;
 "occupe"      return token::OCCUPIED;
 "vide"        return token::EMPTY;
@@ -64,7 +68,6 @@ comment {comment_begin}{comment_content}{comment_end}
 "°"           return token::DEGREE;
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
-"Construire"  return token::CONSTRUCT;
 "Tourner"     return token::TURN;
 "Orienter"    return token::ORIENTATE;
 "Deplacer"    return token::MOVE;

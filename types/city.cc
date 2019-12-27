@@ -1,10 +1,19 @@
 #include "city.hh"
 
+bool city::house_exists(point const & p) {
+	for (auto & h : houses) {
+		if (h->get_coordinates() == p) return true;
+	}
+
+	return false;
+}
+
 void city::add_house(house_ptr h) {
 	auto coords = h->get_coordinates();
 	if (coords.get_x() > radius|| coords.get_y() > radius || coords.get_z() > radius)
 		error::report("La position " + coords.to_string() + " est hors du périmètre de la ville.");
 
+	if (house_exists(coords)) error::report("une maison existe déjà en " + coords.to_string());
 	houses.push_back(h);
 }
 
@@ -21,9 +30,7 @@ house_ptr city::add_random_house(house_ptr h) {
 			point pnt2(pnt);
 			pnt2.translate(coordinates);
 
-			int found = true;
-			try { get_house(pnt2); }
-			catch(...) { found = false; }
+			int found = house_exists(pnt2);
 
 			if (!found) { success = true; break; }
 
@@ -58,11 +65,11 @@ house_ptr city::get_house(std::string const & name) {
 		if (h->get_name() == name) return h;
 	}
 
-	throw house_not_found_var(name);
+	error::report("Il n'existe pas une maison avec le nom \"" + name + "\"");
 }
 
 house_ptr city::get_house(unsigned int index) {
-	if (index-1 >= houses.size()) throw house_not_found_list(index);
+	if (index > houses.size()) error::report("Il n'existe pas une maison avec l'indice " + std::to_string(index) + " (maison[" + std::to_string(index) + "])");
 	return houses.at(index-1);
 }
 
@@ -71,11 +78,11 @@ house_ptr city::get_house(point const & coordinates) {
 		if (h->get_coordinates() == coordinates) return h;
 	}
 
-	throw house_not_found_coordinates(coordinates);
+	error::report("Il n'existe pas une maison en " + coordinates.to_string());
 }
 
 house_ptr city::add_neighbor(house_ptr h, int distance) {
-	if (distance <= 0) throw "distance must be atleast 1\n";
+	if (distance <= 0) error::report("La distance minimale pour un voisin est 1");
 
 	point const & coordinates = h->get_coordinates();
 	point start(distance);
@@ -86,9 +93,7 @@ house_ptr city::add_neighbor(house_ptr h, int distance) {
 		point pnt2(pnt);
 		pnt2.translate(coordinates);
 
-		int found = true;
-		try { get_house(pnt2); }
-		catch(...) { found = false; }
+		int found = house_exists(pnt2);
 
 		if (!found) {
 			success = true;
@@ -103,7 +108,7 @@ house_ptr city::add_neighbor(house_ptr h, int distance) {
 	}
 
 	if (!success) {
-		throw full_neighborhood(coordinates);
+		error::report("Il n'y a plus de place pour un voisin pour la maison en " + coordinates.to_string() + " avec la distance " + std::to_string(distance));
 	}
 
 	pnt.translate(coordinates);

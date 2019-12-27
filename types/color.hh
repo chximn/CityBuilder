@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <exception>
 #include "point.hh"
+#include "error.hh"
 
 class color {
 private:
@@ -16,11 +16,4 @@ public:
 	int get_r() { return rgb.get_x(); }
 	int get_g() { return rgb.get_y(); }
 	int get_b() { return rgb.get_z(); }
-};
-
-class color_not_valid : public std::exception {
-public:
-	const char * what() const noexcept override {
-		return "Color Not Valid\n";
-	}
 };

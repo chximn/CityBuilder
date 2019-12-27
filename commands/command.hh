@@ -17,11 +17,12 @@ class command;
 using command_ptr = std::shared_ptr<command>;
 
 class command {
-protected:
+private:
 	int error_line;
+protected:
+	void set_contextus();
 public:
 	command(): error_line(error::get_line()) {}
-	void set_contextus();
 	virtual void execute(city &, Contexte &) = 0;
 };
 
@@ -218,10 +219,10 @@ public:
 
 class city_construction : public command {
 private:
-	int _radius;
+	ExpressionPtr _radius;
 	std::vector<command_ptr> _body;
 public:
-	city_construction(int a, std::vector<command_ptr> b): _radius(a), _body(b) {}
+	city_construction(ExpressionPtr a, std::vector<command_ptr> b): _radius(a), _body(b) {}
 	void execute(city &, Contexte  &) override;
 };
 

@@ -12,8 +12,8 @@ void error::increment_line() {
 }
 
 void error::report(unsigned int l, std::string const & s) {
-	std::cerr << "Erreur (ligne " << l << "): " << s << "\n";
-	exit(-1);
+	std::cerr << "\nErreur (ligne " << l << "): " << s << "\n";
+	exit(-2);
 }
 
 void error::report(std::string const & s) {
@@ -23,8 +23,8 @@ void error::report(std::string const & s) {
 	}
 
 	else {
-		std::cerr << "Erreur: " << s << "\n";
-		exit(-2);
+		std::cerr << "\nErreur: " << s << "\n";
+		exit(-3);
 	}
 }
 

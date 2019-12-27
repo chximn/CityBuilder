@@ -23,6 +23,7 @@ public:
     house_ptr get_house(std::string const &);
     house_ptr get_house(unsigned int);
     house_ptr get_house(point const &);
+	bool house_exists(point const &);
     house_ptr add_neighbor(house_ptr, int);
 	void set_radius(int r);
 	int get_radius() const { return radius; }

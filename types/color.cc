@@ -1,14 +1,15 @@
 #include "color.hh"
 
 color::color(point const & p): rgb(p) {
-	if (p.get_x() < 0 || p.get_x() > 255 || p.get_y() < 0 || p.get_y() > 255 || p.get_z() < 0 || p.get_z() > 255) throw color_not_valid();
+	if (p.get_x() < 0 || p.get_x() > 255 || p.get_y() < 0 || p.get_y() > 255 || p.get_z() < 0 || p.get_z() > 255)
+		error::report("La couleur " + p.to_string() + " n'est pas valide");
 }
 
 color::color(std::string const & s) {
-	if (s.length() != 7 || s[0] != '#') throw color_not_valid();
+	if (s.length() != 7 || s[0] != '#')
+		error::report("La couleur " + s + " n'est pas valide");
 
 	int vals[6];
-
 	for (int i = 1; i < 7; i++) {
 		if (s[i] >= '0' && s[i] <= '9') {
 			vals[i - 1] = s[i] - '0';
@@ -18,7 +19,7 @@ color::color(std::string const & s) {
 			vals[i - 1] = s[i] - 'a' + 10;
 		}
 
-		else throw color_not_valid();
+		else error::report("La couleur " + s + " n'est pas valide");
 	}
 
 	rgb.set_x(vals[0] * 16 + vals[1]);

@@ -45,11 +45,12 @@
 	// int calculate(ExpressionPtr, Driver &);
 }
 
-%token NEIGHBOR HOUSE ROAD CONSTRUCT TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
+%token NEIGHBOR HOUSE ROAD TURN ORIENTATE MOVE DESTRUCT POSITION ORIENTATION NEIGHBORHOOD HOUSELIST COLORIZE COLOR_OF
+%token CONSTRUCT IF WHILE FOR REPEAT
 %token <bool> CLOCKWISE
 %token <std::string> OTHER
 %token ARROW DEGREE
-%token AND OR IF ELSE VOID WHILE OCCUPIED EMPTY REPEAT RTIMES FOR
+%token AND OR  ELSE VOID  OCCUPIED EMPTY  RTIMES
 %type <std::vector<std::string>> arguments
 %type <std::vector<ExpressionPtr>> args
 %type <std::pair<std::string, std::vector<std::string>>> function_header
@@ -59,7 +60,7 @@
 %token <std::string>    COMMENT
 %token <std::string>    VAR_NAME
 %token <std::string>    COLOR
-%type <int>             city_header
+%type <ExpressionPtr>   city_header
 %type <ExpressionPtr>   condition
 %type <ExpressionPtr>   operation
 %type <color_ref_ptr>   color
@@ -104,8 +105,8 @@ city:
 	}
 
 city_header:
-	CONSTRUCT '(' NUMBER ')' { $$ = $3; } |
-	CONSTRUCT                { $$ = 5;  }
+	CONSTRUCT '(' operation ')' { $$ = $3; } |
+	CONSTRUCT                   { $$ = std::make_shared<Constante>(5);  }
 
 commands:
 	comment NL commands {
@@ -440,6 +441,7 @@ operation:
 
 void yy::Parser::error(const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
+	exit(-1);
 }
 
 // int calculate(ExpressionPtr p, Driver & d) {

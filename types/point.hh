@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "error.hh"
 
 class point {
 private:

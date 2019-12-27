@@ -20,8 +20,11 @@ point::point(int distance) {
 	z = coords[2];
 }
 
-point::point(int a, int b, int c):
-	x(a), y(b), z(c) {}
+point::point(int a, int b, int c): x(a), y(b), z(c) {
+	if (a + b + c != 0) {
+		error::report("la position " + to_string() + " n'est pas une position valide");
+	}
+}
 
 int point::get_x() const {
 	return x;
