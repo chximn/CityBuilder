@@ -57,10 +57,10 @@ void show_neighborhood::execute(city & c, Contexte  & ctx) {
 
 	auto house = _house->execute(c, ctx);
 
-	os << "Voisinage de " << house->get_coordinates().to_string() << ":\n";
+	os << "Maisons reliées à maison " << house->get_coordinates().to_string() << ":\n";
 
 	for (auto  & h : house->get_neighbors()) {
-		os << h->to_string() << ", distance : " << house->distance(h) << "\n";
+		os << "  maison : " << h->get_coordinates().to_string() << "\n";
 	}
 }
 
