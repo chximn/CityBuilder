@@ -56,7 +56,7 @@ void colorize_house::execute(city & c, Contexte  & ctx) {
 }
 
 void show_color::execute(city & c, Contexte  & ctx) {
-	os << _house->execute(c, ctx)->get_color().to_string();
+	os << "La couleur de la maison est: " << _house->execute(c, ctx)->get_color().to_string() << "\n";
 }
 
 void add_neighbor::execute(city & c, Contexte  & ctx) {
