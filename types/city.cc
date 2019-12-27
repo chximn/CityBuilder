@@ -12,9 +12,11 @@ void city::add_house(house_ptr h) {
 house_ptr city::add_random_house(house_ptr h) {
 	point coordinates(0, 0, 0);
 
-	int i = 1;
-	while (i < radius) {
+	int starti = rand() % (radius + 1);
 
+	int i = starti;
+
+	do {
 		point start(i);
 		point pnt(start);
 		bool success;
@@ -36,10 +38,11 @@ house_ptr city::add_random_house(house_ptr h) {
 			return h;
 		}
 
-		i++;
-	}
+		i = (i+1) % (radius + 1);
+	} while (i != starti);
 
 	error::report("Il n'y a plus de place pour une maison, probleme de surpopulation!");
+	return nullptr;
 }
 
 void city::remove_house(house_ptr f) {
@@ -68,6 +71,7 @@ house_ptr city::get_house(std::string const & name) {
 	}
 
 	error::report("Il n'existe pas une maison avec le nom \"" + name + "\"");
+	return nullptr;
 }
 
 bool city::house_exists(std::string const & name) {
@@ -94,6 +98,7 @@ house_ptr city::get_house(point const & coordinates) {
 	}
 
 	error::report("Il n'existe pas une maison en " + coordinates.to_string());
+	return nullptr;
 }
 
 bool city::house_exists(point const & p) {

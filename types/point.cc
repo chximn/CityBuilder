@@ -1,23 +1,32 @@
 #include "point.hh"
 
 point::point(int distance) {
-	int sign = (rand()%2)*2-1;
-	int asign = sign > 0 ? -1 : 1;
+	if (distance == 0) {
+		x = 0;
+		y = 0;
+		z = 0;
+	}
 
-	int a = distance * sign;
-	int b = (rand() % distance) * asign;
-	int c = (distance - abs(b)) * asign;
+	else {
+		int sign = (rand()%2)*2-1;
+		int asign = sign > 0 ? -1 : 1;
 
-	int coords[] = {0, 0, 0};
-	int pivot = rand() % 3;
+		int a = distance * sign;
+		int b = (rand() % distance) * asign;
+		int c = (distance - abs(b)) * asign;
 
-	coords[pivot] = a;
-	coords[(pivot+1)%3] = b;
-	coords[(pivot+2)%3] = c;
+		int coords[] = {0, 0, 0};
+		int pivot = rand() % 3;
 
-	x = coords[0];
-	y = coords[1];
-	z = coords[2];
+		coords[pivot] = a;
+		coords[(pivot+1)%3] = b;
+		coords[(pivot+2)%3] = c;
+
+		x = coords[0];
+		y = coords[1];
+		z = coords[2];
+	}
+
 }
 
 point::point(int a, int b, int c): x(a), y(b), z(c) {
@@ -71,6 +80,8 @@ void point::translate(point const & p) {
 }
 
 void point::rotate() {
+	if (x == 0 && y == 0 && z == 0) return;
+
 	int pivot;
 	if (x == 0) pivot = 2;
 	else if (y == 0) pivot = 0;
