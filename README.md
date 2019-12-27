@@ -1,4 +1,4 @@
-
+> Note: this README.md definitely needs to be updated
 
 # CityBuilder
 Programming Language Theory and Compilation Project
@@ -144,7 +144,7 @@ Example: `#f20f44` , `(23, 213, 33)`
 	  radius: number
 	  houses: list of built houses
 	```
-	
+
 ## Graphical User Interface
 Every GUI operation goes through the `VilleGUI` class, which contains the following methods:
 ```

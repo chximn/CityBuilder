@@ -1,25 +1,64 @@
-#	1.	Partie théorie de langage et compilation
-	Toutes les fonctionnalités ont été implementées,
-	y compris la boucle pour.
-	la seule chose que manque est la fonction avec une valeure de retourne
+Etablissement: Université d'Angers
+Filière: L3 Informatique
+Binôme: Anis BOUCHEKHIMA
+ 		Oussama ICHOUA
 
-##	1.1	Exemple 9, 13, 14bis, 15, 15bis
+#	1.	Partie théorie de langage et compilation
+	Toutes les fonctionnalités ont été implémentées,
+	y compris la boucle pour.
+	la seule chose que manque est la fonction avec une valeure de retourne.
+	Tous les exemples peuvent être trouvés dans "/Tests/Compilation"
+
+##	1.1. Exemple 9, 13, 14bis, 15, 15bis
 	Dans les exemples présentés, l'orientation n'est pas correcte.
 	On suppose que pour une orientation de 0 degrées la maison est orientée vers le sud.
 	pour l'exemple 9, la maison (1, 0, -1),
-	normalement pour une orientation de -90 degrées elle doit etre orientée vers l'est,
+	normalement pour une orientation de -90 degrées elle doit être orientée vers l'est,
 	mais on trouve qu'elle est orientée vers le nord.
 
-##	1.2	Exemple 21
+##	1.2. Exemple 21
 	Dans cet exemple
 	d'après la photo présentée dans le documents,
 	on augmente la distance chaque itération,
-	donc l'instruction correte est "Voisin M1 i".
+	donc l'instruction correcte est "Voisin M1 i".
 	et dans la premiere iteration, i vaut 0,
 	et on peut pas construire un voisin avec une distance de 0
 	donc on doit initialiser i à 1
 	on trouve l'exemple corrigé dans le dossier des tests
 
-##	1.3	Exemple 23
-	La meme chose que l'exemple 21
+##	1.3. Exemple 23
+	La même chose que l'exemple 21
 	on trouve l'exemple corrigé dans le dossier des tests
+
+#	2.	Algorithmes des graphes
+	Pour tester les algorithmes, on utilise les instructions graphes ajoutés au langage du CityBuilder:
+	A*, Dijkstra, Kruskal, Tarjan, Welsh-Powell
+
+##	2.1. Plus Court Chemin:
+	pour trouver le plus court chemin, on fait appel à l'instruction "PCC",
+	qui appliquera l'algorithme de A* et celle de Dijkstra,
+	et affichera le plus court chemin dans le flux de sortie standard (std::cout)
+	ainsi que le temps pris par les deux algorithmes
+	on trouve dans le fichier pcc.txt,
+	un exemple montrant comment tester l'implémentation de ces algorithmes
+
+##	2.2. Arbre Couvrante Minimale:
+	pour chercher l'arbre couvrante minimale en utilisant l'algorithme de Kruskal,
+	on fait appel à l'instruction "Kruskal",
+	qui supprimera les arrete qui font pas partie de l'arbre couvrante minimale
+	on trouve dans le fichier kruskal.txt,
+	un exemple montrant comment tester l'implémentation de l'algorithme de kruskal
+
+##	2.3. Composants Fortement Connexes:
+	pour trouver les composants fortement connexes dans le graphe,
+	on fait appel à l'instruction "Tarjan", qui appliquera l'algorithme de Tarjan
+	et colorera les maisons du même composant fortement connexe par la même couleur
+	on trouve dans le fichier tarjan.txt,
+	un exemple montrant comment tester l'implémentation de l'algorithme de Tarjan
+
+##	2.4. K-Coloration:
+	pour encadrer le nombre chromatique du graphe, en utilisant l'algorithme de Welsh-Powell,
+	on fait appel à l'instruction "Welsh-Powell",
+	qui colorera les maisons et affichera l'encadrement du nombre chromatique
+	on trouve dans le fichier welsh_powell.txt,
+	un exemple montrant comment tester l'implémentation de l'algorithme de Welsh-Powell
