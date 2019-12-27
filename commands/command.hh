@@ -193,7 +193,7 @@ private:
 public:
 	function(std::string const & n, std::vector<std::string> const & a, std::vector<command_ptr> const & b): _name(n), _arguments(a), _body(b) {}
 	void execute(city &, Contexte  &) override;
-	std::string const & get_name() { return _name; }
+	std::string const & get_name() const { return _name; }
 	friend function_call;
 };
 
