@@ -3,6 +3,9 @@ Filière: L3 Informatique
 Binôme: Anis BOUCHEKHIMA
  		Oussama ICHOUA
 
+Ce dossier comporte les deux projets de théorie de langage de compilation et algorithmes des graphes,
+on verra par la suite comment faire appel aux algorithmes implémentés des graphes
+
 #	1.	Partie théorie de langage et compilation
 	Toutes les fonctionnalités ont été implémentées,
 	y compris la boucle pour.
@@ -42,10 +45,10 @@ Binôme: Anis BOUCHEKHIMA
 	on trouve dans le fichier pcc.txt,
 	un exemple montrant comment tester l'implémentation de ces algorithmes
 
-##	2.2. Arbre Couvrante Minimale:
-	pour chercher l'arbre couvrante minimale en utilisant l'algorithme de Kruskal,
+##	2.2. Arbre Couvrant Minimal:
+	pour chercher l'arbre couvrant minimal en utilisant l'algorithme de Kruskal,
 	on fait appel à l'instruction "Kruskal",
-	qui supprimera les arrete qui font pas partie de l'arbre couvrante minimale
+	qui supprimera les arrete qui font pas partie de l'arbre couvrant minimal
 	on trouve dans le fichier kruskal.txt,
 	un exemple montrant comment tester l'implémentation de l'algorithme de kruskal
 
