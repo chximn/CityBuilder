@@ -211,7 +211,6 @@ void city_construction::execute(city & c, Contexte & ctx) {
 	int rad = _radius->calculer(lctx);
 
 	if (rad < 0) error::report("impossible de créer une ville avec rayon négatif");
-	else if (rad == 0) error::report("impossible de créer une ville avec rayon nul");
 
 	c.set_radius(rad);
 	for (auto const & cmd : _body) {
