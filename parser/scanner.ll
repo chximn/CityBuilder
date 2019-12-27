@@ -33,6 +33,8 @@ comment {comment_begin}{comment_content}{comment_end}
 
 <<EOF>> return token::END;
 
+"<"           return '<';
+">"           return '>';
 "=="          return token::EQUAL;
 ">="          return token::GE;
 "<="          return token::LE;
@@ -50,8 +52,6 @@ comment {comment_begin}{comment_content}{comment_end}
 "->"          return token::ARROW;
 "["           return '[';
 "]"           return ']';
-"<"           return '<';
-">"           return '>';
 "non"         return '!';
 "void"        return token::VOID;
 

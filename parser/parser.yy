@@ -63,7 +63,7 @@
 %token <std::string>    COLOR
 %type <ExpressionPtr>   city_header
 %type <ExpressionPtr>   condition
-%type <ExpressionPtr>   operation
+%type <ExpressionPtr>   operation boolean
 %type <color_ref_ptr>   color
 %type <degree_ref_ptr>  degree
 %type <point_ref_ptr>   coordinates point
@@ -76,6 +76,10 @@
 
 %left '-' '+'
 %left '*' '/'
+%left '<' '>' EQUAL LE GE
+%left AND OR
+
+
 %precedence  NO
 %precedence  NEG
 
@@ -426,40 +430,43 @@ operation:
 		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::multiplie);
 	} |
 
+	'-' operation %prec NEG {
+		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
+	}
+
+	| boolean
+
+boolean:
 	operation '<' operation  {
 		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf);
 	} |
 
-	// operation '>' operation {
-	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
-	// } |
+	operation '>' operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup);
+	} |
 
-	// operation EQUAL operation {
-	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::equ);
-	// } |
+	operation EQUAL operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::equ);
+	} |
 
-	// operation LE operation {
-	// 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf_equ);
-	// } |
-	//
-	// operation GE operation {
-    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup_equ);
-    // } |
+	operation LE operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::inf_equ);
+	} |
 
-	// operation OR operation {
-    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
-    // } |
-	//
-	// operation AND operation {
-    // 	$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
-    // } |
+	operation GE operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::sup_equ);
+	} |
+
+	operation OR operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::ou);
+	} |
+
+	operation AND operation {
+		$$ = std::make_shared<ExpressionBinaire>($1,$3, OperateurBinaire::et);
+	} |
 
 	'!' operation %prec NO {
 		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::non);
-	} |
-
-	'-' operation %prec NEG {
-		$$ = std::make_shared<ExpressionUnaire>($2,OperateurUnaire::neg);
 	} |
 
 	OCCUPIED point {
