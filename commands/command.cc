@@ -236,23 +236,20 @@ void pcc::execute(city & c, Contexte & ctx) {
 	auto l = c.a_star(_house1->execute(c, ctx), _house2->execute(c, ctx));
 	auto m1 = std::chrono::high_resolution_clock::now();
 
-	for (auto const & h : l) {
-		os << h->get_name() << " ";
-	}
-	os << "\n";
-
 
 	auto m2 = std::chrono::high_resolution_clock::now();
 	auto l2 = c.dijkstra(_house1->execute(c, ctx), _house2->execute(c, ctx));
 	auto m3 = std::chrono::high_resolution_clock::now();
-	for (auto const & h : l2) {
-		os << h->get_name() << " ";
-	}
-	os << "\n";
 	std::cout<<"################################################################################\n";
 	std::cout << "Time of execution :" << '\n';
 	std::cout << "A* took       " << (m1-m0).count() << " microseconds" << "\n";
 	std::cout << "Dijkstra took " << (m3-m2).count() << " microseconds" << "\n";
+
+	os << "chemin: ";
+	for (auto const & h : l) {
+		os << h->get_name() << " -> ";
+	}
+	os << "\n";
 }
 
 void tarjan_algorithm::execute(city & c, Contexte & ctx) {
