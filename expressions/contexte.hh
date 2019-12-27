@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <ostream>
+#include "error.hh"
 
 class Contexte {
 private:

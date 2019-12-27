@@ -1,19 +1,27 @@
 #include "contexte.hh"
 
 int& Contexte::get(const std::string & nom) {
-    return variables[nom];
+	try { return variables[nom]; }
+	catch (...) { error::report("La variable \"" + nom + "\" n'est pas définée ou pas accessible dans ce contexte"); }
+	return variables[nom];
 }
 
 const int& Contexte::get(const std::string & nom) const {
-    return variables.at(nom);
+	try { return variables.at(nom); }
+	catch (...) { error::report("La variable \"" + nom + "\" n'est pas définée ou pas accessible dans ce contexte"); }
+	return variables.at(nom);
 }
 
 int& Contexte::operator[](const std::string & nom) {
-    return variables[nom];
+	try { return variables[nom]; }
+	catch (...) { error::report("La variable \"" + nom + "\" n'est pas définée ou pas accessible dans ce contexte"); }
+	return variables[nom];
 }
 
 const int& Contexte::operator[](const std::string & nom) const {
-    return variables.at(nom);
+	try { return variables.at(nom); }
+	catch (...) { error::report("La variable \"" + nom + "\" n'est pas définée ou pas accessible dans ce contexte"); }
+	return variables.at(nom);
 }
 
 void Contexte::show(std::ostream & os) {
