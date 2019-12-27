@@ -29,11 +29,7 @@ point::point(int distance) {
 
 }
 
-point::point(int a, int b, int c): x(a), y(b), z(c) {
-	if (a + b + c != 0) {
-		error::report("la position " + to_string() + " n'est pas une position valide");
-	}
-}
+point::point(int a, int b, int c): x(a), y(b), z(c) {}
 
 int point::get_x() const {
 	return x;
@@ -107,4 +103,8 @@ void point::rotate() {
 		x -= sign;
 		y += sign;
 	}
+}
+
+bool point::is_valid_coordinates() {
+	return (x + y + z == 0);
 }

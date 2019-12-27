@@ -25,6 +25,8 @@ public:
 	bool operator==(point const &) const;
 	bool operator!=(point const &) const;
 
+	bool is_valid_coordinates(); 
+
 	void translate(point const &);
 	void rotate();
 };

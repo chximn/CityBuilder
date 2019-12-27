@@ -8,7 +8,7 @@ class color {
 private:
     point rgb;
 public:
-    color() = default;
+    color(): rgb(255, 0, 0) {}
     color(point const &);
     color(std::string const &);
     std::string to_string() const;

@@ -8,8 +8,9 @@ void command::set_contextus() {
 
 void construct_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
-
-	c.add_house(_house->execute(c, ctx));
+	auto h = _house->execute(c, ctx);
+	if (!h->get_coordinates().is_valid_coordinates()) error::report("la position " + h->get_coordinates().to_string() + " n'est pas une position valide");
+	c.add_house(h);
 }
 
 void construct_road::execute(city & c, Contexte  & ctx) {
@@ -72,6 +73,8 @@ void move_house::execute(city & c, Contexte  & ctx) {
 
 	auto ccc = _coordinates->execute(ctx);;
 	if (c.house_exists(ccc)) error::report("Une maison existe déjà en " + ccc.to_string());
+	if (!ccc.is_valid_coordinates()) error::report("la position " + ccc.to_string() + " n'est pas une position valide");
+
 
 	_house->execute(c, ctx)->get_coordinates() = ccc;
 }
