@@ -18,7 +18,7 @@ Binôme: Anis BOUCHEKHIMA
 
 ##	1.2. Exemple 21
 	Dans cet exemple
-	d'après la photo présentée dans le documents,
+	d'après la photo présentée dans le document,
 	on augmente la distance chaque itération,
 	donc l'instruction correcte est "Voisin M1 i".
 	et dans la premiere iteration, i vaut 0,
