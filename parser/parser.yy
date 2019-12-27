@@ -225,6 +225,11 @@ command:
 		$$ = std::make_shared<commands::orientate_house>($2, $3);
 	} |
 
+    ORIENTATION house {
+        // std::cout<<"hello \n";
+        $$ = std::make_shared<commands::orientation_house>($2, std::cout);
+    } |
+
 	MOVE house ARROW coordinates {
 		// std::cout << "move house\n";
 		// $2->get_coordinates() = $4;
@@ -374,6 +379,10 @@ operation:
 
 	NUMBER {
 		$$ = std::make_shared<Constante>($1);
+    } |
+
+    '(' operation ')' {
+    $$ = $2;
     } |
 
 	operation '+' operation {

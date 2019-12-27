@@ -63,6 +63,10 @@ void orientate_house::execute(city & c, Contexte  & ctx) {
 	_house->execute(c, ctx)->get_orientation() = _degree->execute(ctx);
 }
 
+void orientation_house::execute(city & c, Contexte  & ctx) {
+	os << "Orientation: " << _house->execute(c, ctx)->get_orientation().to_string() << "\n";
+}
+
 void move_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
 

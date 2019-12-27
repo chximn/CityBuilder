@@ -4,6 +4,6 @@ Construire (6) {
   Route maison[1] -> maison[2]
   Orienter maison[1] 150°
   Position maison[1]
-  Orientation (0,0,0)
+  Orientation (0, 0, 0)
   Voisinage maison[1]
 }

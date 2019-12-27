@@ -99,6 +99,15 @@ public:
 	void execute(city &, Contexte  &) override;
 };
 
+class orientation_house: public command {
+private:
+	house_ref_ptr _house;
+	std::ostream & os;
+public:
+	orientation_house(house_ref_ptr h, std::ostream & s): _house(h), os(s) {}
+	void execute(city &, Contexte  &) override;
+};
+
 class move_house: public command {
 private:
 	house_ref_ptr _house;
