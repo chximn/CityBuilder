@@ -1,3 +1,3 @@
 #include "road.hh"
 
-int road::distance() const { return _house1->distance(_house2); }
+int road::get_distance() const { return _house1->distance(_house2); }
