@@ -68,6 +68,8 @@ comment {comment_begin}{comment_content}{comment_end}
 "°"           return token::DEGREE;
 "Maison"      return token::HOUSE;
 "Route"       return token::ROAD;
+"oriente"     return token::DIRECTED;
+"Construire"  return token::CONSTRUCT;
 "Tourner"     return token::TURN;
 "Orienter"    return token::ORIENTATE;
 "Deplacer"    return token::MOVE;
@@ -79,6 +81,10 @@ comment {comment_begin}{comment_content}{comment_end}
 "maison"      return token::HOUSELIST;
 "Coloriser"   return token::COLORIZE;
 "Couleur"     return token::COLOR_OF;
+"PCC"         return token::PCC;
+"Tarjan"      return token::TARJAN;
+"Kruskal"     return token::KRUSKAL;
+"Welsh-Powell" return token::WELSH_POWELL;
 "horaire" {
 	yylval->build<bool>(true);
 	return token::CLOCKWISE;

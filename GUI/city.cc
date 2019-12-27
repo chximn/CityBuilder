@@ -19,7 +19,7 @@ RouteGUI::RouteGUI(int x1, int y1, int z1, int x2, int y2, int z2){
 }
 
 VilleGUI::VilleGUI(unsigned int r, QWidget * parent, Qt::WindowFlags flags):QWidget(parent,flags), v_radius(r) {
-  this->setFixedSize(1000,1000);
+  this->setFixedSize(500,500);
 }
 
 int toX(int x,int y,int z){

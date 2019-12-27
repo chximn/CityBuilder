@@ -4,12 +4,16 @@
 #include <algorithm>
 #include "city.hh"
 #include "house.hh"
+#include "road.hh"
 #include "house_ref.hh"
 #include "point_ref.hh"
 #include "degree_ref.hh"
 #include "color_ref.hh"
 #include "contexte.hh"
+
 #include "error.hh"
+#include "expression.hh"
+#include <chrono>
 
 namespace commands {
 
@@ -38,9 +42,10 @@ class construct_road : public command {
 private:
 	house_ref_ptr _house1;
 	house_ref_ptr _house2;
-
+	bool _directed = false;
 public:
 	construct_road(house_ref_ptr h1, house_ref_ptr h2): _house1(h1), _house2(h2) {}
+	construct_road(house_ref_ptr h1, house_ref_ptr h2, bool d): _house1(h1), _house2(h2), _directed(d) {}
 	void execute(city &, Contexte  &) override;
 };
 
@@ -233,6 +238,34 @@ private:
 public:
 	city_construction(ExpressionPtr a, std::vector<command_ptr> b): _radius(a), _body(b) {}
 	void execute(city &, Contexte  &) override;
+};
+
+class pcc : public command {
+private:
+	house_ref_ptr _house1;
+	house_ref_ptr _house2;
+	std::ostream & os;
+public:
+	pcc(house_ref_ptr h1, house_ref_ptr h2, std::ostream & s): _house1(h1), _house2(h2), os(s) {}
+	void execute(city &, Contexte  &) override;
+};
+
+class tarjan_algorithm : public command {
+public:
+	tarjan_algorithm() = default;
+	void execute(city &, Contexte  &) override;
+};
+
+class kruksal_algorithm : public command {
+public:
+	kruksal_algorithm() = default;
+	void execute(city &, Contexte &) override;
+};
+
+class welsh_powell_algorithm : public command {
+public:
+	welsh_powell_algorithm() = default;
+	void execute(city &, Contexte &) override;
 };
 
 }

@@ -54,6 +54,7 @@
 %type <std::vector<std::string>> arguments
 %type <std::vector<ExpressionPtr>> args
 %type <std::pair<std::string, std::vector<std::string>>> function_header
+%token DIRECTED PCC TARJAN KRUSKAL WELSH_POWELL
 %token                  NL
 %token                  END
 %token <int>            NUMBER
@@ -193,6 +194,11 @@ command:
         $$ = std::make_shared<commands::destruct_road>($2,$4);
     } |
 
+	ROAD house ARROW house DIRECTED {
+		$$ = std::make_shared<commands::construct_road>($2, $4, true);
+	} |
+
+
 	DESTRUCT house {
 		// std::cout << "destruct house" << "\n";
 		// driver.get_city().remove_house(*$2)
@@ -259,9 +265,26 @@ command:
 		// std::cout << "new neighbour: " << hp->to_string() << "\n";
 		$$ = std::make_shared<commands::add_neighbor>($2, $3);
 	} |
-
+	
 	VAR_NAME '(' args ')' {
 		$$ = std::make_shared<commands::function_call>($1, $3, driver.get_functions());
+	} |
+
+	PCC house ARROW house {
+		// std::cout << "plus court chemin\n";
+		$$ = std::make_shared<commands::pcc>($2, $4, std::cout);
+	} |
+
+	TARJAN {
+		$$ = std::make_shared<commands::tarjan_algorithm>();
+	} |
+
+	KRUSKAL {
+		$$ = std::make_shared<commands::kruksal_algorithm>();
+	} |
+
+	WELSH_POWELL {
+		$$ = std::make_shared<commands::welsh_powell_algorithm>();
 	}
 
 assignment:

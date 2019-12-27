@@ -1,0 +1,30 @@
+Construire(3) {
+	Maison A (-1, 3, -2)
+	Maison B (0, 2, -2)
+	Maison C (1, 0, -1)
+	Maison D (2, -1, -1)
+	Maison E (1, -1, 0)
+	Maison F (2, -3, 1)
+	Maison G (-1, 0, 1)
+	Maison H (-2, 2, 0)
+	Maison I (-3, 0, 3)
+
+	Route A -> B
+	Route B -> F
+	Route B -> E
+	Route B -> C
+    Route C -> D
+    Route C -> G
+    Route D -> C
+    Route D -> H
+    Route E -> A
+    Route E -> F
+    Route F -> I
+    Route F -> G
+    Route G -> F
+    Route H -> D
+    Route H -> G
+	Route I -> A
+
+	Kruskal
+}

@@ -26,22 +26,27 @@ std::string const & house::get_name() const {
 void house::add_neighbor(house_ptr h) {
 	neighbors.push_back(h);
 }
-std::vector<house_ptr> house::get_neighbors() {
+
+
+std::vector<house_ptr> & house::get_neighbors() {
 	return neighbors;
-}
-int house::distance(house_ptr p) {
-	return (abs(coordinates.get_x() - p->coordinates.get_x())+ abs(coordinates.get_y() - p->coordinates.get_y())+ abs(coordinates.get_z() - p->coordinates.get_z()));
 }
 
 void house::remove_neighbor(house_ptr h) {
-	for (auto it = neighbors.begin(); it != neighbors.end(); it++) {
+	auto it = neighbors.begin();
+	while (it != neighbors.end()) {
 		if ((*it) == h) {
 			neighbors.erase(it);
 			break;
 		}
+		it++;
 	}
 }
 
 void house::clear_neighbors() {
 	neighbors.clear();
+}
+
+int house::distance(house_ptr p) {
+	return (abs(coordinates.get_x() - p->coordinates.get_x())+ abs(coordinates.get_y() - p->coordinates.get_y())+ abs(coordinates.get_z() - p->coordinates.get_z()));
 }

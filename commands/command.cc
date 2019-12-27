@@ -20,7 +20,10 @@ void construct_road::execute(city & c, Contexte  & ctx) {
 	auto h2 = _house2->execute(c, ctx);
 
 	h1->add_neighbor(h2);
-	h2->add_neighbor(h1);
+
+	if (!_directed) {
+		h2->add_neighbor(h1);
+	}
 }
 void destruct_road::execute(city & c, Contexte  & ctx) {
 	set_contextus();
@@ -222,4 +225,111 @@ void city_construction::execute(city & c, Contexte & ctx) {
 	for (auto const & cmd : _body) {
 		cmd->execute(c, ctx);
 	}
+}
+
+void pcc::execute(city & c, Contexte & ctx) {
+
+	auto m0 = std::chrono::high_resolution_clock::now();
+	auto l = c.a_star(_house1->execute(c, ctx), _house2->execute(c, ctx));
+	auto m1 = std::chrono::high_resolution_clock::now();
+
+	for (auto const & h : l) {
+		os << h->get_name() << " ";
+	}
+	os << "\n";
+
+
+	auto m2 = std::chrono::high_resolution_clock::now();
+	auto l2 = c.dijkstra(_house1->execute(c, ctx), _house2->execute(c, ctx));
+	auto m3 = std::chrono::high_resolution_clock::now();
+	for (auto const & h : l2) {
+		os << h->get_name() << " ";
+	}
+	os << "\n";
+	std::cout<<"################################################################################\n";
+	std::cout << "Time of execution :" << '\n';
+	std::cout << "A* took       " << (m1-m0).count() << " microseconds" << "\n";
+	std::cout << "Dijkstra took " << (m3-m2).count() << " microseconds" << "\n";
+}
+
+void tarjan_algorithm::execute(city & c, Contexte & ctx) {
+	std::vector<std::vector<house_ptr>> blocks = c.tarjan();
+
+	color colors[] = {
+		color("#ff0000"),
+		color("#00ff00"),
+		color("#0000ff"),
+		color("#ffff00"),
+		color("#ff00ff"),
+		color("#00ffff"),
+		color("#000000"),
+		color("#888888"),
+		color("#55ff55"),
+		color("#5555ff"),
+		color("#ff55ff"),
+		color("#8855ff"),
+		color("#005588")
+	};
+
+	int i = 0;
+	for (auto const & block : blocks) {
+		for (auto const & h : block) {
+			h->get_color() = colors[i];
+		}
+		i++;
+	}
+}
+
+void kruksal_algorithm::execute(city & c, Contexte & ctx) {
+	auto s = c.kruksal();
+	c.clear_houses();
+
+	std::map<house_ptr, bool> visited;
+
+	 for (auto const & r : s) {
+	// 	std::cout << r->get_house1()->to_string() << "\n";
+	// 	std::cout << r->get_house2()->to_string() << "\n";
+		auto h1 = r->get_house1();
+		if (visited.find(h1) == visited.end()) {
+			visited[h1] = true;
+			c.add_house(h1);
+		}
+
+		auto h2 = r->get_house2();
+		if (visited.find(h2) == visited.end()) {
+			visited[h2] = true;
+			c.add_house(h2);
+		}
+
+		r->get_house1()->add_neighbor(r->get_house2());
+		r->get_house2()->add_neighbor(r->get_house1());
+	}
+}
+
+void welsh_powell_algorithm::execute(city & c, Contexte & ctx) {
+	std::map<house_ptr, int> mp = c.welsh_powell();
+
+	color colors[] = {
+		color("#ff0000"),
+		color("#00ff00"),
+		color("#0000ff"),
+		color("#ffff00"),
+		color("#ff00ff"),
+		color("#00ffff"),
+		color("#000000"),
+		color("#888888"),
+		color("#55ff55"),
+		color("#5555ff"),
+		color("#ff55ff"),
+		color("#8855ff"),
+		color("#005588")
+	};
+
+	int size = 0;
+	for (auto & hc : mp) {
+		hc.first->get_color() = colors[hc.second];
+		if (hc.second + 1 > size) size = hc.second + 1;
+	}
+
+	std::cout << "le nombre chromatique du graphe < " << size << "\n";
 }
