@@ -83,6 +83,8 @@
 
 entry:
 	program {
+		std::cout << "\n";
+		
 		for (auto const & c : $1) {
 			c->execute(driver.get_city(), driver.getContexte());
 		}
@@ -265,7 +267,7 @@ command:
 		// std::cout << "new neighbour: " << hp->to_string() << "\n";
 		$$ = std::make_shared<commands::add_neighbor>($2, $3);
 	} |
-	
+
 	VAR_NAME '(' args ')' {
 		$$ = std::make_shared<commands::function_call>($1, $3, driver.get_functions());
 	} |

@@ -56,6 +56,9 @@ void show_neighborhood::execute(city & c, Contexte  & ctx) {
 	set_contextus();
 
 	auto house = _house->execute(c, ctx);
+
+	os << "Voisinage de " << house->get_coordinates().to_string() << ":\n";
+
 	for (auto  & h : house->get_neighbors()) {
 		os << h->to_string() << ", distance : " << house->distance(h) << "\n";
 	}
