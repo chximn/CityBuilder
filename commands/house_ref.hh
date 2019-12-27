@@ -16,6 +16,7 @@ private:
 public:
     house_ref() = default;
 	virtual house_ptr execute(city &, Contexte const &) const = 0;
+	virtual bool test(city &, Contexte const &) const { return true; }
 };
 
 class house_ref_coordinates : public house_ref {
@@ -24,6 +25,7 @@ private:
 public:
 	house_ref_coordinates(point_ref_ptr p): coordinates(p){}
 	house_ptr execute(city &, Contexte const &) const override;
+	bool test(city &, Contexte const &) const override;
 };
 
 class house_ref_index : public house_ref {
@@ -32,6 +34,7 @@ private:
 public:
 	house_ref_index(ExpressionPtr i): index(i){}
 	house_ptr execute(city &, Contexte const &) const override;
+	bool test(city &, Contexte const &) const override;
 };
 
 class house_ref_name : public house_ref {
@@ -40,6 +43,7 @@ private:
 public:
 	house_ref_name(std::string const & s): name(s) {}
 	house_ptr execute(city &, Contexte const &) const override;
+	bool test(city &, Contexte const &) const override;
 };
 
 class house_ref_create : public house_ref {

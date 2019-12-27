@@ -1,13 +1,5 @@
 #include "city.hh"
 
-bool city::house_exists(point const & p) {
-	for (auto & h : houses) {
-		if (h->get_coordinates() == p) return true;
-	}
-
-	return false;
-}
-
 void city::add_house(house_ptr h) {
 	auto coords = h->get_coordinates();
 	if (coords.get_x() > radius|| coords.get_y() > radius || coords.get_z() > radius)
@@ -68,9 +60,22 @@ house_ptr city::get_house(std::string const & name) {
 	error::report("Il n'existe pas une maison avec le nom \"" + name + "\"");
 }
 
+bool city::house_exists(std::string const & name) {
+	for (auto & h : houses) {
+		if (h->get_name() == name) return true;
+	}
+
+	return false;
+}
+
 house_ptr city::get_house(unsigned int index) {
 	if (index > houses.size()) error::report("Il n'existe pas une maison avec l'indice " + std::to_string(index) + " (maison[" + std::to_string(index) + "])");
 	return houses.at(index-1);
+}
+
+bool city::house_exists(unsigned int index) {
+	if (index > houses.size()) return false;
+	return true;
 }
 
 house_ptr city::get_house(point const & coordinates) {
@@ -79,6 +84,14 @@ house_ptr city::get_house(point const & coordinates) {
 	}
 
 	error::report("Il n'existe pas une maison en " + coordinates.to_string());
+}
+
+bool city::house_exists(point const & p) {
+	for (auto & h : houses) {
+		if (h->get_coordinates() == p) return true;
+	}
+
+	return false;
 }
 
 house_ptr city::add_neighbor(house_ptr h, int distance) {

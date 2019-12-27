@@ -4,12 +4,24 @@ house_ptr house_ref_name::execute(city & c, Contexte const & ctx) const {
 	return c.get_house(name);
 }
 
+bool house_ref_name::test(city & c, Contexte const & ctx) const {
+	return c.house_exists(name);
+}
+
 house_ptr house_ref_index::execute(city & c, Contexte const & ctx) const {
 	return c.get_house(index->calculer(ctx));
 }
 
+bool house_ref_index::test(city & c, Contexte const & ctx) const {
+	return c.house_exists(index->calculer(ctx));
+}
+
 house_ptr house_ref_coordinates::execute(city & c, Contexte const & ctx) const {
 	return c.get_house(coordinates->execute(ctx));
+}
+
+bool house_ref_coordinates::test(city & c, Contexte const & ctx) const {
+	return c.house_exists(coordinates->execute(ctx));
 }
 
 house_ptr house_ref_create::execute(city & c, Contexte const & ctx) const {

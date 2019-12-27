@@ -15,6 +15,6 @@ int ExpressionUnaire::calculer(const Contexte& contexte) const {
 }
 
 int ExpressionOccupied::calculer(const Contexte& contexte) const {
-	try { _house->execute(_city, contexte); return 1; }
-	catch(...) { return 0; }
+	if (_house->test(_city, contexte)) return 1;
+	else return 0;
 }
