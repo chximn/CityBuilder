@@ -12,7 +12,7 @@ on verra par la suite comment faire appel aux algorithmes implémentés des grap
 	Toutes les fonctionnalités ont été implémentées,
 	y compris la boucle pour.
 	La seule chose que manque est la fonction avec une valeur de retour.
-	Tous les exemples peuvent être trouvés dans "/Tests/Compilation"
+	Tous les exemples peuvent être trouvés dans "/tests/compilation"
 
 
 ##	1.1. Exemple 9, 13, 14bis, 15, 15bis
@@ -49,7 +49,7 @@ on verra par la suite comment faire appel aux algorithmes implémentés des grap
 	qui appliquera l'algorithme de A* et celle de Dijkstra,
 	et affichera le plus court chemin dans le flux de sortie standard (std::cout)
 	ainsi que le temps pris par les deux algorithmes
-	on trouve dans le fichier pcc.txt,
+	on trouve dans le fichier tests/graph/pcc.txt,
 	un exemple montrant comment tester l'implémentation de ces algorithmes
 
 
@@ -57,19 +57,19 @@ on verra par la suite comment faire appel aux algorithmes implémentés des grap
 	pour chercher l'arbre couvrant minimal en utilisant l'algorithme de Kruskal,
 	on fait appel à l'instruction "Kruskal",
 	qui supprimera les arrêts qui font pas partie de l'arbre couvrant minimal
-	on trouve dans le fichier kruskal.txt,
+	on trouve dans le fichier tests/graph/kruskal.txt,
 	un exemple montrant comment tester l'implémentation de l'algorithme de kruskal
 
 ##	2.3. Composants Fortement Connexes:
 	pour trouver les composants fortement connexes dans le graphe,
 	on fait appel à l'instruction "Tarjan", qui appliquera l'algorithme de Tarjan
 	et colorera les maisons du même composant fortement connexe par la même couleur
-	on trouve dans le fichier tarjan.txt,
+	on trouve dans le fichier tests/graph/tarjan.txt,
 	un exemple montrant comment tester l'implémentation de l'algorithme de Tarjan
 
 ##	2.4. K-Coloration:
 	pour encadrer le nombre chromatique du graphe, en utilisant l'algorithme de Welsh-Powell,
 	on fait appel à l'instruction "Welsh-Powell",
 	qui colorera les maisons et affichera l'encadrement du nombre chromatique
-	on trouve dans le fichier welsh_powell.txt,
+	on trouve dans le fichier tests/graph/welsh_powell.txt,
 	un exemple montrant comment tester l'implémentation de l'algorithme de Welsh-Powell
