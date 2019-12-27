@@ -3,39 +3,46 @@ Filière: L3 Informatique
 Binôme: Anis BOUCHEKHIMA
  		Oussama ICHOUA
 
+
 Ce dossier comporte les deux projets de théorie de langage de compilation et algorithmes des graphes,
 on verra par la suite comment faire appel aux algorithmes implémentés des graphes
+
 
 #	1.	Partie théorie de langage et compilation
 	Toutes les fonctionnalités ont été implémentées,
 	y compris la boucle pour.
-	la seule chose que manque est la fonction avec une valeure de retourne.
+	La seule chose que manque est la fonction avec une valeur de retour.
 	Tous les exemples peuvent être trouvés dans "/Tests/Compilation"
+
 
 ##	1.1. Exemple 9, 13, 14bis, 15, 15bis
 	Dans les exemples présentés, l'orientation n'est pas correcte.
-	On suppose que pour une orientation de 0 degrées la maison est orientée vers le sud.
-	pour l'exemple 9, la maison (1, 0, -1),
-	normalement pour une orientation de -90 degrées elle doit être orientée vers l'est,
+	On suppose que pour une orientation de 0 degrés la maison est orientée vers le sud.
+	Pour l'exemple 9, la maison (1, 0, -1),
+	normalement pour une orientation de -90 degrés elle doit être orientée vers l'est,
 	mais on trouve qu'elle est orientée vers le nord.
+
 
 ##	1.2. Exemple 21
 	Dans cet exemple
 	d'après la photo présentée dans le document,
 	on augmente la distance chaque itération,
 	donc l'instruction correcte est "Voisin M1 i".
-	et dans la premiere iteration, i vaut 0,
-	et on peut pas construire un voisin avec une distance de 0
+	Et dans la première itération, i vaut 0,
+	et on ne peut pas construire un voisin avec une distance de 0
 	donc on doit initialiser i à 1
 	on trouve l'exemple corrigé dans le dossier des tests
+
 
 ##	1.3. Exemple 23
 	La même chose que l'exemple 21
 	on trouve l'exemple corrigé dans le dossier des tests
 
+
 #	2.	Algorithmes des graphes
 	Pour tester les algorithmes, on utilise les instructions graphes ajoutés au langage du CityBuilder:
 	A*, Dijkstra, Kruskal, Tarjan, Welsh-Powell
+
 
 ##	2.1. Plus Court Chemin:
 	pour trouver le plus court chemin, on fait appel à l'instruction "PCC",
@@ -45,10 +52,11 @@ on verra par la suite comment faire appel aux algorithmes implémentés des grap
 	on trouve dans le fichier pcc.txt,
 	un exemple montrant comment tester l'implémentation de ces algorithmes
 
+
 ##	2.2. Arbre Couvrant Minimal:
 	pour chercher l'arbre couvrant minimal en utilisant l'algorithme de Kruskal,
 	on fait appel à l'instruction "Kruskal",
-	qui supprimera les arrete qui font pas partie de l'arbre couvrant minimal
+	qui supprimera les arrêts qui font pas partie de l'arbre couvrant minimal
 	on trouve dans le fichier kruskal.txt,
 	un exemple montrant comment tester l'implémentation de l'algorithme de kruskal
 
