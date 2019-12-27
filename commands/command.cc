@@ -33,7 +33,7 @@ void destruct_road::execute(city & c, Contexte  & ctx) {
 
 void destruct_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
-	
+
 	auto h = _house->execute(c, ctx);
 	c.remove_house(h);
 }
@@ -67,7 +67,10 @@ void orientate_house::execute(city & c, Contexte  & ctx) {
 void move_house::execute(city & c, Contexte  & ctx) {
 	set_contextus();
 
-	_house->execute(c, ctx)->get_coordinates() = _coordinates->execute(ctx);
+	auto ccc = _coordinates->execute(ctx);;
+	if (c.house_exists(ccc)) error::report("Une maison existe déjà en " + ccc.to_string());
+
+	_house->execute(c, ctx)->get_coordinates() = ccc;
 }
 
 void colorize_house::execute(city & c, Contexte  & ctx) {
