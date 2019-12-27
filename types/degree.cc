@@ -30,7 +30,7 @@ degree degree::operator=(int v) {
 }
 
 degree degree::operator =(degree const & d) {
-	val = d.val;
+	val += d.val;
 	return *this;
 }
 

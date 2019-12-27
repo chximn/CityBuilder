@@ -103,7 +103,7 @@ city:
 	}
 
 city_header:
-	CONSTRUCT '(' NUMBER ')' { $$ = $3; } |
+	CONSTRUCT '(' operation ')' { $$ = $3->calculer(driver.getContexte()); } |
 	CONSTRUCT                { $$ = 5;  }
 
 commands:
@@ -198,9 +198,9 @@ command:
 	} |
 
 	POSITION house {
+        $$ = std::make_shared<commands::position_house>($2, std::cout);
 		std::cout << "show house" << "\n";
-		// std::cout << "position: " << $2->get_coordinates().to_string() << "\n";
-		$$ = std::make_shared<commands::position_house>($2, std::cout);
+		 //std::cout << "position: " << $2->get_coordinates().to_string() << "\n";
 	} |
 
 	TURN house CLOCKWISE {
@@ -222,6 +222,11 @@ command:
 		// $2->get_orientation() = $3;
 		$$ = std::make_shared<commands::orientate_house>($2, $3);
 	} |
+
+    ORIENTATION house {
+        std::cout<<"hello \n";
+        $$ = std::make_shared<commands::orientation_house>($2, std::cout);
+    } |
 
 	MOVE house ARROW coordinates {
 		std::cout << "move house\n";
@@ -372,6 +377,10 @@ operation:
 
 	NUMBER {
 		$$ = std::make_shared<Constante>($1);
+    } |
+
+    '(' operation ')' {
+    $$ = $2;
     } |
 
 	operation '+' operation {
